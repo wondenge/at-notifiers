@@ -35,19 +35,19 @@ The Voice API sends a notification when a specific event happens. To receive the
 
 Voice API notifications are sent for;
 
-### 2.1 Outbound calls
+#### 2.1 Outbound calls
 
 These are sent whenever you make a call from a registered SIP number.
 
-### 2.2 Inbound calls
+#### 2.2 Inbound calls
 
 These are sent when a call comes to your virtual or SIP number.
 
-### 2.3 After Input
+#### 2.3 After Input
 
 These are sent whenever an action in your response requires user input (such as GetDigits and Record)
 
-### 2.4 When Call Ends
+#### 2.4 When Call Ends
 
 These are sent after a call ends. This is the final notification and contains some extra information about the call like the cost and duration.
 
@@ -62,13 +62,13 @@ Once you register your callback URL, any requests that they receive belonging to
 
 ## 4. Airtime Callback Service
 
-### 4.1 Airtime Validation Notifications
+#### 4.1 Airtime Validation Notifications
 
 The Airtime API provides optional functionality to validate airtime requests from your application. To receive these notifications you need to setup an airtime validation callback URL. From the dashboard select Airtime -> Airtime Callback URLs -> Validation Callback URL. Airtime validation notifications are sent as HTTP POST requests to the validation callback URL provided.
 
 Once you receive a validation callback notification you’ll be expected to send back a JSON response that marks the transaction as Validated or Failed. If validated we will proceed to send the airtime, if failed, we will block the airtime transaction
 
-### 4.2 Airtime Status Notifications
+#### 4.2 Airtime Status Notifications
 
 The Airtime API sends delivery status notification from the mobile service provider to your application indicating success or failure of the request. To receive these notifications you need to setup an airtime status callback URL. From the dashboard select Airtime -> Airtime Callback URLs -> Status Callback URL. Status notification content Airtime status notifications are sent as HTTP POST requests to the status callback URL provided.
 
@@ -76,40 +76,40 @@ The Airtime API sends delivery status notification from the mobile service provi
 
 The Payment API sends a notification when a specific event happens. To receive these notifications you need to setup a callback URL depending on the type of notification.
 
-### 5.1 BankCheckout
+#### 5.1 BankCheckout
 
 These are sent once the provided bank confirms or rejects the checkout request, or once the checkout request expires.
 
-### 5.2 CardCheckout
+#### 5.2 CardCheckout
 
 These are sent once the card provider confirms or rejects the checkout request, or once the checkout request expires.
 
-### 5.3 MobileCheckout
+#### 5.3 MobileCheckout
 
 These are sent once the mobile subscriber confirms or rejects the checkout request, or once the checkout request expires.
 
-### 5.4 MobileC2B
+#### 5.4 MobileC2B
 
 These are sent once funds are moved from the mobile subscriber’s account to your payment wallet.
 
-### 5.5 MobileB2C
+#### 5.5 MobileB2C
 
 These are sent once funds are successfully moved from your payment wallet to the mobile subscriber’s account.
 If AT are not able to complete the transaction, they will refund your payment wallet with the value of the transaction, and also refund your Africa’s Talking Stash with any transaction Fees.
 
-### 5.6 MobileB2B
+#### 5.6 MobileB2B
 
 These are sent once funds are successfully moved from your payment wallet to the recipeints business account. If AT are not able to complete the transaction, they will refund your payment wallet with the value of the transaction, and also refund your Africa’s Talking Stash with any transaction Fees.
 
-### 5.7 BankTransfer
+#### 5.7 BankTransfer
 
 These are sent once funds are successfully moved from your payment wallet to the provided bank account account. If AT are not able to complete the transaction, they will refund your payment wallet with the value of the transaction, and also refund your Africa’s Talking Stash with any transaction Fees.
 
-### 5.8 WalletTransfer
+#### 5.8 WalletTransfer
 
 These are sent once funds are successfully moved from your payment wallet to the target payment wallet.
 
-### 5.9 UserStashTopup
+#### 5.9 UserStashTopup
 
 These are sent once funds are successfully moved from your payment wallet to your Africa’s Talking Stash.
 

@@ -13,19 +13,19 @@ Other events AfricasTalking sends notifications for are;
 
 To receive these notifications you need to setup a callback URL depending on the type of notification you would like to receive. SMS API notifications are sent for various SMS categories as shown below:
 
-### 1.1 Delivery Reports
+#### 1.1 Delivery Reports
 
 These are sent whenever the mobile service provider confirms or rejects delivery of a message. To receive delivery reports, you need to set a delivery report callback URL. From the dashboard select SMS -> SMS Callback URLs -> Delivery Reports.
 
-### 1.2 Incoming Messages.
+#### 1.2 Incoming Messages.
 
 These are sent whenever a message is sent to any of your registered shortcodes. To receive incoming messages, you need to set an incoming messages callback URL. From the dashboard select SMS -> SMS Callback URLs -> Incoming Messages.
 
-### 1.3 Bulk SMS Opt Out
+#### 1.3 Bulk SMS Opt Out
 
 These are sent whenever a user opts out of receiving messages from your alphanumeric sender ID. To receive bulk sms opt out notifications, you need to set a bulk sms opt out callback URL. From the dashboard select SMS -> SMS Callback URLs -> Bulk SMS Opt Out. The instructions on how to opt out are automatically appended to the first message you send to the mobile subscriber. From then onwards, any other message will be sent ‘as is’ to the subscriber.
 
-### 1.4 Subscription Notification.
+#### 1.4 Subscription Notification.
 
 These are sent whenever someone subscribes or unsubscribes from any of your premium SMS products. To receive premium sms subscription notifications, you need to set asubscription notification callback URL. From the dashboard select SMS -> SMS Callback URLs -> Subscription Notifications.
 

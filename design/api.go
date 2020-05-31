@@ -46,7 +46,7 @@ var _ = API("notifier", func() {
 		Description("atsvr hosts callbacks that support AfricasTalking APIs.")
 
 		// List services hosted by this server.
-		Services("sms", "voice", "ussd", "airtime", "payments", "iot")
+		Services("sms", "voice", "ussd", "airtime", "payments", "iot", "health", "swagger")
 
 		// List the Hosts and their transport URLs.
 		Host("local", func() {

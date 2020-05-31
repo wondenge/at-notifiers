@@ -15,6 +15,7 @@ import (
 
 	"github.com/go-kit/kit/endpoint"
 	airtimec "github.com/wondenge/at-notifiers/gen/http/airtime/client"
+	healthc "github.com/wondenge/at-notifiers/gen/http/health/client"
 	iotc "github.com/wondenge/at-notifiers/gen/http/iot/client"
 	paymentsc "github.com/wondenge/at-notifiers/gen/http/payments/client"
 	smsc "github.com/wondenge/at-notifiers/gen/http/sms/client"

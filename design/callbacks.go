@@ -137,7 +137,7 @@ var _ = Service("ussd", func() {
 		Payload(USSDPayload)
 		Result(USSDResponse)
 		HTTP(func() {
-			POST("/notification")
+			POST("/sessions")
 			Response(StatusCreated)
 		})
 	})

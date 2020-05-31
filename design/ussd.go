@@ -7,25 +7,6 @@ import (
 	_ "goa.design/plugins/v3/zaplogger" // Enables ZapLogger Plugin
 )
 
-// USSD Callback Service
-// This service hosts the following notifications.
-// 1. USSD Notifications
-var _ = Service("ussd", func() {
-
-	HTTP(func() {
-		Path("/africastalking/ussd/version1")
-	})
-
-	Method("newUSSDNotification", func() {
-		Description("USSD Notifications")
-		Payload(USSDPayload)
-		Result(USSDResponse)
-		HTTP(func() {
-			POST("/sessions")
-			Response(StatusCreated)
-		})
-	})
-})
 var USSDPayload = Type("USSDPayload", func() {
 	Description("Request made whenever user dials a USSD code or responds to a menu.")
 

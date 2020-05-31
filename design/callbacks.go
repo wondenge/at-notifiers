@@ -262,7 +262,6 @@ var _ = Service("health", func() {
 })
 
 var _ = Service("swagger", func() {
-	Title("Open API Service")
 	Description("The swagger service serves the API swagger definition.")
 	HTTP(func() {
 		Path("/swagger")

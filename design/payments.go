@@ -385,7 +385,7 @@ var B2CValidationNotificationPayload = Type("B2CValidationNotificationPayload", 
 		Description("The 3-digist ISO format currency for the value of this transaction")
 		Example("KES")
 	})
-	Attribute("amount", UInt64, func() {
+	Attribute("amount", Float64, func() {
 		Description("Amount - in the provided currency - that the client will receive.")
 		Example(500.00)
 	})

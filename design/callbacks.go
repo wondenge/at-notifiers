@@ -17,7 +17,7 @@ import (
 */
 var _ = Service("sms", func() {
 	HTTP(func() {
-		Path("/africastalking/sms/version1")
+		Path("/callbacks/africastalking/sms")
 	})
 
 	// Delivery Reports
@@ -32,7 +32,7 @@ var _ = Service("sms", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/deliveryreport")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -48,7 +48,7 @@ var _ = Service("sms", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/incomingmessage")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -67,7 +67,7 @@ var _ = Service("sms", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/bulksmsoptout")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -83,7 +83,7 @@ var _ = Service("sms", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/subscription")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 })
@@ -97,7 +97,7 @@ var _ = Service("sms", func() {
 var _ = Service("voice", func() {
 
 	HTTP(func() {
-		Path("/voice/version1")
+		Path("/callbacks/africastalking/voice")
 	})
 
 	Method("voiceNotifier", func() {
@@ -116,7 +116,7 @@ var _ = Service("voice", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/transferevents")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 })
@@ -129,7 +129,7 @@ var _ = Service("voice", func() {
 var _ = Service("ussd", func() {
 
 	HTTP(func() {
-		Path("/ussd/version1")
+		Path("/callbacks/africastalking/ussd")
 	})
 
 	Method("ussdNotifier", func() {
@@ -138,7 +138,7 @@ var _ = Service("ussd", func() {
 		Result(USSDResponse)
 		HTTP(func() {
 			POST("/notification")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -153,7 +153,7 @@ var _ = Service("ussd", func() {
 var _ = Service("airtime", func() {
 
 	HTTP(func() {
-		Path("airtime/version1")
+		Path("/callbacks/africastalking/airtime")
 	})
 
 	Method("validation", func() {
@@ -187,7 +187,7 @@ var _ = Service("airtime", func() {
 var _ = Service("payments", func() {
 
 	HTTP(func() {
-		Path("/payments/version1")
+		Path("/callbacks/africastalking/payments")
 	})
 
 	Method("paymentNotifier", func() {
@@ -229,7 +229,7 @@ var _ = Service("payments", func() {
 var _ = Service("iot", func() {
 
 	HTTP(func() {
-		Path("/iot/version1")
+		Path("/callbacks/africastalking/iot")
 	})
 
 	Method("iotNotifier", func() {

@@ -252,7 +252,13 @@ curl --request POST \
   --url http://0.0.0.0:8000/callbacks/africastalking/airtime/validation \
   --header 'accept: application/json' \
   --header 'cache-control: no-cache' \
-  --header 'content-type: application/json'
+  --header 'content-type: application/json' \
+  --data '{
+      "amount": 500,
+      "currencyCode": "KES",
+      "phoneNumber": "+254711XXXYYY",
+      "transactionId": "SomeTransactionID"
+   }'
 ```
 
 Once you receive a validation callback notification you’ll be expected to send back a JSON response that marks the transaction as Validated or Failed.
@@ -267,14 +273,16 @@ To receive these notifications you need to setup an airtime status callback URL.
 
 From the dashboard select Airtime -> Airtime Callback URLs -> Status Callback URL.
 
-
-
 ```bash
 curl --request POST \
   --url http://0.0.0.0:8000/callbacks/africastalking/airtime/status \
   --header 'accept: application/json' \
   --header 'cache-control: no-cache' \
-  --header 'content-type: application/json'
+  --header 'content-type: application/json' \
+  --data '{
+      "requestId": "ATQid_SampleTxnId123",
+      "status": "Success"
+   }'
 ```
 
 # 8. Payment Callback
@@ -290,7 +298,7 @@ The Payment API sends a notification when a specific event happens. To receive t
 - MobileC2B: These are sent once funds are moved from the mobile subscriber’s account to your payment wallet.
 
 - MobileB2C: These are sent once funds are successfully moved from your payment wallet to the mobile subscriber’s account.
-If AT are not able to complete the transaction, they will refund your payment wallet with the value of the transaction, and also refund your Africa’s Talking Stash with any transaction Fees.
+  If AT are not able to complete the transaction, they will refund your payment wallet with the value of the transaction, and also refund your Africa’s Talking Stash with any transaction Fees.
 
 - MobileB2B: These are sent once funds are successfully moved from your payment wallet to the recipeints business account. If AT are not able to complete the transaction, they will refund your payment wallet with the value of the transaction, and also refund your Africa’s Talking Stash with any transaction Fees.
 

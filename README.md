@@ -1,23 +1,19 @@
 # AfricasTalking Notifiers
 
-# Overview
+## Overview
 
-This is a Golang HTTP service hosting callbacks for all AfricasTalking APIs. This server has the ability to shutdown nicely to ensure that all requests have been completed. This is usually referred to as graceful shutdown.
+This is a Golang HTTP service hosting callbacks to enable rapid prototyping for all AfricasTalking APIs. This server has the ability to shutdown nicely to ensure that all requests have been completed. This is usually referred to as graceful shutdown.
 
-```bash
-^Cts=2020-05-31T14:35:49.780992137Z caller=main.go:155 info="exiting (interrupt)"
-ts=2020-05-31T14:35:49.781055553Z caller=http.go:236 info="shutting down HTTP server at \"0.0.0.0:8000\""
-ts=2020-05-31T14:35:49.781140662Z caller=main.go:161 info=exited
-```
+AfricasTalking powers communications solutions across Africa. With simplified access to telco infrastructure, developers use their powerful SMS, USSD, Voice, Airtime and Payments APIs to bring their ideas to life, as they build and sustain scalable businesses.
 
-# Build from Source
+## Quickstart
+
+### Build from Source locally
 
 Requirements:
 
 - Go 1.14 or newer
 - Docker 19.03.9 or newer
-
-## For development
 
 ```bash
 $ git clone
@@ -26,95 +22,23 @@ $ go build ./cmd/atsvr && go build ./cmd/atsvr-cli
 ```
 
 This creates two binaries, atsvr and atsvr-cli, which is a server and a client respectively. Start a local server by running `./atsvr`
-which runs on `http://localhost:3000` and outputs the following logs.
-
-```bash
-ts=2020-05-31T14:39:05.520825711Z caller=http.go:201 info="HTTP \"DeliveryReport\" mounted on POST /callbacks/africastalking/sms/deliveryreport"
-ts=2020-05-31T14:39:05.52087906Z caller=http.go:201 info="HTTP \"IncomingMessage\" mounted on POST /callbacks/africastalking/sms/incomingmessage"
-ts=2020-05-31T14:39:05.520909653Z caller=http.go:201 info="HTTP \"BulkSMSOptOut\" mounted on POST /callbacks/africastalking/sms/bulksmsoptout"
-ts=2020-05-31T14:39:05.520925898Z caller=http.go:201 info="HTTP \"SubNotifier\" mounted on POST /callbacks/africastalking/sms/subscription"
-ts=2020-05-31T14:39:05.520947528Z caller=http.go:204 info="HTTP \"VoiceNotifier\" mounted on POST /callbacks/africastalking/voice/notifications"
-ts=2020-05-31T14:39:05.520967045Z caller=http.go:204 info="HTTP \"TransferEvents\" mounted on POST /callbacks/africastalking/voice/transferevents"
-ts=2020-05-31T14:39:05.520983162Z caller=http.go:207 info="HTTP \"UssdNotifier\" mounted on POST /callbacks/africastalking/ussd/sessions"
-ts=2020-05-31T14:39:05.520999475Z caller=http.go:210 info="HTTP \"Validation\" mounted on POST /callbacks/africastalking/airtime/validation"
-ts=2020-05-31T14:39:05.521021341Z caller=http.go:210 info="HTTP \"Status\" mounted on POST /callbacks/africastalking/airtime/status"
-ts=2020-05-31T14:39:05.521039289Z caller=http.go:213 info="HTTP \"PaymentNotifier\" mounted on POST /callbacks/africastalking/payments/events"
-ts=2020-05-31T14:39:05.521055436Z caller=http.go:213 info="HTTP \"C2bNotifier\" mounted on POST /callbacks/africastalking/payments/c2b/validation"
-ts=2020-05-31T14:39:05.521071599Z caller=http.go:213 info="HTTP \"B2cNotifier\" mounted on POST /callbacks/africastalking/payments/b2c/validation"
-ts=2020-05-31T14:39:05.521089257Z caller=http.go:216 info="HTTP \"IotNotifier\" mounted on POST /callbacks/africastalking/iot/events"
-ts=2020-05-31T14:39:05.521114861Z caller=http.go:219 info="HTTP \"Show\" mounted on GET /health"
-ts=2020-05-31T14:39:05.521133021Z caller=http.go:222 info="HTTP \"../../gen/http/openapi.json\" mounted on GET /swagger/swagger.json"
-ts=2020-05-31T14:39:05.52115686Z caller=http.go:231 info="HTTP server listening on \"localhost:3000\""
-```
+which runs on `http://localhost:3000`.
 
 On a separate terminal, run the CLI client for the notifier API by invoking the --help command using `./atsvr-cli --help` and logs the following output.
 
-```bash
-./atsvr-cli is a command line client for the notifier API.
+### Docker
 
-Usage:
-    ./atsvr-cli [-host HOST][-url URL][-timeout SECONDS][-verbose|-v] SERVICE ENDPOINT [flags]
-
-    -host HOST:  server host (local). valid values: local, docker
-    -url URL:    specify service URL overriding host URL (http://localhost:8080)
-    -timeout:    maximum number of seconds to wait for response (30)
-    -verbose|-v: print request and response details (false)
-
-Commands:
-    airtime (validation|status)
-    health show
-    iot iot-notifier
-    payments (payment-notifier|c2b-notifier|b2c-notifier)
-    sms (delivery-report|incoming-message|bulk-sms-opt-out|sub-notifier)
-    ussd ussd-notifier
-    voice (voice-notifier|transfer-events)
-
-Additional help:
-    ./atsvr-cli SERVICE [ENDPOINT] --help
-```
-
-## Docker
-
-We can build from source and use a Docker Image locally for our Golang HTTP Listener using our [Dockerfile](). This is a multi-stage build Dockerfile built with two images:
-
-- From [golang:1.14.3-alpine3.11](https://hub.docker.com/layers/golang/library/golang/1.14.3-alpine3.11/images/sha256-911ebd34ce76d69beac233711215ece09b81f9000bb0fc4615ef3ee732a1c495?context=explore) as Builder
-- and then the resulting binaries built from [scratch](https://hub.docker.com/_/scratch/).
-
-Let's build the image by running;
+Let's pull the docker image from docker hub
 
 ```bash
-$ git clone
-$ cd at-notifiers
-$ docker build . -t at-notifier:latest
+$ docker pull ondengew/at-notifiers
 ```
 
-We can then run the docker image locally;
+We can then run the docker image locally by running which starts the HTTP server listening on 0.0.0.0:8000
 
 ```bash
-$ docker run -p 8000:8000 at-notifier
+$ docker run -p 8000:8000 at-notifiers
 ```
-
-```bash
-(base) wondenge@hpelitebook:~/projects/sdks/at-notifiers$ docker run -p 8000:8000 at-notifier
-ts=2020-05-31T14:06:24.31800445Z caller=http.go:201 info="HTTP \"DeliveryReport\" mounted on POST /callbacks/africastalking/sms/deliveryreport"
-ts=2020-05-31T14:06:24.318065289Z caller=http.go:201 info="HTTP \"IncomingMessage\" mounted on POST /callbacks/africastalking/sms/incomingmessage"
-ts=2020-05-31T14:06:24.318093753Z caller=http.go:201 info="HTTP \"BulkSMSOptOut\" mounted on POST /callbacks/africastalking/sms/bulksmsoptout"
-ts=2020-05-31T14:06:24.318114975Z caller=http.go:201 info="HTTP \"SubNotifier\" mounted on POST /callbacks/africastalking/sms/subscription"
-ts=2020-05-31T14:06:24.318127887Z caller=http.go:204 info="HTTP \"VoiceNotifier\" mounted on POST /callbacks/africastalking/voice/notifications"
-ts=2020-05-31T14:06:24.318140974Z caller=http.go:204 info="HTTP \"TransferEvents\" mounted on POST /callbacks/africastalking/voice/transferevents"
-ts=2020-05-31T14:06:24.318155288Z caller=http.go:207 info="HTTP \"UssdNotifier\" mounted on POST /callbacks/africastalking/ussd/sessions"
-ts=2020-05-31T14:06:24.31817146Z caller=http.go:210 info="HTTP \"Validation\" mounted on POST /callbacks/africastalking/airtime/validation"
-ts=2020-05-31T14:06:24.318186354Z caller=http.go:210 info="HTTP \"Status\" mounted on POST /callbacks/africastalking/airtime/status"
-ts=2020-05-31T14:06:24.31820336Z caller=http.go:213 info="HTTP \"PaymentNotifier\" mounted on POST /callbacks/africastalking/payments/events"
-ts=2020-05-31T14:06:24.31822186Z caller=http.go:213 info="HTTP \"C2bNotifier\" mounted on POST /callbacks/africastalking/payments/c2b/validation"
-ts=2020-05-31T14:06:24.318231384Z caller=http.go:213 info="HTTP \"B2cNotifier\" mounted on POST /callbacks/africastalking/payments/b2c/validation"
-ts=2020-05-31T14:06:24.318247624Z caller=http.go:216 info="HTTP \"IotNotifier\" mounted on POST /callbacks/africastalking/iot/events"
-ts=2020-05-31T14:06:24.318261437Z caller=http.go:219 info="HTTP \"Show\" mounted on GET /health"
-ts=2020-05-31T14:06:24.318276134Z caller=http.go:222 info="HTTP \"../../gen/http/openapi.json\" mounted on GET /swagger/swagger.json"
-ts=2020-05-31T14:06:24.318302371Z caller=http.go:231 info="HTTP server listening on \"0.0.0.0:8000\""
-```
-
-We also have an existing maintained official docker image from docker hub.
 
 ## 1. SMS Callback Service
 

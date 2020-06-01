@@ -2,7 +2,9 @@
 
 # 1. Overview
 
-This is a Golang HTTP service hosting callbacks to enable rapid prototyping for all AfricasTalking APIs. This server has the ability to shutdown nicely to ensure that all requests have been completed. This is usually referred to as graceful shutdown.
+This is a Golang HTTP service hosting callbacks to enable rapid prototyping and production use for all AfricasTalking APIs.
+
+This server has the ability to shutdown nicely to ensure that all requests have been completed. This is usually referred to as graceful shutdown.
 
 AfricasTalking powers communications solutions across Africa. With simplified access to telco infrastructure, developers use their powerful SMS, USSD, Voice, Airtime and Payments APIs to bring their ideas to life, as they build and sustain scalable businesses.
 
@@ -13,13 +15,15 @@ AfricasTalking powers communications solutions across Africa. With simplified ac
 
 # 3. Quickstart
 
-## 3.1 Local Development
+## Local Development
 
 When the above pre-requisites have been fullfilled, run the following commands:
 
 ```bash
-$ git clone
+$ git clone https://github.com/wondenge/at-notifiers.git
+
 $ cd at-notifiers
+
 $ go build ./cmd/atsvr && go build ./cmd/atsvr-cli
 ```
 
@@ -27,30 +31,7 @@ This creates two binaries, atsvr and atsvr-cli, which is a server and a client r
 
 On a separate terminal, run the CLI client for the notifier API by invoking the --help command using `./atsvr-cli --help` and logs the following output.
 
-### Example Usage: SMS Delivery Reports
-
-This is a simple example testing the delivery reports callback service
-
-```bash
-    ./atsvr-cli sms delivery-report --body '{
-          "failureReason": "UserAccountSuspended",
-          "id": "Consequatur et dicta.",
-          "networkCode": "64110",
-          "phoneNumber": "Recusandae perspiciatis excepturi reiciendis est quasi est.",
-          "retryCount": "Non quo omnis consequatur vero.",
-          "status": "Buffered"
-       }'
-```
-
-The server responds with a Status 201, as shown below
-
-```bash
-ts=2020-05-31T15:12:19.311626187Z caller=log.go:30 id=Ad3v0i-K req="POST /callbacks/africastalking/sms/deliveryreport" from=127.0.0.1
-ts=2020-05-31T15:12:19.311917897Z caller=sms.go:24 info=sms.deliveryReport
-ts=2020-05-31T15:12:19.311981209Z caller=log.go:37 id=Ad3v0i-K status=201 bytes=3 time=358.417µs
-```
-
-## 3.2 Production Use using Docker
+## Production Use with Docker
 
 Let's pull the docker image from docker hub
 
@@ -64,58 +45,175 @@ We can then run the docker image which starts the HTTP server listening on 0.0.0
 $ docker run -p 8000:8000 at-notifiers
 ```
 
-# 4. Available Callback Services for AfricasTalking APIs
+# 4. SMS Callback
 
-## 4.1. SMS Callback Service
-
-SMSs are sent from an application by making a HTTP POST request to the AfricasTalking SMS API. For each request AfricasTalking receives, they respond with a notification back indicating whether the sms transaction was successful or failed.
+For each request AfricasTalking receives, they respond with a notification back indicating whether the sms transaction was successful or failed.
 
 Other events AfricasTalking sends notifications for are;
 
 - Whenever they receive a message for an application.
 - When a user opts out of receiving messages from the alphanumeric code, sender id, or if they subscribe/unsubscribe from the premium SMS service.
 
-To receive these notifications you need to setup a callback URL depending on the type of notification you would like to receive. SMS API notifications are sent for various SMS categories as shown below:
+To receive these notifications you need to setup a callback URL depending on the type of notification you would like to receive.
 
-### 4.1.1 Delivery Reports
+SMS API notifications are sent for various SMS categories as shown below:
 
-These are sent whenever the mobile service provider confirms or rejects delivery of a message. To receive delivery reports, you need to set a delivery report callback URL. From the dashboard select SMS -> SMS Callback URLs -> Delivery Reports.
+## Delivery Reports
 
-### 4.1.2 Incoming Messages.
+These are sent whenever the mobile service provider confirms or rejects delivery of a message.
 
-These are sent whenever a message is sent to any of your registered shortcodes. To receive incoming messages, you need to set an incoming messages callback URL. From the dashboard select SMS -> SMS Callback URLs -> Incoming Messages.
+To receive delivery reports, you need to set a delivery report callback URL.
 
-### 4.1.3 Bulk SMS Opt Out
+From the dashboard select SMS -> SMS Callback URLs -> Delivery Reports.
 
-These are sent whenever a user opts out of receiving messages from your alphanumeric sender ID. To receive bulk sms opt out notifications, you need to set a bulk sms opt out callback URL. From the dashboard select SMS -> SMS Callback URLs -> Bulk SMS Opt Out. The instructions on how to opt out are automatically appended to the first message you send to the mobile subscriber. From then onwards, any other message will be sent ‘as is’ to the subscriber.
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/sms/deliveryreport \
+  --header 'accept: application/json' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json' \
+  --data '{
+          "failureReason": "UserAccountSuspended",
+          "id": "Consequatur et dicta.",
+          "networkCode": "64110",
+          "phoneNumber": "Recusandae perspiciatis excepturi reiciendis est quasi est.",
+          "retryCount": "Non quo omnis consequatur vero.",
+          "status": "Buffered"
+       }'
+```
 
-### 4.1.4 Subscription Notification.
+## Incoming Messages.
 
-These are sent whenever someone subscribes or unsubscribes from any of your premium SMS products. To receive premium sms subscription notifications, you need to set asubscription notification callback URL. From the dashboard select SMS -> SMS Callback URLs -> Subscription Notifications.
+These are sent whenever a message is sent to any of your registered shortcodes.
 
-## 4.2 Voice Callback Service
+To receive incoming messages, you need to set an incoming messages callback URL.
 
-The Voice API sends a notification when a specific event happens. To receive these notifications you need to setup a voice callback URL. From the dashboard select Voice -> Phone Numbers -> Actions -> Callback.
+From the dashboard select SMS -> SMS Callback URLs -> Incoming Messages.
+
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/sms/incomingmessage \
+  --header 'accept: application/json' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json' \
+  --body '{
+      "date": "1977-01-31",
+      "from": "Velit earum est.",
+      "id": "Illo voluptate iste voluptate unde.",
+      "linkId": "Vitae autem adipisci sed labore reprehenderit est.",
+      "networkCode": "64007",
+      "text": "Aut quas quia laboriosam vitae dolor hic.",
+      "to": "Eligendi suscipit recusandae libero natus cupiditate libero."
+   }'
+```
+
+## Bulk SMS Opt Out
+
+These are sent whenever a user opts out of receiving messages from your alphanumeric sender ID.
+
+To receive bulk sms opt out notifications, you need to set a bulk sms opt out callback URL.
+
+From the dashboard select SMS -> SMS Callback URLs -> Bulk SMS Opt Out.
+
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/sms/bulksmsoptout \
+  --header 'accept: application/json' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json' \
+  --data '{
+      "phoneNumber": "Ut vitae sit.",
+      "senderId": "Enim neque."
+   }'
+```
+
+The instructions on how to opt out are automatically appended to the first message you send to the mobile subscriber. From then onwards, any other message will be sent ‘as is’ to the subscriber.
+
+## Subscription Notification.
+
+These are sent whenever someone subscribes or unsubscribes from any of your premium SMS products.
+
+To receive premium sms subscription notifications, you need to set asubscription notification callback URL.
+
+From the dashboard select SMS -> SMS Callback URLs -> Subscription Notifications.
+
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/sms/subscription \
+  --header 'accept: application/json' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json' \
+  --data '{
+      "keyword": "Magni molestiae molestiae esse.",
+      "phoneNumber": "Ut perferendis sit ratione expedita.",
+      "shortCode": "Pariatur aut omnis.",
+      "updateType": "deletion"
+   }'
+```
+
+# 5. Voice Callback
+
+The Voice API sends a notification when a specific event happens.
+
+To receive these notifications you need to setup a voice callback URL.
+
+From the dashboard select Voice -> Phone Numbers -> Actions -> Callback.
 
 Voice API notifications are sent for;
 
-### 4.2.1 Outbound calls
+- Outbound calls: These are sent whenever you make a call from a registered SIP number.
 
-These are sent whenever you make a call from a registered SIP number.
+- Inbound calls: These are sent when a call comes to your virtual or SIP number.
 
-### 4.2.2 Inbound calls
+- After Input: These are sent whenever an action in your response requires user input (such as GetDigits and Record)
 
-These are sent when a call comes to your virtual or SIP number.
+- When Call Ends: These are sent after a call ends. This is the final notification and contains some extra information about the call like the cost and duration.
 
-### 4.2.3 After Input
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/voice/notifications \
+  --header 'accept: application/json' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json' \
+  --data '{
+      "amount": "Optio alias iure est.",
+      "callSessionState": "Qui reiciendis in sed consequatur eos.",
+      "callStartTime": "Saepe veniam.",
+      "callerCountryCode": "Deserunt velit praesentium quos id repellat.",
+      "callerNumber": "+254711XXXYYY",
+      "currencyCode": "Suscipit deleniti beatae.",
+      "destinationNumber": "+254711XXXYYY",
+      "dialDestinationNumber": "Repellendus est suscipit aperiam in aut.",
+      "dialDurationInSeconds": "Magnam dolores nihil eligendi perspiciatis dolore.",
+      "dialStartTime": "Aspernatur est ut doloribus architecto est.",
+      "direction": "Sunt vero totam sint qui.",
+      "dtmfDigits": "Ut assumenda dignissimos cupiditate eius illo qui.",
+      "durationInSeconds": "Quibusdam optio facilis accusantium assumenda eum nemo.",
+      "hangupCause": "SERVICE_UNAVAILABLE",
+      "isActive": "Voluptas fugiat sed numquam iure.",
+      "recordingUrl": "Enim beatae ut velit porro.",
+      "sessionId": "Nobis nostrum et quaerat quaerat accusantium earum."
+   }'
+```
 
-These are sent whenever an action in your response requires user input (such as GetDigits and Record)
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/voice/transferevents \
+  --header 'accept: application/json' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json' \
+  --data '{
+      "callSessionState": "Transferred",
+      "callTransferHangupCause": "InvalidPhoneNumber",
+      "callTransferParam": "Unde quos mollitia.",
+      "callTransferState": " Active",
+      "callTransferredToNumber": "Doloremque velit repellendus perferendis tempora veritatis quidem.",
+      "isActive": "1",
+      "status": "Success"
+   }'
+```
 
-### 4.2.4 When Call Ends
-
-These are sent after a call ends. This is the final notification and contains some extra information about the call like the cost and duration.
-
-## 4.3 USSD Callback Service
+# 6. USSD Callback
 
 This service is hit when the user dials a USSD code and every time they respond to a menu. Processing USSD requests using the USSD API is very easy once your account is set up. In particular, you will need to:
 
@@ -124,59 +222,167 @@ This service is hit when the user dials a USSD code and every time they respond 
 
 Once you register your callback URL, any requests that they receive belonging to you will trigger a callback that sends the request data to that URL using HTTP POST.
 
-## 4.4 Airtime Callback Service
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/ussd/sessions \
+  --header 'accept: text/plain' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json' \
+  --data '{
+      "networkCode": "Provident ut.",
+      "phoneNumber": "Et porro soluta.",
+      "serviceCode": "Atque maiores asperiores.",
+      "sessionId": "Itaque quam saepe ex.",
+      "text": "Rerum ducimus at voluptas ipsa."
+   }'
+```
 
-### 4.4.1 Airtime Validation Notifications
+# 7 Airtime Callback
 
-The Airtime API provides optional functionality to validate airtime requests from your application. To receive these notifications you need to setup an airtime validation callback URL. From the dashboard select Airtime -> Airtime Callback URLs -> Validation Callback URL. Airtime validation notifications are sent as HTTP POST requests to the validation callback URL provided.
+## Airtime Validation Notifications
 
-Once you receive a validation callback notification you’ll be expected to send back a JSON response that marks the transaction as Validated or Failed. If validated we will proceed to send the airtime, if failed, we will block the airtime transaction
+The Airtime API provides optional functionality to validate airtime requests from your application.
 
-### 4.4.2 Airtime Status Notifications
+To receive these notifications you need to setup an airtime validation callback URL.
 
-The Airtime API sends delivery status notification from the mobile service provider to your application indicating success or failure of the request. To receive these notifications you need to setup an airtime status callback URL. From the dashboard select Airtime -> Airtime Callback URLs -> Status Callback URL. Status notification content Airtime status notifications are sent as HTTP POST requests to the status callback URL provided.
+From the dashboard select Airtime -> Airtime Callback URLs -> Validation Callback URL.
 
-## 4.5 Payment Callback Service
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/airtime/validation \
+  --header 'accept: application/json' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json'
+```
+
+Once you receive a validation callback notification you’ll be expected to send back a JSON response that marks the transaction as Validated or Failed.
+
+If validated we will proceed to send the airtime, if failed, we will block the airtime transaction.
+
+## Airtime Status Notifications
+
+The Airtime API sends delivery status notification from the mobile service provider to your application indicating success or failure of the request.
+
+To receive these notifications you need to setup an airtime status callback URL.
+
+From the dashboard select Airtime -> Airtime Callback URLs -> Status Callback URL.
+
+
+
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/airtime/status \
+  --header 'accept: application/json' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json'
+```
+
+# 8. Payment Callback
 
 The Payment API sends a notification when a specific event happens. To receive these notifications you need to setup a callback URL depending on the type of notification.
 
-### 4.5.1 BankCheckout
+- BankCheckout: These are sent once the provided bank confirms or rejects the checkout request, or once the checkout request expires.
 
-These are sent once the provided bank confirms or rejects the checkout request, or once the checkout request expires.
+- CardCheckout: These are sent once the card provider confirms or rejects the checkout request, or once the checkout request expires.
 
-### 4.5.2 CardCheckout
+- MobileCheckout: These are sent once the mobile subscriber confirms or rejects the checkout request, or once the checkout request expires.
 
-These are sent once the card provider confirms or rejects the checkout request, or once the checkout request expires.
+- MobileC2B: These are sent once funds are moved from the mobile subscriber’s account to your payment wallet.
 
-### 4.5.3 MobileCheckout
-
-These are sent once the mobile subscriber confirms or rejects the checkout request, or once the checkout request expires.
-
-### 4.5.4 MobileC2B
-
-These are sent once funds are moved from the mobile subscriber’s account to your payment wallet.
-
-### 4.5.5 MobileB2C
-
-These are sent once funds are successfully moved from your payment wallet to the mobile subscriber’s account.
+- MobileB2C: These are sent once funds are successfully moved from your payment wallet to the mobile subscriber’s account.
 If AT are not able to complete the transaction, they will refund your payment wallet with the value of the transaction, and also refund your Africa’s Talking Stash with any transaction Fees.
 
-### 4.5.6 MobileB2B
+- MobileB2B: These are sent once funds are successfully moved from your payment wallet to the recipeints business account. If AT are not able to complete the transaction, they will refund your payment wallet with the value of the transaction, and also refund your Africa’s Talking Stash with any transaction Fees.
 
-These are sent once funds are successfully moved from your payment wallet to the recipeints business account. If AT are not able to complete the transaction, they will refund your payment wallet with the value of the transaction, and also refund your Africa’s Talking Stash with any transaction Fees.
+- BankTransfer: These are sent once funds are successfully moved from your payment wallet to the provided bank account account. If AT are not able to complete the transaction, they will refund your payment wallet with the value of the transaction, and also refund your Africa’s Talking Stash with any transaction Fees.
 
-### 4.5.7 BankTransfer
+- WalletTransfer: These are sent once funds are successfully moved from your payment wallet to the target payment wallet.
 
-These are sent once funds are successfully moved from your payment wallet to the provided bank account account. If AT are not able to complete the transaction, they will refund your payment wallet with the value of the transaction, and also refund your Africa’s Talking Stash with any transaction Fees.
+- UserStashTopup: These are sent once funds are successfully moved from your payment wallet to your Africa’s Talking Stash.
 
-### 4.5.8 WalletTransfer
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/payments/events \
+  --header 'accept: application/json' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json' \
+  --data '{
+      "category": "MobileB2B",
+      "clientAccount": "Corrupti ducimus autem cum eum exercitationem.",
+      "description": "Hic sequi quis nihil asperiores culpa.",
+      "destination": "Eveniet doloribus.",
+      "destinationType": "Card",
+      "productName": "Molestiae animi officiis.",
+      "provider": "Athena",
+      "providerChannel": "Velit eveniet est veritatis.",
+      "providerFee": "Minus corrupti voluptatem eos.",
+      "providerMetadata": "Sunt nemo ex esse eveniet quas.",
+      "providerRefId": "Vitae qui qui omnis.",
+      "requestMetadata": "Corrupti corrupti nobis corporis qui.",
+      "source": "Fugiat quod nemo natus.",
+      "sourceType": "PhoneNumber",
+      "status": "Success",
+      "transactionDate": "Est quibusdam hic ut.",
+      "transactionFee": "Quas est nostrum incidunt impedit vel.",
+      "transactionId": "In eum.",
+      "value": "Ut eveniet."
+   }'
+```
 
-These are sent once funds are successfully moved from your payment wallet to the target payment wallet.
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/payments/c2b/validation \
+  --header 'accept: application/json' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json' \
+  --data '{
+      "clientAccount": "Culpa soluta quibusdam corporis rerum deleniti.",
+      "phoneNumber": "Sequi non sit aliquid.",
+      "productName": "Magni est aspernatur qui velit.",
+      "provider": "TigoTanzania",
+      "providerMetadata": {
+         "Molestias laborum magnam numquam nostrum accusamus.": "Aliquam ut vel."
+      },
+      "value": "Provident nam non est quia et nobis."
+   }'
+```
 
-### 4.5.9 UserStashTopup
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/payments/b2c/validation \
+  --header 'accept: application/json' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json' \
+  --data '{
+      "amount": 500,
+      "currencyCode": "KES",
+      "metadata": {
+         "Sit sit id voluptatibus occaecati nostrum.": "Fugiat sunt sed provident eos sunt."
+      },
+      "phoneNumber": "+254711XXXYYY",
+      "sourceIpAddress": "12.34.56.78",
+      "transactionId": "SomeTransactionID"
+   }'
+```
 
-These are sent once funds are successfully moved from your payment wallet to your Africa’s Talking Stash.
+# 9. IoT Callback
 
-## 4.6 IoT Callback Service
+The IoT API sends a notification when a device publish event occurs.
 
-The IoT API sends a notification when a device publish event occurs. To receive these notifications you need to setup a callback URL depending on the type of notification. When creating your device group, you have the option to supply your application callback URL. This is the remote endpoint to which device messages will be sent.
+To receive these notifications you need to setup a callback URL depending on the type of notification.
+
+When creating your device group, you have the option to supply your application callback URL. This is the remote endpoint to which device messages will be sent.
+
+Here is a curl example request testing the IoT callback.
+
+```bash
+curl --request POST \
+  --url http://0.0.0.0:8000/callbacks/africastalking/iot/events \
+  --header 'accept: application/json' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json' \
+  --data '{
+      "payload": "42",
+      "topic": "myusername/devicegroup/sensor/id/1/temperature"
+   }'
+```

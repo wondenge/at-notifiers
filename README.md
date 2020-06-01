@@ -1,3 +1,10 @@
+<p align="center">
+<img src="docs/assets/img/gopher.png" alt="Traefik" title="AfricasTalking Notifiers" />
+</p>
+
+[![Go Report Card](https://goreportcard.com/badge/wondenge/at-notifiers)](https://goreportcard.com/report/wondenge/at-notifiers)
+[![License](https://img.shields.io/badge/license-Apache-blue.svg)]
+
 # AfricasTalking Notifiers
 
 # 1. Overview

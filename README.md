@@ -73,6 +73,8 @@ To receive delivery reports, you need to set a delivery report callback URL.
 
 From the dashboard select SMS -> SMS Callback URLs -> Delivery Reports.
 
+> Example Request
+
 ```bash
 curl --request POST \
   --url http://0.0.0.0:8000/callbacks/africastalking/sms/deliveryreport \
@@ -88,6 +90,8 @@ curl --request POST \
           "status": "Buffered"
        }'
 ```
+
+> Example Response
 
 ```bash
 ts=2020-06-01T19:19:03.39104844Z caller=log.go:30 id=M_4eFRe_ req="POST /callbacks/africastalking/sms/deliveryreport" from=172.17.0.1

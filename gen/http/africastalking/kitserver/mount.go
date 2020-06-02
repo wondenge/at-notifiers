@@ -13,9 +13,9 @@ import (
 	goahttp "goa.design/goa/v3/http"
 )
 
-// MountSmsDeliveryReportHandler configures the mux to serve the
-// "africastalking" service "sms_delivery_report" endpoint.
-func MountSmsDeliveryReportHandler(mux goahttp.Muxer, h http.Handler) {
+// MountDeliveryReportNotifierHandler configures the mux to serve the
+// "africastalking" service "delivery_report_notifier" endpoint.
+func MountDeliveryReportNotifierHandler(mux goahttp.Muxer, h http.Handler) {
 	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
@@ -25,9 +25,9 @@ func MountSmsDeliveryReportHandler(mux goahttp.Muxer, h http.Handler) {
 	mux.Handle("POST", "/callbacks/africastalking/sms/deliveryreport", f)
 }
 
-// MountSmsIncomingMessageHandler configures the mux to serve the
-// "africastalking" service "sms_incoming_message" endpoint.
-func MountSmsIncomingMessageHandler(mux goahttp.Muxer, h http.Handler) {
+// MountIncomingMessageNotifierHandler configures the mux to serve the
+// "africastalking" service "incoming_message_notifier" endpoint.
+func MountIncomingMessageNotifierHandler(mux goahttp.Muxer, h http.Handler) {
 	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
@@ -37,9 +37,9 @@ func MountSmsIncomingMessageHandler(mux goahttp.Muxer, h http.Handler) {
 	mux.Handle("POST", "/callbacks/africastalking/sms/incomingmessage", f)
 }
 
-// MountSmsBulkOptoutHandler configures the mux to serve the "africastalking"
-// service "sms_bulk_optout" endpoint.
-func MountSmsBulkOptoutHandler(mux goahttp.Muxer, h http.Handler) {
+// MountBulkOptOutNotifierHandler configures the mux to serve the
+// "africastalking" service "bulk_optOut_notifier" endpoint.
+func MountBulkOptOutNotifierHandler(mux goahttp.Muxer, h http.Handler) {
 	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
@@ -49,9 +49,9 @@ func MountSmsBulkOptoutHandler(mux goahttp.Muxer, h http.Handler) {
 	mux.Handle("POST", "/callbacks/africastalking/sms/bulksmsoptout", f)
 }
 
-// MountSmsSubscriptionHandler configures the mux to serve the "africastalking"
-// service "sms_subscription" endpoint.
-func MountSmsSubscriptionHandler(mux goahttp.Muxer, h http.Handler) {
+// MountSubNotifierHandler configures the mux to serve the "africastalking"
+// service "sub_notifier" endpoint.
+func MountSubNotifierHandler(mux goahttp.Muxer, h http.Handler) {
 	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
@@ -61,9 +61,9 @@ func MountSmsSubscriptionHandler(mux goahttp.Muxer, h http.Handler) {
 	mux.Handle("POST", "/callbacks/africastalking/sms/subscription", f)
 }
 
-// MountVoiceNotificationHandler configures the mux to serve the
-// "africastalking" service "voice_notification" endpoint.
-func MountVoiceNotificationHandler(mux goahttp.Muxer, h http.Handler) {
+// MountVoiceNotifierHandler configures the mux to serve the "africastalking"
+// service "voice_notifier" endpoint.
+func MountVoiceNotifierHandler(mux goahttp.Muxer, h http.Handler) {
 	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
@@ -73,9 +73,9 @@ func MountVoiceNotificationHandler(mux goahttp.Muxer, h http.Handler) {
 	mux.Handle("POST", "/callbacks/africastalking/voice/notifications", f)
 }
 
-// MountTransferEventHandler configures the mux to serve the "africastalking"
-// service "transfer_event" endpoint.
-func MountTransferEventHandler(mux goahttp.Muxer, h http.Handler) {
+// MountTransferEventNotifierHandler configures the mux to serve the
+// "africastalking" service "transfer_event_notifier" endpoint.
+func MountTransferEventNotifierHandler(mux goahttp.Muxer, h http.Handler) {
 	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {

@@ -16,109 +16,109 @@ import (
 	goahttp "goa.design/goa/v3/http"
 )
 
-// EncodeSmsDeliveryReportRequest returns a go-kit EncodeRequestFunc suitable
-// for encoding africastalking sms_delivery_report requests.
-func EncodeSmsDeliveryReportRequest(encoder func(*http.Request) goahttp.Encoder) kithttp.EncodeRequestFunc {
-	enc := client.EncodeSmsDeliveryReportRequest(encoder)
+// EncodeDeliveryReportNotifierRequest returns a go-kit EncodeRequestFunc
+// suitable for encoding africastalking delivery_report_notifier requests.
+func EncodeDeliveryReportNotifierRequest(encoder func(*http.Request) goahttp.Encoder) kithttp.EncodeRequestFunc {
+	enc := client.EncodeDeliveryReportNotifierRequest(encoder)
 	return func(_ context.Context, r *http.Request, v interface{}) error {
 		return enc(r, v)
 	}
 }
 
-// DecodeSmsDeliveryReportResponse returns a go-kit DecodeResponseFunc suitable
-// for decoding africastalking sms_delivery_report responses.
-func DecodeSmsDeliveryReportResponse(decoder func(*http.Response) goahttp.Decoder) kithttp.DecodeResponseFunc {
-	dec := client.DecodeSmsDeliveryReportResponse(decoder, false)
+// DecodeDeliveryReportNotifierResponse returns a go-kit DecodeResponseFunc
+// suitable for decoding africastalking delivery_report_notifier responses.
+func DecodeDeliveryReportNotifierResponse(decoder func(*http.Response) goahttp.Decoder) kithttp.DecodeResponseFunc {
+	dec := client.DecodeDeliveryReportNotifierResponse(decoder, false)
 	return func(ctx context.Context, resp *http.Response) (interface{}, error) {
 		return dec(resp)
 	}
 }
 
-// EncodeSmsIncomingMessageRequest returns a go-kit EncodeRequestFunc suitable
-// for encoding africastalking sms_incoming_message requests.
-func EncodeSmsIncomingMessageRequest(encoder func(*http.Request) goahttp.Encoder) kithttp.EncodeRequestFunc {
-	enc := client.EncodeSmsIncomingMessageRequest(encoder)
+// EncodeIncomingMessageNotifierRequest returns a go-kit EncodeRequestFunc
+// suitable for encoding africastalking incoming_message_notifier requests.
+func EncodeIncomingMessageNotifierRequest(encoder func(*http.Request) goahttp.Encoder) kithttp.EncodeRequestFunc {
+	enc := client.EncodeIncomingMessageNotifierRequest(encoder)
 	return func(_ context.Context, r *http.Request, v interface{}) error {
 		return enc(r, v)
 	}
 }
 
-// DecodeSmsIncomingMessageResponse returns a go-kit DecodeResponseFunc
-// suitable for decoding africastalking sms_incoming_message responses.
-func DecodeSmsIncomingMessageResponse(decoder func(*http.Response) goahttp.Decoder) kithttp.DecodeResponseFunc {
-	dec := client.DecodeSmsIncomingMessageResponse(decoder, false)
+// DecodeIncomingMessageNotifierResponse returns a go-kit DecodeResponseFunc
+// suitable for decoding africastalking incoming_message_notifier responses.
+func DecodeIncomingMessageNotifierResponse(decoder func(*http.Response) goahttp.Decoder) kithttp.DecodeResponseFunc {
+	dec := client.DecodeIncomingMessageNotifierResponse(decoder, false)
 	return func(ctx context.Context, resp *http.Response) (interface{}, error) {
 		return dec(resp)
 	}
 }
 
-// EncodeSmsBulkOptoutRequest returns a go-kit EncodeRequestFunc suitable for
-// encoding africastalking sms_bulk_optout requests.
-func EncodeSmsBulkOptoutRequest(encoder func(*http.Request) goahttp.Encoder) kithttp.EncodeRequestFunc {
-	enc := client.EncodeSmsBulkOptoutRequest(encoder)
+// EncodeBulkOptOutNotifierRequest returns a go-kit EncodeRequestFunc suitable
+// for encoding africastalking bulk_optOut_notifier requests.
+func EncodeBulkOptOutNotifierRequest(encoder func(*http.Request) goahttp.Encoder) kithttp.EncodeRequestFunc {
+	enc := client.EncodeBulkOptOutNotifierRequest(encoder)
 	return func(_ context.Context, r *http.Request, v interface{}) error {
 		return enc(r, v)
 	}
 }
 
-// DecodeSmsBulkOptoutResponse returns a go-kit DecodeResponseFunc suitable for
-// decoding africastalking sms_bulk_optout responses.
-func DecodeSmsBulkOptoutResponse(decoder func(*http.Response) goahttp.Decoder) kithttp.DecodeResponseFunc {
-	dec := client.DecodeSmsBulkOptoutResponse(decoder, false)
+// DecodeBulkOptOutNotifierResponse returns a go-kit DecodeResponseFunc
+// suitable for decoding africastalking bulk_optOut_notifier responses.
+func DecodeBulkOptOutNotifierResponse(decoder func(*http.Response) goahttp.Decoder) kithttp.DecodeResponseFunc {
+	dec := client.DecodeBulkOptOutNotifierResponse(decoder, false)
 	return func(ctx context.Context, resp *http.Response) (interface{}, error) {
 		return dec(resp)
 	}
 }
 
-// EncodeSmsSubscriptionRequest returns a go-kit EncodeRequestFunc suitable for
-// encoding africastalking sms_subscription requests.
-func EncodeSmsSubscriptionRequest(encoder func(*http.Request) goahttp.Encoder) kithttp.EncodeRequestFunc {
-	enc := client.EncodeSmsSubscriptionRequest(encoder)
+// EncodeSubNotifierRequest returns a go-kit EncodeRequestFunc suitable for
+// encoding africastalking sub_notifier requests.
+func EncodeSubNotifierRequest(encoder func(*http.Request) goahttp.Encoder) kithttp.EncodeRequestFunc {
+	enc := client.EncodeSubNotifierRequest(encoder)
 	return func(_ context.Context, r *http.Request, v interface{}) error {
 		return enc(r, v)
 	}
 }
 
-// DecodeSmsSubscriptionResponse returns a go-kit DecodeResponseFunc suitable
-// for decoding africastalking sms_subscription responses.
-func DecodeSmsSubscriptionResponse(decoder func(*http.Response) goahttp.Decoder) kithttp.DecodeResponseFunc {
-	dec := client.DecodeSmsSubscriptionResponse(decoder, false)
+// DecodeSubNotifierResponse returns a go-kit DecodeResponseFunc suitable for
+// decoding africastalking sub_notifier responses.
+func DecodeSubNotifierResponse(decoder func(*http.Response) goahttp.Decoder) kithttp.DecodeResponseFunc {
+	dec := client.DecodeSubNotifierResponse(decoder, false)
 	return func(ctx context.Context, resp *http.Response) (interface{}, error) {
 		return dec(resp)
 	}
 }
 
-// EncodeVoiceNotificationRequest returns a go-kit EncodeRequestFunc suitable
-// for encoding africastalking voice_notification requests.
-func EncodeVoiceNotificationRequest(encoder func(*http.Request) goahttp.Encoder) kithttp.EncodeRequestFunc {
-	enc := client.EncodeVoiceNotificationRequest(encoder)
+// EncodeVoiceNotifierRequest returns a go-kit EncodeRequestFunc suitable for
+// encoding africastalking voice_notifier requests.
+func EncodeVoiceNotifierRequest(encoder func(*http.Request) goahttp.Encoder) kithttp.EncodeRequestFunc {
+	enc := client.EncodeVoiceNotifierRequest(encoder)
 	return func(_ context.Context, r *http.Request, v interface{}) error {
 		return enc(r, v)
 	}
 }
 
-// DecodeVoiceNotificationResponse returns a go-kit DecodeResponseFunc suitable
-// for decoding africastalking voice_notification responses.
-func DecodeVoiceNotificationResponse(decoder func(*http.Response) goahttp.Decoder) kithttp.DecodeResponseFunc {
-	dec := client.DecodeVoiceNotificationResponse(decoder, false)
+// DecodeVoiceNotifierResponse returns a go-kit DecodeResponseFunc suitable for
+// decoding africastalking voice_notifier responses.
+func DecodeVoiceNotifierResponse(decoder func(*http.Response) goahttp.Decoder) kithttp.DecodeResponseFunc {
+	dec := client.DecodeVoiceNotifierResponse(decoder, false)
 	return func(ctx context.Context, resp *http.Response) (interface{}, error) {
 		return dec(resp)
 	}
 }
 
-// EncodeTransferEventRequest returns a go-kit EncodeRequestFunc suitable for
-// encoding africastalking transfer_event requests.
-func EncodeTransferEventRequest(encoder func(*http.Request) goahttp.Encoder) kithttp.EncodeRequestFunc {
-	enc := client.EncodeTransferEventRequest(encoder)
+// EncodeTransferEventNotifierRequest returns a go-kit EncodeRequestFunc
+// suitable for encoding africastalking transfer_event_notifier requests.
+func EncodeTransferEventNotifierRequest(encoder func(*http.Request) goahttp.Encoder) kithttp.EncodeRequestFunc {
+	enc := client.EncodeTransferEventNotifierRequest(encoder)
 	return func(_ context.Context, r *http.Request, v interface{}) error {
 		return enc(r, v)
 	}
 }
 
-// DecodeTransferEventResponse returns a go-kit DecodeResponseFunc suitable for
-// decoding africastalking transfer_event responses.
-func DecodeTransferEventResponse(decoder func(*http.Response) goahttp.Decoder) kithttp.DecodeResponseFunc {
-	dec := client.DecodeTransferEventResponse(decoder, false)
+// DecodeTransferEventNotifierResponse returns a go-kit DecodeResponseFunc
+// suitable for decoding africastalking transfer_event_notifier responses.
+func DecodeTransferEventNotifierResponse(decoder func(*http.Response) goahttp.Decoder) kithttp.DecodeResponseFunc {
+	dec := client.DecodeTransferEventNotifierResponse(decoder, false)
 	return func(ctx context.Context, resp *http.Response) (interface{}, error) {
 		return dec(resp)
 	}

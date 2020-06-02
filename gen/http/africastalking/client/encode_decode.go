@@ -19,81 +19,14 @@ import (
 	goahttp "goa.design/goa/v3/http"
 )
 
-// BuildSmsDeliveryReportRequest instantiates a HTTP request object with method
-// and path set to call the "africastalking" service "sms_delivery_report"
-// endpoint
-func (c *Client) BuildSmsDeliveryReportRequest(ctx context.Context, v interface{}) (*http.Request, error) {
-	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: SmsDeliveryReportAfricastalkingPath()}
-	req, err := http.NewRequest("POST", u.String(), nil)
-	if err != nil {
-		return nil, goahttp.ErrInvalidURL("africastalking", "sms_delivery_report", u.String(), err)
-	}
-	if ctx != nil {
-		req = req.WithContext(ctx)
-	}
-
-	return req, nil
-}
-
-// EncodeSmsDeliveryReportRequest returns an encoder for requests sent to the
-// africastalking sms_delivery_report server.
-func EncodeSmsDeliveryReportRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
-	return func(req *http.Request, v interface{}) error {
-		p, ok := v.(*africastalking.DeliveryReport)
-		if !ok {
-			return goahttp.ErrInvalidType("africastalking", "sms_delivery_report", "*africastalking.DeliveryReport", v)
-		}
-		body := NewSmsDeliveryReportRequestBody(p)
-		if err := encoder(req).Encode(&body); err != nil {
-			return goahttp.ErrEncodingError("africastalking", "sms_delivery_report", err)
-		}
-		return nil
-	}
-}
-
-// DecodeSmsDeliveryReportResponse returns a decoder for responses returned by
-// the africastalking sms_delivery_report endpoint. restoreBody controls
-// whether the response body should be restored after having been read.
-func DecodeSmsDeliveryReportResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
-	return func(resp *http.Response) (interface{}, error) {
-		if restoreBody {
-			b, err := ioutil.ReadAll(resp.Body)
-			if err != nil {
-				return nil, err
-			}
-			resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
-			defer func() {
-				resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
-			}()
-		} else {
-			defer resp.Body.Close()
-		}
-		switch resp.StatusCode {
-		case http.StatusCreated:
-			var (
-				body string
-				err  error
-			)
-			err = decoder(resp).Decode(&body)
-			if err != nil {
-				return nil, goahttp.ErrDecodingError("africastalking", "sms_delivery_report", err)
-			}
-			return body, nil
-		default:
-			body, _ := ioutil.ReadAll(resp.Body)
-			return nil, goahttp.ErrInvalidResponse("africastalking", "sms_delivery_report", resp.StatusCode, string(body))
-		}
-	}
-}
-
-// BuildSmsIncomingMessageRequest instantiates a HTTP request object with
+// BuildDeliveryReportNotifierRequest instantiates a HTTP request object with
 // method and path set to call the "africastalking" service
-// "sms_incoming_message" endpoint
-func (c *Client) BuildSmsIncomingMessageRequest(ctx context.Context, v interface{}) (*http.Request, error) {
-	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: SmsIncomingMessageAfricastalkingPath()}
+// "delivery_report_notifier" endpoint
+func (c *Client) BuildDeliveryReportNotifierRequest(ctx context.Context, v interface{}) (*http.Request, error) {
+	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: DeliveryReportNotifierAfricastalkingPath()}
 	req, err := http.NewRequest("POST", u.String(), nil)
 	if err != nil {
-		return nil, goahttp.ErrInvalidURL("africastalking", "sms_incoming_message", u.String(), err)
+		return nil, goahttp.ErrInvalidURL("africastalking", "delivery_report_notifier", u.String(), err)
 	}
 	if ctx != nil {
 		req = req.WithContext(ctx)
@@ -102,26 +35,162 @@ func (c *Client) BuildSmsIncomingMessageRequest(ctx context.Context, v interface
 	return req, nil
 }
 
-// EncodeSmsIncomingMessageRequest returns an encoder for requests sent to the
-// africastalking sms_incoming_message server.
-func EncodeSmsIncomingMessageRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
+// EncodeDeliveryReportNotifierRequest returns an encoder for requests sent to
+// the africastalking delivery_report_notifier server.
+func EncodeDeliveryReportNotifierRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
 	return func(req *http.Request, v interface{}) error {
-		p, ok := v.(*africastalking.IncomingMessage)
+		p, ok := v.(*africastalking.DeliveryReportPayload)
 		if !ok {
-			return goahttp.ErrInvalidType("africastalking", "sms_incoming_message", "*africastalking.IncomingMessage", v)
+			return goahttp.ErrInvalidType("africastalking", "delivery_report_notifier", "*africastalking.DeliveryReportPayload", v)
 		}
-		body := NewSmsIncomingMessageRequestBody(p)
+		body := NewDeliveryReportNotifierRequestBody(p)
 		if err := encoder(req).Encode(&body); err != nil {
-			return goahttp.ErrEncodingError("africastalking", "sms_incoming_message", err)
+			return goahttp.ErrEncodingError("africastalking", "delivery_report_notifier", err)
 		}
 		return nil
 	}
 }
 
-// DecodeSmsIncomingMessageResponse returns a decoder for responses returned by
-// the africastalking sms_incoming_message endpoint. restoreBody controls
+// DecodeDeliveryReportNotifierResponse returns a decoder for responses
+// returned by the africastalking delivery_report_notifier endpoint.
+// restoreBody controls whether the response body should be restored after
+// having been read.
+func DecodeDeliveryReportNotifierResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
+	return func(resp *http.Response) (interface{}, error) {
+		if restoreBody {
+			b, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				return nil, err
+			}
+			resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
+			defer func() {
+				resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
+			}()
+		} else {
+			defer resp.Body.Close()
+		}
+		switch resp.StatusCode {
+		case http.StatusCreated:
+			var (
+				body string
+				err  error
+			)
+			err = decoder(resp).Decode(&body)
+			if err != nil {
+				return nil, goahttp.ErrDecodingError("africastalking", "delivery_report_notifier", err)
+			}
+			return body, nil
+		default:
+			body, _ := ioutil.ReadAll(resp.Body)
+			return nil, goahttp.ErrInvalidResponse("africastalking", "delivery_report_notifier", resp.StatusCode, string(body))
+		}
+	}
+}
+
+// BuildIncomingMessageNotifierRequest instantiates a HTTP request object with
+// method and path set to call the "africastalking" service
+// "incoming_message_notifier" endpoint
+func (c *Client) BuildIncomingMessageNotifierRequest(ctx context.Context, v interface{}) (*http.Request, error) {
+	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: IncomingMessageNotifierAfricastalkingPath()}
+	req, err := http.NewRequest("POST", u.String(), nil)
+	if err != nil {
+		return nil, goahttp.ErrInvalidURL("africastalking", "incoming_message_notifier", u.String(), err)
+	}
+	if ctx != nil {
+		req = req.WithContext(ctx)
+	}
+
+	return req, nil
+}
+
+// EncodeIncomingMessageNotifierRequest returns an encoder for requests sent to
+// the africastalking incoming_message_notifier server.
+func EncodeIncomingMessageNotifierRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
+	return func(req *http.Request, v interface{}) error {
+		p, ok := v.(*africastalking.IncomingMessagePayload)
+		if !ok {
+			return goahttp.ErrInvalidType("africastalking", "incoming_message_notifier", "*africastalking.IncomingMessagePayload", v)
+		}
+		body := NewIncomingMessageNotifierRequestBody(p)
+		if err := encoder(req).Encode(&body); err != nil {
+			return goahttp.ErrEncodingError("africastalking", "incoming_message_notifier", err)
+		}
+		return nil
+	}
+}
+
+// DecodeIncomingMessageNotifierResponse returns a decoder for responses
+// returned by the africastalking incoming_message_notifier endpoint.
+// restoreBody controls whether the response body should be restored after
+// having been read.
+func DecodeIncomingMessageNotifierResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
+	return func(resp *http.Response) (interface{}, error) {
+		if restoreBody {
+			b, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				return nil, err
+			}
+			resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
+			defer func() {
+				resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
+			}()
+		} else {
+			defer resp.Body.Close()
+		}
+		switch resp.StatusCode {
+		case http.StatusCreated:
+			var (
+				body string
+				err  error
+			)
+			err = decoder(resp).Decode(&body)
+			if err != nil {
+				return nil, goahttp.ErrDecodingError("africastalking", "incoming_message_notifier", err)
+			}
+			return body, nil
+		default:
+			body, _ := ioutil.ReadAll(resp.Body)
+			return nil, goahttp.ErrInvalidResponse("africastalking", "incoming_message_notifier", resp.StatusCode, string(body))
+		}
+	}
+}
+
+// BuildBulkOptOutNotifierRequest instantiates a HTTP request object with
+// method and path set to call the "africastalking" service
+// "bulk_optOut_notifier" endpoint
+func (c *Client) BuildBulkOptOutNotifierRequest(ctx context.Context, v interface{}) (*http.Request, error) {
+	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: BulkOptOutNotifierAfricastalkingPath()}
+	req, err := http.NewRequest("POST", u.String(), nil)
+	if err != nil {
+		return nil, goahttp.ErrInvalidURL("africastalking", "bulk_optOut_notifier", u.String(), err)
+	}
+	if ctx != nil {
+		req = req.WithContext(ctx)
+	}
+
+	return req, nil
+}
+
+// EncodeBulkOptOutNotifierRequest returns an encoder for requests sent to the
+// africastalking bulk_optOut_notifier server.
+func EncodeBulkOptOutNotifierRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
+	return func(req *http.Request, v interface{}) error {
+		p, ok := v.(*africastalking.BulkSMSOptOutPayload)
+		if !ok {
+			return goahttp.ErrInvalidType("africastalking", "bulk_optOut_notifier", "*africastalking.BulkSMSOptOutPayload", v)
+		}
+		body := NewBulkOptOutNotifierRequestBody(p)
+		if err := encoder(req).Encode(&body); err != nil {
+			return goahttp.ErrEncodingError("africastalking", "bulk_optOut_notifier", err)
+		}
+		return nil
+	}
+}
+
+// DecodeBulkOptOutNotifierResponse returns a decoder for responses returned by
+// the africastalking bulk_optOut_notifier endpoint. restoreBody controls
 // whether the response body should be restored after having been read.
-func DecodeSmsIncomingMessageResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
+func DecodeBulkOptOutNotifierResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
 	return func(resp *http.Response) (interface{}, error) {
 		if restoreBody {
 			b, err := ioutil.ReadAll(resp.Body)
@@ -143,23 +212,23 @@ func DecodeSmsIncomingMessageResponse(decoder func(*http.Response) goahttp.Decod
 			)
 			err = decoder(resp).Decode(&body)
 			if err != nil {
-				return nil, goahttp.ErrDecodingError("africastalking", "sms_incoming_message", err)
+				return nil, goahttp.ErrDecodingError("africastalking", "bulk_optOut_notifier", err)
 			}
 			return body, nil
 		default:
 			body, _ := ioutil.ReadAll(resp.Body)
-			return nil, goahttp.ErrInvalidResponse("africastalking", "sms_incoming_message", resp.StatusCode, string(body))
+			return nil, goahttp.ErrInvalidResponse("africastalking", "bulk_optOut_notifier", resp.StatusCode, string(body))
 		}
 	}
 }
 
-// BuildSmsBulkOptoutRequest instantiates a HTTP request object with method and
-// path set to call the "africastalking" service "sms_bulk_optout" endpoint
-func (c *Client) BuildSmsBulkOptoutRequest(ctx context.Context, v interface{}) (*http.Request, error) {
-	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: SmsBulkOptoutAfricastalkingPath()}
+// BuildSubNotifierRequest instantiates a HTTP request object with method and
+// path set to call the "africastalking" service "sub_notifier" endpoint
+func (c *Client) BuildSubNotifierRequest(ctx context.Context, v interface{}) (*http.Request, error) {
+	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: SubNotifierAfricastalkingPath()}
 	req, err := http.NewRequest("POST", u.String(), nil)
 	if err != nil {
-		return nil, goahttp.ErrInvalidURL("africastalking", "sms_bulk_optout", u.String(), err)
+		return nil, goahttp.ErrInvalidURL("africastalking", "sub_notifier", u.String(), err)
 	}
 	if ctx != nil {
 		req = req.WithContext(ctx)
@@ -168,26 +237,26 @@ func (c *Client) BuildSmsBulkOptoutRequest(ctx context.Context, v interface{}) (
 	return req, nil
 }
 
-// EncodeSmsBulkOptoutRequest returns an encoder for requests sent to the
-// africastalking sms_bulk_optout server.
-func EncodeSmsBulkOptoutRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
+// EncodeSubNotifierRequest returns an encoder for requests sent to the
+// africastalking sub_notifier server.
+func EncodeSubNotifierRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
 	return func(req *http.Request, v interface{}) error {
-		p, ok := v.(*africastalking.BulkSMSOptOut)
+		p, ok := v.(*africastalking.SubNotificationPayload)
 		if !ok {
-			return goahttp.ErrInvalidType("africastalking", "sms_bulk_optout", "*africastalking.BulkSMSOptOut", v)
+			return goahttp.ErrInvalidType("africastalking", "sub_notifier", "*africastalking.SubNotificationPayload", v)
 		}
-		body := NewSmsBulkOptoutRequestBody(p)
+		body := NewSubNotifierRequestBody(p)
 		if err := encoder(req).Encode(&body); err != nil {
-			return goahttp.ErrEncodingError("africastalking", "sms_bulk_optout", err)
+			return goahttp.ErrEncodingError("africastalking", "sub_notifier", err)
 		}
 		return nil
 	}
 }
 
-// DecodeSmsBulkOptoutResponse returns a decoder for responses returned by the
-// africastalking sms_bulk_optout endpoint. restoreBody controls whether the
+// DecodeSubNotifierResponse returns a decoder for responses returned by the
+// africastalking sub_notifier endpoint. restoreBody controls whether the
 // response body should be restored after having been read.
-func DecodeSmsBulkOptoutResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
+func DecodeSubNotifierResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
 	return func(resp *http.Response) (interface{}, error) {
 		if restoreBody {
 			b, err := ioutil.ReadAll(resp.Body)
@@ -209,23 +278,23 @@ func DecodeSmsBulkOptoutResponse(decoder func(*http.Response) goahttp.Decoder, r
 			)
 			err = decoder(resp).Decode(&body)
 			if err != nil {
-				return nil, goahttp.ErrDecodingError("africastalking", "sms_bulk_optout", err)
+				return nil, goahttp.ErrDecodingError("africastalking", "sub_notifier", err)
 			}
 			return body, nil
 		default:
 			body, _ := ioutil.ReadAll(resp.Body)
-			return nil, goahttp.ErrInvalidResponse("africastalking", "sms_bulk_optout", resp.StatusCode, string(body))
+			return nil, goahttp.ErrInvalidResponse("africastalking", "sub_notifier", resp.StatusCode, string(body))
 		}
 	}
 }
 
-// BuildSmsSubscriptionRequest instantiates a HTTP request object with method
-// and path set to call the "africastalking" service "sms_subscription" endpoint
-func (c *Client) BuildSmsSubscriptionRequest(ctx context.Context, v interface{}) (*http.Request, error) {
-	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: SmsSubscriptionAfricastalkingPath()}
+// BuildVoiceNotifierRequest instantiates a HTTP request object with method and
+// path set to call the "africastalking" service "voice_notifier" endpoint
+func (c *Client) BuildVoiceNotifierRequest(ctx context.Context, v interface{}) (*http.Request, error) {
+	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: VoiceNotifierAfricastalkingPath()}
 	req, err := http.NewRequest("POST", u.String(), nil)
 	if err != nil {
-		return nil, goahttp.ErrInvalidURL("africastalking", "sms_subscription", u.String(), err)
+		return nil, goahttp.ErrInvalidURL("africastalking", "voice_notifier", u.String(), err)
 	}
 	if ctx != nil {
 		req = req.WithContext(ctx)
@@ -234,159 +303,26 @@ func (c *Client) BuildSmsSubscriptionRequest(ctx context.Context, v interface{})
 	return req, nil
 }
 
-// EncodeSmsSubscriptionRequest returns an encoder for requests sent to the
-// africastalking sms_subscription server.
-func EncodeSmsSubscriptionRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
+// EncodeVoiceNotifierRequest returns an encoder for requests sent to the
+// africastalking voice_notifier server.
+func EncodeVoiceNotifierRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
 	return func(req *http.Request, v interface{}) error {
-		p, ok := v.(*africastalking.SubscriptionNotification)
+		p, ok := v.(*africastalking.VoiceNotificationPayload)
 		if !ok {
-			return goahttp.ErrInvalidType("africastalking", "sms_subscription", "*africastalking.SubscriptionNotification", v)
+			return goahttp.ErrInvalidType("africastalking", "voice_notifier", "*africastalking.VoiceNotificationPayload", v)
 		}
-		body := NewSmsSubscriptionRequestBody(p)
+		body := NewVoiceNotifierRequestBody(p)
 		if err := encoder(req).Encode(&body); err != nil {
-			return goahttp.ErrEncodingError("africastalking", "sms_subscription", err)
+			return goahttp.ErrEncodingError("africastalking", "voice_notifier", err)
 		}
 		return nil
 	}
 }
 
-// DecodeSmsSubscriptionResponse returns a decoder for responses returned by
-// the africastalking sms_subscription endpoint. restoreBody controls whether
-// the response body should be restored after having been read.
-func DecodeSmsSubscriptionResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
-	return func(resp *http.Response) (interface{}, error) {
-		if restoreBody {
-			b, err := ioutil.ReadAll(resp.Body)
-			if err != nil {
-				return nil, err
-			}
-			resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
-			defer func() {
-				resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
-			}()
-		} else {
-			defer resp.Body.Close()
-		}
-		switch resp.StatusCode {
-		case http.StatusCreated:
-			var (
-				body string
-				err  error
-			)
-			err = decoder(resp).Decode(&body)
-			if err != nil {
-				return nil, goahttp.ErrDecodingError("africastalking", "sms_subscription", err)
-			}
-			return body, nil
-		default:
-			body, _ := ioutil.ReadAll(resp.Body)
-			return nil, goahttp.ErrInvalidResponse("africastalking", "sms_subscription", resp.StatusCode, string(body))
-		}
-	}
-}
-
-// BuildVoiceNotificationRequest instantiates a HTTP request object with method
-// and path set to call the "africastalking" service "voice_notification"
-// endpoint
-func (c *Client) BuildVoiceNotificationRequest(ctx context.Context, v interface{}) (*http.Request, error) {
-	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: VoiceNotificationAfricastalkingPath()}
-	req, err := http.NewRequest("POST", u.String(), nil)
-	if err != nil {
-		return nil, goahttp.ErrInvalidURL("africastalking", "voice_notification", u.String(), err)
-	}
-	if ctx != nil {
-		req = req.WithContext(ctx)
-	}
-
-	return req, nil
-}
-
-// EncodeVoiceNotificationRequest returns an encoder for requests sent to the
-// africastalking voice_notification server.
-func EncodeVoiceNotificationRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
-	return func(req *http.Request, v interface{}) error {
-		p, ok := v.(*africastalking.VoiceNotification1)
-		if !ok {
-			return goahttp.ErrInvalidType("africastalking", "voice_notification", "*africastalking.VoiceNotification1", v)
-		}
-		body := NewVoiceNotificationRequestBody(p)
-		if err := encoder(req).Encode(&body); err != nil {
-			return goahttp.ErrEncodingError("africastalking", "voice_notification", err)
-		}
-		return nil
-	}
-}
-
-// DecodeVoiceNotificationResponse returns a decoder for responses returned by
-// the africastalking voice_notification endpoint. restoreBody controls whether
-// the response body should be restored after having been read.
-func DecodeVoiceNotificationResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
-	return func(resp *http.Response) (interface{}, error) {
-		if restoreBody {
-			b, err := ioutil.ReadAll(resp.Body)
-			if err != nil {
-				return nil, err
-			}
-			resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
-			defer func() {
-				resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
-			}()
-		} else {
-			defer resp.Body.Close()
-		}
-		switch resp.StatusCode {
-		case http.StatusCreated:
-			var (
-				body string
-				err  error
-			)
-			err = decoder(resp).Decode(&body)
-			if err != nil {
-				return nil, goahttp.ErrDecodingError("africastalking", "voice_notification", err)
-			}
-			return body, nil
-		default:
-			body, _ := ioutil.ReadAll(resp.Body)
-			return nil, goahttp.ErrInvalidResponse("africastalking", "voice_notification", resp.StatusCode, string(body))
-		}
-	}
-}
-
-// BuildTransferEventRequest instantiates a HTTP request object with method and
-// path set to call the "africastalking" service "transfer_event" endpoint
-func (c *Client) BuildTransferEventRequest(ctx context.Context, v interface{}) (*http.Request, error) {
-	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: TransferEventAfricastalkingPath()}
-	req, err := http.NewRequest("POST", u.String(), nil)
-	if err != nil {
-		return nil, goahttp.ErrInvalidURL("africastalking", "transfer_event", u.String(), err)
-	}
-	if ctx != nil {
-		req = req.WithContext(ctx)
-	}
-
-	return req, nil
-}
-
-// EncodeTransferEventRequest returns an encoder for requests sent to the
-// africastalking transfer_event server.
-func EncodeTransferEventRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
-	return func(req *http.Request, v interface{}) error {
-		p, ok := v.(*africastalking.CallTransferEvent)
-		if !ok {
-			return goahttp.ErrInvalidType("africastalking", "transfer_event", "*africastalking.CallTransferEvent", v)
-		}
-		body := NewTransferEventRequestBody(p)
-		if err := encoder(req).Encode(&body); err != nil {
-			return goahttp.ErrEncodingError("africastalking", "transfer_event", err)
-		}
-		return nil
-	}
-}
-
-// DecodeTransferEventResponse returns a decoder for responses returned by the
-// africastalking transfer_event endpoint. restoreBody controls whether the
+// DecodeVoiceNotifierResponse returns a decoder for responses returned by the
+// africastalking voice_notifier endpoint. restoreBody controls whether the
 // response body should be restored after having been read.
-func DecodeTransferEventResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
+func DecodeVoiceNotifierResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
 	return func(resp *http.Response) (interface{}, error) {
 		if restoreBody {
 			b, err := ioutil.ReadAll(resp.Body)
@@ -408,12 +344,79 @@ func DecodeTransferEventResponse(decoder func(*http.Response) goahttp.Decoder, r
 			)
 			err = decoder(resp).Decode(&body)
 			if err != nil {
-				return nil, goahttp.ErrDecodingError("africastalking", "transfer_event", err)
+				return nil, goahttp.ErrDecodingError("africastalking", "voice_notifier", err)
 			}
 			return body, nil
 		default:
 			body, _ := ioutil.ReadAll(resp.Body)
-			return nil, goahttp.ErrInvalidResponse("africastalking", "transfer_event", resp.StatusCode, string(body))
+			return nil, goahttp.ErrInvalidResponse("africastalking", "voice_notifier", resp.StatusCode, string(body))
+		}
+	}
+}
+
+// BuildTransferEventNotifierRequest instantiates a HTTP request object with
+// method and path set to call the "africastalking" service
+// "transfer_event_notifier" endpoint
+func (c *Client) BuildTransferEventNotifierRequest(ctx context.Context, v interface{}) (*http.Request, error) {
+	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: TransferEventNotifierAfricastalkingPath()}
+	req, err := http.NewRequest("POST", u.String(), nil)
+	if err != nil {
+		return nil, goahttp.ErrInvalidURL("africastalking", "transfer_event_notifier", u.String(), err)
+	}
+	if ctx != nil {
+		req = req.WithContext(ctx)
+	}
+
+	return req, nil
+}
+
+// EncodeTransferEventNotifierRequest returns an encoder for requests sent to
+// the africastalking transfer_event_notifier server.
+func EncodeTransferEventNotifierRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
+	return func(req *http.Request, v interface{}) error {
+		p, ok := v.(*africastalking.TransferEventPayload)
+		if !ok {
+			return goahttp.ErrInvalidType("africastalking", "transfer_event_notifier", "*africastalking.TransferEventPayload", v)
+		}
+		body := NewTransferEventNotifierRequestBody(p)
+		if err := encoder(req).Encode(&body); err != nil {
+			return goahttp.ErrEncodingError("africastalking", "transfer_event_notifier", err)
+		}
+		return nil
+	}
+}
+
+// DecodeTransferEventNotifierResponse returns a decoder for responses returned
+// by the africastalking transfer_event_notifier endpoint. restoreBody controls
+// whether the response body should be restored after having been read.
+func DecodeTransferEventNotifierResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
+	return func(resp *http.Response) (interface{}, error) {
+		if restoreBody {
+			b, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				return nil, err
+			}
+			resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
+			defer func() {
+				resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
+			}()
+		} else {
+			defer resp.Body.Close()
+		}
+		switch resp.StatusCode {
+		case http.StatusCreated:
+			var (
+				body string
+				err  error
+			)
+			err = decoder(resp).Decode(&body)
+			if err != nil {
+				return nil, goahttp.ErrDecodingError("africastalking", "transfer_event_notifier", err)
+			}
+			return body, nil
+		default:
+			body, _ := ioutil.ReadAll(resp.Body)
+			return nil, goahttp.ErrInvalidResponse("africastalking", "transfer_event_notifier", resp.StatusCode, string(body))
 		}
 	}
 }
@@ -582,9 +585,9 @@ func (c *Client) BuildStatusNotifierRequest(ctx context.Context, v interface{}) 
 // africastalking status_notifier server.
 func EncodeStatusNotifierRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
 	return func(req *http.Request, v interface{}) error {
-		p, ok := v.(*africastalking.AirtimeStatus)
+		p, ok := v.(*africastalking.AirtimeStatusPayload)
 		if !ok {
-			return goahttp.ErrInvalidType("africastalking", "status_notifier", "*africastalking.AirtimeStatus", v)
+			return goahttp.ErrInvalidType("africastalking", "status_notifier", "*africastalking.AirtimeStatusPayload", v)
 		}
 		body := NewStatusNotifierRequestBody(p)
 		if err := encoder(req).Encode(&body); err != nil {
@@ -648,9 +651,9 @@ func (c *Client) BuildPaymentNotifierRequest(ctx context.Context, v interface{})
 // africastalking payment_notifier server.
 func EncodePaymentNotifierRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
 	return func(req *http.Request, v interface{}) error {
-		p, ok := v.(*africastalking.PaymentNotification)
+		p, ok := v.(*africastalking.PaymentNotificationPayload)
 		if !ok {
-			return goahttp.ErrInvalidType("africastalking", "payment_notifier", "*africastalking.PaymentNotification", v)
+			return goahttp.ErrInvalidType("africastalking", "payment_notifier", "*africastalking.PaymentNotificationPayload", v)
 		}
 		body := NewPaymentNotifierRequestBody(p)
 		if err := encoder(req).Encode(&body); err != nil {
@@ -715,9 +718,9 @@ func (c *Client) BuildC2bValidationNotifierRequest(ctx context.Context, v interf
 // the africastalking c2b_validation_notifier server.
 func EncodeC2bValidationNotifierRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
 	return func(req *http.Request, v interface{}) error {
-		p, ok := v.(*africastalking.C2BValidationNotification)
+		p, ok := v.(*africastalking.C2BValidationNotificationPayload)
 		if !ok {
-			return goahttp.ErrInvalidType("africastalking", "c2b_validation_notifier", "*africastalking.C2BValidationNotification", v)
+			return goahttp.ErrInvalidType("africastalking", "c2b_validation_notifier", "*africastalking.C2BValidationNotificationPayload", v)
 		}
 		body := NewC2bValidationNotifierRequestBody(p)
 		if err := encoder(req).Encode(&body); err != nil {
@@ -853,9 +856,9 @@ func (c *Client) BuildIotNotifierRequest(ctx context.Context, v interface{}) (*h
 // africastalking iot_notifier server.
 func EncodeIotNotifierRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
 	return func(req *http.Request, v interface{}) error {
-		p, ok := v.(*africastalking.IoTNotification)
+		p, ok := v.(*africastalking.IoTNotificationPayload)
 		if !ok {
-			return goahttp.ErrInvalidType("africastalking", "iot_notifier", "*africastalking.IoTNotification", v)
+			return goahttp.ErrInvalidType("africastalking", "iot_notifier", "*africastalking.IoTNotificationPayload", v)
 		}
 		body := NewIotNotifierRequestBody(p)
 		if err := encoder(req).Encode(&body); err != nil {

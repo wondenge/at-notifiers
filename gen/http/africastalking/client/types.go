@@ -13,9 +13,9 @@ import (
 	goa "goa.design/goa/v3/pkg"
 )
 
-// SmsDeliveryReportRequestBody is the type of the "africastalking" service
-// "sms_delivery_report" endpoint HTTP request body.
-type SmsDeliveryReportRequestBody struct {
+// DeliveryReportNotifierRequestBody is the type of the "africastalking"
+// service "delivery_report_notifier" endpoint HTTP request body.
+type DeliveryReportNotifierRequestBody struct {
 	// A unique identifier for each message.
 	ID *string `form:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
 	// The status of the message.
@@ -31,9 +31,9 @@ type SmsDeliveryReportRequestBody struct {
 	RetryCount *string `form:"retryCount,omitempty" json:"retryCount,omitempty" xml:"retryCount,omitempty"`
 }
 
-// SmsIncomingMessageRequestBody is the type of the "africastalking" service
-// "sms_incoming_message" endpoint HTTP request body.
-type SmsIncomingMessageRequestBody struct {
+// IncomingMessageNotifierRequestBody is the type of the "africastalking"
+// service "incoming_message_notifier" endpoint HTTP request body.
+type IncomingMessageNotifierRequestBody struct {
 	// The date and time when the message was received.
 	Date *string `form:"date,omitempty" json:"date,omitempty" xml:"date,omitempty"`
 	// The number that sent the message.
@@ -51,18 +51,18 @@ type SmsIncomingMessageRequestBody struct {
 	NetworkCode *string `form:"networkCode,omitempty" json:"networkCode,omitempty" xml:"networkCode,omitempty"`
 }
 
-// SmsBulkOptoutRequestBody is the type of the "africastalking" service
-// "sms_bulk_optout" endpoint HTTP request body.
-type SmsBulkOptoutRequestBody struct {
+// BulkOptOutNotifierRequestBody is the type of the "africastalking" service
+// "bulk_optOut_notifier" endpoint HTTP request body.
+type BulkOptOutNotifierRequestBody struct {
 	// Shortcode/Alphanumeric Sender ID the user opted out from.
 	SenderID *string `form:"senderId,omitempty" json:"senderId,omitempty" xml:"senderId,omitempty"`
 	// Mobile phone number of the subscriber who opted out.
 	PhoneNumber *string `form:"phoneNumber,omitempty" json:"phoneNumber,omitempty" xml:"phoneNumber,omitempty"`
 }
 
-// SmsSubscriptionRequestBody is the type of the "africastalking" service
-// "sms_subscription" endpoint HTTP request body.
-type SmsSubscriptionRequestBody struct {
+// SubNotifierRequestBody is the type of the "africastalking" service
+// "sub_notifier" endpoint HTTP request body.
+type SubNotifierRequestBody struct {
 	// Mobile phone number to subscribe or unsubscribe.
 	PhoneNumber *string `form:"phoneNumber,omitempty" json:"phoneNumber,omitempty" xml:"phoneNumber,omitempty"`
 	// The short code that has this product.
@@ -73,9 +73,9 @@ type SmsSubscriptionRequestBody struct {
 	UpdateType *string `form:"updateType,omitempty" json:"updateType,omitempty" xml:"updateType,omitempty"`
 }
 
-// VoiceNotificationRequestBody is the type of the "africastalking" service
-// "voice_notification" endpoint HTTP request body.
-type VoiceNotificationRequestBody struct {
+// VoiceNotifierRequestBody is the type of the "africastalking" service
+// "voice_notifier" endpoint HTTP request body.
+type VoiceNotifierRequestBody struct {
 	// Lets us know whether the call is in session state
 	IsActive string `form:"isActive,omitempty" json:"isActive,omitempty" xml:"isActive,omitempty"`
 	// A unique identifier generated during each call session
@@ -112,9 +112,9 @@ type VoiceNotificationRequestBody struct {
 	HangupCause *string `form:"hangupCause,omitempty" json:"hangupCause,omitempty" xml:"hangupCause,omitempty"`
 }
 
-// TransferEventRequestBody is the type of the "africastalking" service
-// "transfer_event" endpoint HTTP request body.
-type TransferEventRequestBody struct {
+// TransferEventNotifierRequestBody is the type of the "africastalking" service
+// "transfer_event_notifier" endpoint HTTP request body.
+type TransferEventNotifierRequestBody struct {
 	CallSessionState *string `form:"callSessionState,omitempty" json:"callSessionState,omitempty" xml:"callSessionState,omitempty"`
 	IsActive         string  `form:"isActive,omitempty" json:"isActive,omitempty" xml:"isActive,omitempty"`
 	Status           *string `form:"status,omitempty" json:"status,omitempty" xml:"status,omitempty"`
@@ -273,11 +273,11 @@ type B2cValidationNotifierResponseBody struct {
 	Status *string `form:"status,omitempty" json:"status,omitempty" xml:"status,omitempty"`
 }
 
-// NewSmsDeliveryReportRequestBody builds the HTTP request body from the
-// payload of the "sms_delivery_report" endpoint of the "africastalking"
+// NewDeliveryReportNotifierRequestBody builds the HTTP request body from the
+// payload of the "delivery_report_notifier" endpoint of the "africastalking"
 // service.
-func NewSmsDeliveryReportRequestBody(p *africastalking.DeliveryReport) *SmsDeliveryReportRequestBody {
-	body := &SmsDeliveryReportRequestBody{
+func NewDeliveryReportNotifierRequestBody(p *africastalking.DeliveryReportPayload) *DeliveryReportNotifierRequestBody {
+	body := &DeliveryReportNotifierRequestBody{
 		ID:            p.ID,
 		Status:        p.Status,
 		PhoneNumber:   p.PhoneNumber,
@@ -288,11 +288,11 @@ func NewSmsDeliveryReportRequestBody(p *africastalking.DeliveryReport) *SmsDeliv
 	return body
 }
 
-// NewSmsIncomingMessageRequestBody builds the HTTP request body from the
-// payload of the "sms_incoming_message" endpoint of the "africastalking"
+// NewIncomingMessageNotifierRequestBody builds the HTTP request body from the
+// payload of the "incoming_message_notifier" endpoint of the "africastalking"
 // service.
-func NewSmsIncomingMessageRequestBody(p *africastalking.IncomingMessage) *SmsIncomingMessageRequestBody {
-	body := &SmsIncomingMessageRequestBody{
+func NewIncomingMessageNotifierRequestBody(p *africastalking.IncomingMessagePayload) *IncomingMessageNotifierRequestBody {
+	body := &IncomingMessageNotifierRequestBody{
 		Date:        p.Date,
 		From:        p.From,
 		ID:          p.ID,
@@ -304,20 +304,21 @@ func NewSmsIncomingMessageRequestBody(p *africastalking.IncomingMessage) *SmsInc
 	return body
 }
 
-// NewSmsBulkOptoutRequestBody builds the HTTP request body from the payload of
-// the "sms_bulk_optout" endpoint of the "africastalking" service.
-func NewSmsBulkOptoutRequestBody(p *africastalking.BulkSMSOptOut) *SmsBulkOptoutRequestBody {
-	body := &SmsBulkOptoutRequestBody{
+// NewBulkOptOutNotifierRequestBody builds the HTTP request body from the
+// payload of the "bulk_optOut_notifier" endpoint of the "africastalking"
+// service.
+func NewBulkOptOutNotifierRequestBody(p *africastalking.BulkSMSOptOutPayload) *BulkOptOutNotifierRequestBody {
+	body := &BulkOptOutNotifierRequestBody{
 		SenderID:    p.SenderID,
 		PhoneNumber: p.PhoneNumber,
 	}
 	return body
 }
 
-// NewSmsSubscriptionRequestBody builds the HTTP request body from the payload
-// of the "sms_subscription" endpoint of the "africastalking" service.
-func NewSmsSubscriptionRequestBody(p *africastalking.SubscriptionNotification) *SmsSubscriptionRequestBody {
-	body := &SmsSubscriptionRequestBody{
+// NewSubNotifierRequestBody builds the HTTP request body from the payload of
+// the "sub_notifier" endpoint of the "africastalking" service.
+func NewSubNotifierRequestBody(p *africastalking.SubNotificationPayload) *SubNotifierRequestBody {
+	body := &SubNotifierRequestBody{
 		PhoneNumber: p.PhoneNumber,
 		ShortCode:   p.ShortCode,
 		Keyword:     p.Keyword,
@@ -326,10 +327,10 @@ func NewSmsSubscriptionRequestBody(p *africastalking.SubscriptionNotification) *
 	return body
 }
 
-// NewVoiceNotificationRequestBody builds the HTTP request body from the
-// payload of the "voice_notification" endpoint of the "africastalking" service.
-func NewVoiceNotificationRequestBody(p *africastalking.VoiceNotification1) *VoiceNotificationRequestBody {
-	body := &VoiceNotificationRequestBody{
+// NewVoiceNotifierRequestBody builds the HTTP request body from the payload of
+// the "voice_notifier" endpoint of the "africastalking" service.
+func NewVoiceNotifierRequestBody(p *africastalking.VoiceNotificationPayload) *VoiceNotifierRequestBody {
+	body := &VoiceNotifierRequestBody{
 		IsActive:              p.IsActive,
 		SessionID:             p.SessionID,
 		Direction:             p.Direction,
@@ -351,10 +352,11 @@ func NewVoiceNotificationRequestBody(p *africastalking.VoiceNotification1) *Voic
 	return body
 }
 
-// NewTransferEventRequestBody builds the HTTP request body from the payload of
-// the "transfer_event" endpoint of the "africastalking" service.
-func NewTransferEventRequestBody(p *africastalking.CallTransferEvent) *TransferEventRequestBody {
-	body := &TransferEventRequestBody{
+// NewTransferEventNotifierRequestBody builds the HTTP request body from the
+// payload of the "transfer_event_notifier" endpoint of the "africastalking"
+// service.
+func NewTransferEventNotifierRequestBody(p *africastalking.TransferEventPayload) *TransferEventNotifierRequestBody {
+	body := &TransferEventNotifierRequestBody{
 		CallSessionState:        p.CallSessionState,
 		IsActive:                p.IsActive,
 		Status:                  p.Status,
@@ -394,7 +396,7 @@ func NewValidationNotifierRequestBody(p *africastalking.AirtimeValidationPayload
 
 // NewStatusNotifierRequestBody builds the HTTP request body from the payload
 // of the "status_notifier" endpoint of the "africastalking" service.
-func NewStatusNotifierRequestBody(p *africastalking.AirtimeStatus) *StatusNotifierRequestBody {
+func NewStatusNotifierRequestBody(p *africastalking.AirtimeStatusPayload) *StatusNotifierRequestBody {
 	body := &StatusNotifierRequestBody{
 		RequestID: p.RequestID,
 		Status:    p.Status,
@@ -404,7 +406,7 @@ func NewStatusNotifierRequestBody(p *africastalking.AirtimeStatus) *StatusNotifi
 
 // NewPaymentNotifierRequestBody builds the HTTP request body from the payload
 // of the "payment_notifier" endpoint of the "africastalking" service.
-func NewPaymentNotifierRequestBody(p *africastalking.PaymentNotification) *PaymentNotifierRequestBody {
+func NewPaymentNotifierRequestBody(p *africastalking.PaymentNotificationPayload) *PaymentNotifierRequestBody {
 	body := &PaymentNotifierRequestBody{
 		TransactionID:    p.TransactionID,
 		Category:         p.Category,
@@ -432,7 +434,7 @@ func NewPaymentNotifierRequestBody(p *africastalking.PaymentNotification) *Payme
 // NewC2bValidationNotifierRequestBody builds the HTTP request body from the
 // payload of the "c2b_validation_notifier" endpoint of the "africastalking"
 // service.
-func NewC2bValidationNotifierRequestBody(p *africastalking.C2BValidationNotification) *C2bValidationNotifierRequestBody {
+func NewC2bValidationNotifierRequestBody(p *africastalking.C2BValidationNotificationPayload) *C2bValidationNotifierRequestBody {
 	body := &C2bValidationNotifierRequestBody{
 		Provider:      p.Provider,
 		ClientAccount: p.ClientAccount,
@@ -475,7 +477,7 @@ func NewB2cValidationNotifierRequestBody(p *africastalking.B2CValidationNotifica
 
 // NewIotNotifierRequestBody builds the HTTP request body from the payload of
 // the "iot_notifier" endpoint of the "africastalking" service.
-func NewIotNotifierRequestBody(p *africastalking.IoTNotification) *IotNotifierRequestBody {
+func NewIotNotifierRequestBody(p *africastalking.IoTNotificationPayload) *IotNotifierRequestBody {
 	body := &IotNotifierRequestBody{
 		Payload: p.Payload,
 		Topic:   p.Topic,

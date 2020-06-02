@@ -25,14 +25,14 @@ import (
 //
 func UsageCommands() string {
 	return `health show
-africastalking (sms-delivery-report|sms-incoming-message|sms-bulk-optout|sms-subscription|voice-notification|transfer-event|ussd-notifier|validation-notifier|status-notifier|payment-notifier|c2b-validation-notifier|b2c-validation-notifier|iot-notifier)
+africastalking (delivery-report-notifier|incoming-message-notifier|bulk-opt-out-notifier|sub-notifier|voice-notifier|transfer-event-notifier|ussd-notifier|validation-notifier|status-notifier|payment-notifier|c2b-validation-notifier|b2c-validation-notifier|iot-notifier)
 `
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` health show` + "\n" +
-		os.Args[0] + ` africastalking sms-delivery-report --body '{
+		os.Args[0] + ` africastalking delivery-report-notifier --body '{
       "failureReason": "UserAccountSuspended",
       "id": "Exercitationem earum et id inventore voluptatem odit.",
       "networkCode": "65001",
@@ -59,23 +59,23 @@ func ParseEndpoint(
 
 		africastalkingFlags = flag.NewFlagSet("africastalking", flag.ContinueOnError)
 
-		africastalkingSmsDeliveryReportFlags    = flag.NewFlagSet("sms-delivery-report", flag.ExitOnError)
-		africastalkingSmsDeliveryReportBodyFlag = africastalkingSmsDeliveryReportFlags.String("body", "REQUIRED", "")
+		africastalkingDeliveryReportNotifierFlags    = flag.NewFlagSet("delivery-report-notifier", flag.ExitOnError)
+		africastalkingDeliveryReportNotifierBodyFlag = africastalkingDeliveryReportNotifierFlags.String("body", "REQUIRED", "")
 
-		africastalkingSmsIncomingMessageFlags    = flag.NewFlagSet("sms-incoming-message", flag.ExitOnError)
-		africastalkingSmsIncomingMessageBodyFlag = africastalkingSmsIncomingMessageFlags.String("body", "REQUIRED", "")
+		africastalkingIncomingMessageNotifierFlags    = flag.NewFlagSet("incoming-message-notifier", flag.ExitOnError)
+		africastalkingIncomingMessageNotifierBodyFlag = africastalkingIncomingMessageNotifierFlags.String("body", "REQUIRED", "")
 
-		africastalkingSmsBulkOptoutFlags    = flag.NewFlagSet("sms-bulk-optout", flag.ExitOnError)
-		africastalkingSmsBulkOptoutBodyFlag = africastalkingSmsBulkOptoutFlags.String("body", "REQUIRED", "")
+		africastalkingBulkOptOutNotifierFlags    = flag.NewFlagSet("bulk-opt-out-notifier", flag.ExitOnError)
+		africastalkingBulkOptOutNotifierBodyFlag = africastalkingBulkOptOutNotifierFlags.String("body", "REQUIRED", "")
 
-		africastalkingSmsSubscriptionFlags    = flag.NewFlagSet("sms-subscription", flag.ExitOnError)
-		africastalkingSmsSubscriptionBodyFlag = africastalkingSmsSubscriptionFlags.String("body", "REQUIRED", "")
+		africastalkingSubNotifierFlags    = flag.NewFlagSet("sub-notifier", flag.ExitOnError)
+		africastalkingSubNotifierBodyFlag = africastalkingSubNotifierFlags.String("body", "REQUIRED", "")
 
-		africastalkingVoiceNotificationFlags    = flag.NewFlagSet("voice-notification", flag.ExitOnError)
-		africastalkingVoiceNotificationBodyFlag = africastalkingVoiceNotificationFlags.String("body", "REQUIRED", "")
+		africastalkingVoiceNotifierFlags    = flag.NewFlagSet("voice-notifier", flag.ExitOnError)
+		africastalkingVoiceNotifierBodyFlag = africastalkingVoiceNotifierFlags.String("body", "REQUIRED", "")
 
-		africastalkingTransferEventFlags    = flag.NewFlagSet("transfer-event", flag.ExitOnError)
-		africastalkingTransferEventBodyFlag = africastalkingTransferEventFlags.String("body", "REQUIRED", "")
+		africastalkingTransferEventNotifierFlags    = flag.NewFlagSet("transfer-event-notifier", flag.ExitOnError)
+		africastalkingTransferEventNotifierBodyFlag = africastalkingTransferEventNotifierFlags.String("body", "REQUIRED", "")
 
 		africastalkingUssdNotifierFlags    = flag.NewFlagSet("ussd-notifier", flag.ExitOnError)
 		africastalkingUssdNotifierBodyFlag = africastalkingUssdNotifierFlags.String("body", "REQUIRED", "")
@@ -102,12 +102,12 @@ func ParseEndpoint(
 	healthShowFlags.Usage = healthShowUsage
 
 	africastalkingFlags.Usage = africastalkingUsage
-	africastalkingSmsDeliveryReportFlags.Usage = africastalkingSmsDeliveryReportUsage
-	africastalkingSmsIncomingMessageFlags.Usage = africastalkingSmsIncomingMessageUsage
-	africastalkingSmsBulkOptoutFlags.Usage = africastalkingSmsBulkOptoutUsage
-	africastalkingSmsSubscriptionFlags.Usage = africastalkingSmsSubscriptionUsage
-	africastalkingVoiceNotificationFlags.Usage = africastalkingVoiceNotificationUsage
-	africastalkingTransferEventFlags.Usage = africastalkingTransferEventUsage
+	africastalkingDeliveryReportNotifierFlags.Usage = africastalkingDeliveryReportNotifierUsage
+	africastalkingIncomingMessageNotifierFlags.Usage = africastalkingIncomingMessageNotifierUsage
+	africastalkingBulkOptOutNotifierFlags.Usage = africastalkingBulkOptOutNotifierUsage
+	africastalkingSubNotifierFlags.Usage = africastalkingSubNotifierUsage
+	africastalkingVoiceNotifierFlags.Usage = africastalkingVoiceNotifierUsage
+	africastalkingTransferEventNotifierFlags.Usage = africastalkingTransferEventNotifierUsage
 	africastalkingUssdNotifierFlags.Usage = africastalkingUssdNotifierUsage
 	africastalkingValidationNotifierFlags.Usage = africastalkingValidationNotifierUsage
 	africastalkingStatusNotifierFlags.Usage = africastalkingStatusNotifierUsage
@@ -159,23 +159,23 @@ func ParseEndpoint(
 
 		case "africastalking":
 			switch epn {
-			case "sms-delivery-report":
-				epf = africastalkingSmsDeliveryReportFlags
+			case "delivery-report-notifier":
+				epf = africastalkingDeliveryReportNotifierFlags
 
-			case "sms-incoming-message":
-				epf = africastalkingSmsIncomingMessageFlags
+			case "incoming-message-notifier":
+				epf = africastalkingIncomingMessageNotifierFlags
 
-			case "sms-bulk-optout":
-				epf = africastalkingSmsBulkOptoutFlags
+			case "bulk-opt-out-notifier":
+				epf = africastalkingBulkOptOutNotifierFlags
 
-			case "sms-subscription":
-				epf = africastalkingSmsSubscriptionFlags
+			case "sub-notifier":
+				epf = africastalkingSubNotifierFlags
 
-			case "voice-notification":
-				epf = africastalkingVoiceNotificationFlags
+			case "voice-notifier":
+				epf = africastalkingVoiceNotifierFlags
 
-			case "transfer-event":
-				epf = africastalkingTransferEventFlags
+			case "transfer-event-notifier":
+				epf = africastalkingTransferEventNotifierFlags
 
 			case "ussd-notifier":
 				epf = africastalkingUssdNotifierFlags
@@ -230,24 +230,24 @@ func ParseEndpoint(
 		case "africastalking":
 			c := africastalkingc.NewClient(scheme, host, doer, enc, dec, restore)
 			switch epn {
-			case "sms-delivery-report":
-				endpoint = c.SmsDeliveryReport()
-				data, err = africastalkingc.BuildSmsDeliveryReportPayload(*africastalkingSmsDeliveryReportBodyFlag)
-			case "sms-incoming-message":
-				endpoint = c.SmsIncomingMessage()
-				data, err = africastalkingc.BuildSmsIncomingMessagePayload(*africastalkingSmsIncomingMessageBodyFlag)
-			case "sms-bulk-optout":
-				endpoint = c.SmsBulkOptout()
-				data, err = africastalkingc.BuildSmsBulkOptoutPayload(*africastalkingSmsBulkOptoutBodyFlag)
-			case "sms-subscription":
-				endpoint = c.SmsSubscription()
-				data, err = africastalkingc.BuildSmsSubscriptionPayload(*africastalkingSmsSubscriptionBodyFlag)
-			case "voice-notification":
-				endpoint = c.VoiceNotification()
-				data, err = africastalkingc.BuildVoiceNotificationPayload(*africastalkingVoiceNotificationBodyFlag)
-			case "transfer-event":
-				endpoint = c.TransferEvent()
-				data, err = africastalkingc.BuildTransferEventPayload(*africastalkingTransferEventBodyFlag)
+			case "delivery-report-notifier":
+				endpoint = c.DeliveryReportNotifier()
+				data, err = africastalkingc.BuildDeliveryReportNotifierPayload(*africastalkingDeliveryReportNotifierBodyFlag)
+			case "incoming-message-notifier":
+				endpoint = c.IncomingMessageNotifier()
+				data, err = africastalkingc.BuildIncomingMessageNotifierPayload(*africastalkingIncomingMessageNotifierBodyFlag)
+			case "bulk-opt-out-notifier":
+				endpoint = c.BulkOptOutNotifier()
+				data, err = africastalkingc.BuildBulkOptOutNotifierPayload(*africastalkingBulkOptOutNotifierBodyFlag)
+			case "sub-notifier":
+				endpoint = c.SubNotifier()
+				data, err = africastalkingc.BuildSubNotifierPayload(*africastalkingSubNotifierBodyFlag)
+			case "voice-notifier":
+				endpoint = c.VoiceNotifier()
+				data, err = africastalkingc.BuildVoiceNotifierPayload(*africastalkingVoiceNotifierBodyFlag)
+			case "transfer-event-notifier":
+				endpoint = c.TransferEventNotifier()
+				data, err = africastalkingc.BuildTransferEventNotifierPayload(*africastalkingTransferEventNotifierBodyFlag)
 			case "ussd-notifier":
 				endpoint = c.UssdNotifier()
 				data, err = africastalkingc.BuildUssdNotifierPayload(*africastalkingUssdNotifierBodyFlag)
@@ -310,12 +310,12 @@ Usage:
     %s [globalflags] africastalking COMMAND [flags]
 
 COMMAND:
-    sms-delivery-report: Adds new SMS Delivery Report to our callback URL and return its ID.
-    sms-incoming-message: Adds new SMS Incoming Message to our callback URL and return its ID.
-    sms-bulk-optout: Adds new SMS Bulk OptOut to our callback URL and return its ID.
-    sms-subscription: Adds new SMS subscription to our callback URL and return its ID.
-    voice-notification: Adds new Voice Notification to our callback URL and return its ID.
-    transfer-event: Adds new Event Notification to our callback URL and return its ID.
+    delivery-report-notifier: Adds new SMS Delivery Report to our callback URL and return its ID.
+    incoming-message-notifier: Adds new SMS Incoming Message to our callback URL and return its ID.
+    bulk-opt-out-notifier: Adds new SMS Bulk OptOut to our callback URL and return its ID.
+    sub-notifier: Adds new SMS subscription to our callback URL and return its ID.
+    voice-notifier: Adds new Voice Notification to our callback URL and return its ID.
+    transfer-event-notifier: Adds new Event Notification to our callback URL and return its ID.
     ussd-notifier: Adds new USSD Notification to our callback URL and return its ID.
     validation-notifier: Adds new Airtime Validation Notification to our callback URL and return its ID.
     status-notifier: Adds new Airtime Status Notification to our callback URL and return its ID.
@@ -328,14 +328,14 @@ Additional help:
     %s africastalking COMMAND --help
 `, os.Args[0], os.Args[0])
 }
-func africastalkingSmsDeliveryReportUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] africastalking sms-delivery-report -body JSON
+func africastalkingDeliveryReportNotifierUsage() {
+	fmt.Fprintf(os.Stderr, `%s [flags] africastalking delivery-report-notifier -body JSON
 
 Adds new SMS Delivery Report to our callback URL and return its ID.
     -body JSON: 
 
 Example:
-    `+os.Args[0]+` africastalking sms-delivery-report --body '{
+    `+os.Args[0]+` africastalking delivery-report-notifier --body '{
       "failureReason": "UserAccountSuspended",
       "id": "Exercitationem earum et id inventore voluptatem odit.",
       "networkCode": "65001",
@@ -346,14 +346,14 @@ Example:
 `, os.Args[0])
 }
 
-func africastalkingSmsIncomingMessageUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] africastalking sms-incoming-message -body JSON
+func africastalkingIncomingMessageNotifierUsage() {
+	fmt.Fprintf(os.Stderr, `%s [flags] africastalking incoming-message-notifier -body JSON
 
 Adds new SMS Incoming Message to our callback URL and return its ID.
     -body JSON: 
 
 Example:
-    `+os.Args[0]+` africastalking sms-incoming-message --body '{
+    `+os.Args[0]+` africastalking incoming-message-notifier --body '{
       "date": "1997-09-28",
       "from": "Enim voluptatem.",
       "id": "Qui ullam optio.",
@@ -365,28 +365,28 @@ Example:
 `, os.Args[0])
 }
 
-func africastalkingSmsBulkOptoutUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] africastalking sms-bulk-optout -body JSON
+func africastalkingBulkOptOutNotifierUsage() {
+	fmt.Fprintf(os.Stderr, `%s [flags] africastalking bulk-opt-out-notifier -body JSON
 
 Adds new SMS Bulk OptOut to our callback URL and return its ID.
     -body JSON: 
 
 Example:
-    `+os.Args[0]+` africastalking sms-bulk-optout --body '{
+    `+os.Args[0]+` africastalking bulk-opt-out-notifier --body '{
       "phoneNumber": "Tenetur sunt quam.",
       "senderId": "Tempora impedit accusantium eveniet maiores occaecati."
    }'
 `, os.Args[0])
 }
 
-func africastalkingSmsSubscriptionUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] africastalking sms-subscription -body JSON
+func africastalkingSubNotifierUsage() {
+	fmt.Fprintf(os.Stderr, `%s [flags] africastalking sub-notifier -body JSON
 
 Adds new SMS subscription to our callback URL and return its ID.
     -body JSON: 
 
 Example:
-    `+os.Args[0]+` africastalking sms-subscription --body '{
+    `+os.Args[0]+` africastalking sub-notifier --body '{
       "keyword": "Non et pariatur non cumque velit laborum.",
       "phoneNumber": "Aut quasi quis animi culpa natus.",
       "shortCode": "Quo eos porro tempore voluptatum voluptatum qui.",
@@ -395,14 +395,14 @@ Example:
 `, os.Args[0])
 }
 
-func africastalkingVoiceNotificationUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] africastalking voice-notification -body JSON
+func africastalkingVoiceNotifierUsage() {
+	fmt.Fprintf(os.Stderr, `%s [flags] africastalking voice-notifier -body JSON
 
 Adds new Voice Notification to our callback URL and return its ID.
     -body JSON: 
 
 Example:
-    `+os.Args[0]+` africastalking voice-notification --body '{
+    `+os.Args[0]+` africastalking voice-notifier --body '{
       "amount": "Itaque atque sed molestias molestiae ea praesentium.",
       "callSessionState": "Totam odit dolorem qui dolor eos.",
       "callStartTime": "Et temporibus nisi nobis corrupti tempora.",
@@ -424,14 +424,14 @@ Example:
 `, os.Args[0])
 }
 
-func africastalkingTransferEventUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] africastalking transfer-event -body JSON
+func africastalkingTransferEventNotifierUsage() {
+	fmt.Fprintf(os.Stderr, `%s [flags] africastalking transfer-event-notifier -body JSON
 
 Adds new Event Notification to our callback URL and return its ID.
     -body JSON: 
 
 Example:
-    `+os.Args[0]+` africastalking transfer-event --body '{
+    `+os.Args[0]+` africastalking transfer-event-notifier --body '{
       "callSessionState": "Transferred",
       "callTransferHangupCause": "NotAllowed",
       "callTransferParam": "Doloremque reiciendis iusto eligendi repellat.",

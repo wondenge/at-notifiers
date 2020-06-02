@@ -18,9 +18,9 @@ import (
 	goa "goa.design/goa/v3/pkg"
 )
 
-// EncodeSmsDeliveryReportResponse returns an encoder for responses returned by
-// the africastalking sms_delivery_report endpoint.
-func EncodeSmsDeliveryReportResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
+// EncodeDeliveryReportNotifierResponse returns an encoder for responses
+// returned by the africastalking delivery_report_notifier endpoint.
+func EncodeDeliveryReportNotifierResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
 	return func(ctx context.Context, w http.ResponseWriter, v interface{}) error {
 		res := v.(string)
 		enc := encoder(ctx, w)
@@ -30,12 +30,12 @@ func EncodeSmsDeliveryReportResponse(encoder func(context.Context, http.Response
 	}
 }
 
-// DecodeSmsDeliveryReportRequest returns a decoder for requests sent to the
-// africastalking sms_delivery_report endpoint.
-func DecodeSmsDeliveryReportRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
+// DecodeDeliveryReportNotifierRequest returns a decoder for requests sent to
+// the africastalking delivery_report_notifier endpoint.
+func DecodeDeliveryReportNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
 	return func(r *http.Request) (interface{}, error) {
 		var (
-			body SmsDeliveryReportRequestBody
+			body DeliveryReportNotifierRequestBody
 			err  error
 		)
 		err = decoder(r).Decode(&body)
@@ -45,19 +45,19 @@ func DecodeSmsDeliveryReportRequest(mux goahttp.Muxer, decoder func(*http.Reques
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateSmsDeliveryReportRequestBody(&body)
+		err = ValidateDeliveryReportNotifierRequestBody(&body)
 		if err != nil {
 			return nil, err
 		}
-		payload := NewSmsDeliveryReportDeliveryReport(&body)
+		payload := NewDeliveryReportNotifierDeliveryReportPayload(&body)
 
 		return payload, nil
 	}
 }
 
-// EncodeSmsIncomingMessageResponse returns an encoder for responses returned
-// by the africastalking sms_incoming_message endpoint.
-func EncodeSmsIncomingMessageResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
+// EncodeIncomingMessageNotifierResponse returns an encoder for responses
+// returned by the africastalking incoming_message_notifier endpoint.
+func EncodeIncomingMessageNotifierResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
 	return func(ctx context.Context, w http.ResponseWriter, v interface{}) error {
 		res := v.(string)
 		enc := encoder(ctx, w)
@@ -67,12 +67,12 @@ func EncodeSmsIncomingMessageResponse(encoder func(context.Context, http.Respons
 	}
 }
 
-// DecodeSmsIncomingMessageRequest returns a decoder for requests sent to the
-// africastalking sms_incoming_message endpoint.
-func DecodeSmsIncomingMessageRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
+// DecodeIncomingMessageNotifierRequest returns a decoder for requests sent to
+// the africastalking incoming_message_notifier endpoint.
+func DecodeIncomingMessageNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
 	return func(r *http.Request) (interface{}, error) {
 		var (
-			body SmsIncomingMessageRequestBody
+			body IncomingMessageNotifierRequestBody
 			err  error
 		)
 		err = decoder(r).Decode(&body)
@@ -82,19 +82,19 @@ func DecodeSmsIncomingMessageRequest(mux goahttp.Muxer, decoder func(*http.Reque
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateSmsIncomingMessageRequestBody(&body)
+		err = ValidateIncomingMessageNotifierRequestBody(&body)
 		if err != nil {
 			return nil, err
 		}
-		payload := NewSmsIncomingMessageIncomingMessage(&body)
+		payload := NewIncomingMessageNotifierIncomingMessagePayload(&body)
 
 		return payload, nil
 	}
 }
 
-// EncodeSmsBulkOptoutResponse returns an encoder for responses returned by the
-// africastalking sms_bulk_optout endpoint.
-func EncodeSmsBulkOptoutResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
+// EncodeBulkOptOutNotifierResponse returns an encoder for responses returned
+// by the africastalking bulk_optOut_notifier endpoint.
+func EncodeBulkOptOutNotifierResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
 	return func(ctx context.Context, w http.ResponseWriter, v interface{}) error {
 		res := v.(string)
 		enc := encoder(ctx, w)
@@ -104,12 +104,12 @@ func EncodeSmsBulkOptoutResponse(encoder func(context.Context, http.ResponseWrit
 	}
 }
 
-// DecodeSmsBulkOptoutRequest returns a decoder for requests sent to the
-// africastalking sms_bulk_optout endpoint.
-func DecodeSmsBulkOptoutRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
+// DecodeBulkOptOutNotifierRequest returns a decoder for requests sent to the
+// africastalking bulk_optOut_notifier endpoint.
+func DecodeBulkOptOutNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
 	return func(r *http.Request) (interface{}, error) {
 		var (
-			body SmsBulkOptoutRequestBody
+			body BulkOptOutNotifierRequestBody
 			err  error
 		)
 		err = decoder(r).Decode(&body)
@@ -119,15 +119,15 @@ func DecodeSmsBulkOptoutRequest(mux goahttp.Muxer, decoder func(*http.Request) g
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		payload := NewSmsBulkOptoutBulkSMSOptOut(&body)
+		payload := NewBulkOptOutNotifierBulkSMSOptOutPayload(&body)
 
 		return payload, nil
 	}
 }
 
-// EncodeSmsSubscriptionResponse returns an encoder for responses returned by
-// the africastalking sms_subscription endpoint.
-func EncodeSmsSubscriptionResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
+// EncodeSubNotifierResponse returns an encoder for responses returned by the
+// africastalking sub_notifier endpoint.
+func EncodeSubNotifierResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
 	return func(ctx context.Context, w http.ResponseWriter, v interface{}) error {
 		res := v.(string)
 		enc := encoder(ctx, w)
@@ -137,12 +137,12 @@ func EncodeSmsSubscriptionResponse(encoder func(context.Context, http.ResponseWr
 	}
 }
 
-// DecodeSmsSubscriptionRequest returns a decoder for requests sent to the
-// africastalking sms_subscription endpoint.
-func DecodeSmsSubscriptionRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
+// DecodeSubNotifierRequest returns a decoder for requests sent to the
+// africastalking sub_notifier endpoint.
+func DecodeSubNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
 	return func(r *http.Request) (interface{}, error) {
 		var (
-			body SmsSubscriptionRequestBody
+			body SubNotifierRequestBody
 			err  error
 		)
 		err = decoder(r).Decode(&body)
@@ -152,19 +152,19 @@ func DecodeSmsSubscriptionRequest(mux goahttp.Muxer, decoder func(*http.Request)
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateSmsSubscriptionRequestBody(&body)
+		err = ValidateSubNotifierRequestBody(&body)
 		if err != nil {
 			return nil, err
 		}
-		payload := NewSmsSubscriptionSubscriptionNotification(&body)
+		payload := NewSubNotifierSubNotificationPayload(&body)
 
 		return payload, nil
 	}
 }
 
-// EncodeVoiceNotificationResponse returns an encoder for responses returned by
-// the africastalking voice_notification endpoint.
-func EncodeVoiceNotificationResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
+// EncodeVoiceNotifierResponse returns an encoder for responses returned by the
+// africastalking voice_notifier endpoint.
+func EncodeVoiceNotifierResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
 	return func(ctx context.Context, w http.ResponseWriter, v interface{}) error {
 		res := v.(string)
 		enc := encoder(ctx, w)
@@ -174,12 +174,12 @@ func EncodeVoiceNotificationResponse(encoder func(context.Context, http.Response
 	}
 }
 
-// DecodeVoiceNotificationRequest returns a decoder for requests sent to the
-// africastalking voice_notification endpoint.
-func DecodeVoiceNotificationRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
+// DecodeVoiceNotifierRequest returns a decoder for requests sent to the
+// africastalking voice_notifier endpoint.
+func DecodeVoiceNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
 	return func(r *http.Request) (interface{}, error) {
 		var (
-			body VoiceNotificationRequestBody
+			body VoiceNotifierRequestBody
 			err  error
 		)
 		err = decoder(r).Decode(&body)
@@ -189,19 +189,19 @@ func DecodeVoiceNotificationRequest(mux goahttp.Muxer, decoder func(*http.Reques
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateVoiceNotificationRequestBody(&body)
+		err = ValidateVoiceNotifierRequestBody(&body)
 		if err != nil {
 			return nil, err
 		}
-		payload := NewVoiceNotification1(&body)
+		payload := NewVoiceNotifierVoiceNotificationPayload(&body)
 
 		return payload, nil
 	}
 }
 
-// EncodeTransferEventResponse returns an encoder for responses returned by the
-// africastalking transfer_event endpoint.
-func EncodeTransferEventResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
+// EncodeTransferEventNotifierResponse returns an encoder for responses
+// returned by the africastalking transfer_event_notifier endpoint.
+func EncodeTransferEventNotifierResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, interface{}) error {
 	return func(ctx context.Context, w http.ResponseWriter, v interface{}) error {
 		res := v.(string)
 		enc := encoder(ctx, w)
@@ -211,12 +211,12 @@ func EncodeTransferEventResponse(encoder func(context.Context, http.ResponseWrit
 	}
 }
 
-// DecodeTransferEventRequest returns a decoder for requests sent to the
-// africastalking transfer_event endpoint.
-func DecodeTransferEventRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
+// DecodeTransferEventNotifierRequest returns a decoder for requests sent to
+// the africastalking transfer_event_notifier endpoint.
+func DecodeTransferEventNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
 	return func(r *http.Request) (interface{}, error) {
 		var (
-			body TransferEventRequestBody
+			body TransferEventNotifierRequestBody
 			err  error
 		)
 		err = decoder(r).Decode(&body)
@@ -226,11 +226,11 @@ func DecodeTransferEventRequest(mux goahttp.Muxer, decoder func(*http.Request) g
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateTransferEventRequestBody(&body)
+		err = ValidateTransferEventNotifierRequestBody(&body)
 		if err != nil {
 			return nil, err
 		}
-		payload := NewTransferEventCallTransferEvent(&body)
+		payload := NewTransferEventNotifierTransferEventPayload(&body)
 
 		return payload, nil
 	}
@@ -334,7 +334,7 @@ func DecodeStatusNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) 
 		if err != nil {
 			return nil, err
 		}
-		payload := NewStatusNotifierAirtimeStatus(&body)
+		payload := NewStatusNotifierAirtimeStatusPayload(&body)
 
 		return payload, nil
 	}
@@ -371,7 +371,7 @@ func DecodePaymentNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request)
 		if err != nil {
 			return nil, err
 		}
-		payload := NewPaymentNotifierPaymentNotification(&body)
+		payload := NewPaymentNotifierPaymentNotificationPayload(&body)
 
 		return payload, nil
 	}
@@ -408,7 +408,7 @@ func DecodeC2bValidationNotifierRequest(mux goahttp.Muxer, decoder func(*http.Re
 		if err != nil {
 			return nil, err
 		}
-		payload := NewC2bValidationNotifierC2BValidationNotification(&body)
+		payload := NewC2bValidationNotifierC2BValidationNotificationPayload(&body)
 
 		return payload, nil
 	}
@@ -474,7 +474,7 @@ func DecodeIotNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goa
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		payload := NewIotNotifierIoTNotification(&body)
+		payload := NewIotNotifierIoTNotificationPayload(&body)
 
 		return payload, nil
 	}

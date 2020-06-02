@@ -12,7 +12,7 @@ import (
 //    From the dashboard select SMS -> SMS Callback URLs -> Delivery Reports.
 //
 //    Delivery Report notification contents.
-var DeliveryReport = Type("DeliveryReport", func() {
+var DeliveryReportPayload = Type("DeliveryReportPayload", func() {
 	Description("Sent whenever the MSP confirms or rejects delivery of a message")
 
 	// Same id as the one in the response when a message is sent
@@ -179,7 +179,7 @@ var DeliveryReport = Type("DeliveryReport", func() {
 //    From the dashboard select SMS -> SMS Callback URLs -> Incoming Messages.
 //
 //    Incoming message notification contents
-var IncomingMessage = Type("IncomingMessage", func() {
+var IncomingMessagePayload = Type("IncomingMessagePayload", func() {
 	Description("Sent whenever a message is sent to any of your registered shortcodes.")
 
 	Attribute("date", String, func() {
@@ -279,7 +279,6 @@ var IncomingMessage = Type("IncomingMessage", func() {
 	})
 })
 
-
 // 3. Bulk SMS Opt Out
 //    To receive bulk sms opt out notifications, you need to set a bulk sms opt out callback URL.
 //    From the dashboard select SMS -> SMS Callback URLs -> Bulk SMS Opt Out.
@@ -288,7 +287,7 @@ var IncomingMessage = Type("IncomingMessage", func() {
 //    From then onwards, any other message will be sent ‘as is’ to the subscriber.
 //
 //    Bulk sms opt out notification contents.
-var BulkSMSOptOut = Type("BulkSMSOptOut", func() {
+var BulkSMSOptOutPayload = Type("BulkSMSOptOutPayload", func() {
 	Description("Triggered whenever a user opts out of receiving messages from Alphanumeric sender ID")
 
 	Attribute("senderId", String, func() {
@@ -299,14 +298,13 @@ var BulkSMSOptOut = Type("BulkSMSOptOut", func() {
 	})
 })
 
-
 // 4. Subscription Notification.
 //    To receive premium sms subscription notifications, you need to set a
 //    subscription notification callback URL.
 //    From the dashboard select SMS -> SMS Callback URLs -> Subscription Notifications.
 //
 //    Subscription notification contents
-var SubscriptionNotification = Type("SubscriptionNotification", func() {
+var SubNotificationPayload = Type("SubNotificationPayload", func() {
 	Description("Triggered whenever someone subscribes or unsubscribes from any premium SMS product.")
 
 	Attribute("phoneNumber", String, func() {
@@ -323,4 +321,3 @@ var SubscriptionNotification = Type("SubscriptionNotification", func() {
 		Enum("addition", "deletion")
 	})
 })
-

@@ -20,7 +20,7 @@ import (
 // When call ends: Sent after a call ends.
 // This is the final notification and contains some extra information
 // about the call like the cost and duration.
-var VoiceNotification = Type("VoiceNotification", func() {
+var VoiceNotificationPayload = Type("VoiceNotificationPayload", func() {
 
 	// The API will set a value of 0 in the
 	// final request to your application.
@@ -196,7 +196,7 @@ var VoiceNotification = Type("VoiceNotification", func() {
 // When the transfer has been initiated AT sends any of these events
 // to the event notifications URL, you can check from these form
 // fields in the events.
-var CallTransferEvent = Type("CallTransferEvent", func() {
+var TransferEventPayload = Type("TransferEventPayload", func() {
 	Description("Event Notifications sent from AT after call transfer initiated.")
 
 	Attribute("callSessionState", String, func() {

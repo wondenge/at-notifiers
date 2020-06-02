@@ -49,55 +49,55 @@ func handleHTTPServer(ctx context.Context, u *url.URL, africastalkingEndpoints *
 	// the service input and output data structures to HTTP requests and
 	// responses.
 	var (
-		africastalkingSmsDeliveryReportHandler     *kithttp.Server
-		africastalkingSmsIncomingMessageHandler    *kithttp.Server
-		africastalkingSmsBulkOptoutHandler         *kithttp.Server
-		africastalkingSmsSubscriptionHandler       *kithttp.Server
-		africastalkingVoiceNotificationHandler     *kithttp.Server
-		africastalkingTransferEventHandler         *kithttp.Server
-		africastalkingUssdNotifierHandler          *kithttp.Server
-		africastalkingValidationNotifierHandler    *kithttp.Server
-		africastalkingStatusNotifierHandler        *kithttp.Server
-		africastalkingPaymentNotifierHandler       *kithttp.Server
-		africastalkingC2bValidationNotifierHandler *kithttp.Server
-		africastalkingB2cValidationNotifierHandler *kithttp.Server
-		africastalkingIotNotifierHandler           *kithttp.Server
-		africastalkingServer                       *africastalkingsvr.Server
-		healthShowHandler                          *kithttp.Server
-		healthServer                               *healthsvr.Server
-		swaggerServer                              *swaggersvr.Server
+		africastalkingDeliveryReportNotifierHandler  *kithttp.Server
+		africastalkingIncomingMessageNotifierHandler *kithttp.Server
+		africastalkingBulkOptOutNotifierHandler      *kithttp.Server
+		africastalkingSubNotifierHandler             *kithttp.Server
+		africastalkingVoiceNotifierHandler           *kithttp.Server
+		africastalkingTransferEventNotifierHandler   *kithttp.Server
+		africastalkingUssdNotifierHandler            *kithttp.Server
+		africastalkingValidationNotifierHandler      *kithttp.Server
+		africastalkingStatusNotifierHandler          *kithttp.Server
+		africastalkingPaymentNotifierHandler         *kithttp.Server
+		africastalkingC2bValidationNotifierHandler   *kithttp.Server
+		africastalkingB2cValidationNotifierHandler   *kithttp.Server
+		africastalkingIotNotifierHandler             *kithttp.Server
+		africastalkingServer                         *africastalkingsvr.Server
+		healthShowHandler                            *kithttp.Server
+		healthServer                                 *healthsvr.Server
+		swaggerServer                                *swaggersvr.Server
 	)
 	{
 		eh := errorHandler(logger)
-		africastalkingSmsDeliveryReportHandler = kithttp.NewServer(
-			endpoint.Endpoint(africastalkingEndpoints.SmsDeliveryReport),
-			africastalkingkitsvr.DecodeSmsDeliveryReportRequest(mux, dec),
-			africastalkingkitsvr.EncodeSmsDeliveryReportResponse(enc),
+		africastalkingDeliveryReportNotifierHandler = kithttp.NewServer(
+			endpoint.Endpoint(africastalkingEndpoints.DeliveryReportNotifier),
+			africastalkingkitsvr.DecodeDeliveryReportNotifierRequest(mux, dec),
+			africastalkingkitsvr.EncodeDeliveryReportNotifierResponse(enc),
 		)
-		africastalkingSmsIncomingMessageHandler = kithttp.NewServer(
-			endpoint.Endpoint(africastalkingEndpoints.SmsIncomingMessage),
-			africastalkingkitsvr.DecodeSmsIncomingMessageRequest(mux, dec),
-			africastalkingkitsvr.EncodeSmsIncomingMessageResponse(enc),
+		africastalkingIncomingMessageNotifierHandler = kithttp.NewServer(
+			endpoint.Endpoint(africastalkingEndpoints.IncomingMessageNotifier),
+			africastalkingkitsvr.DecodeIncomingMessageNotifierRequest(mux, dec),
+			africastalkingkitsvr.EncodeIncomingMessageNotifierResponse(enc),
 		)
-		africastalkingSmsBulkOptoutHandler = kithttp.NewServer(
-			endpoint.Endpoint(africastalkingEndpoints.SmsBulkOptout),
-			africastalkingkitsvr.DecodeSmsBulkOptoutRequest(mux, dec),
-			africastalkingkitsvr.EncodeSmsBulkOptoutResponse(enc),
+		africastalkingBulkOptOutNotifierHandler = kithttp.NewServer(
+			endpoint.Endpoint(africastalkingEndpoints.BulkOptOutNotifier),
+			africastalkingkitsvr.DecodeBulkOptOutNotifierRequest(mux, dec),
+			africastalkingkitsvr.EncodeBulkOptOutNotifierResponse(enc),
 		)
-		africastalkingSmsSubscriptionHandler = kithttp.NewServer(
-			endpoint.Endpoint(africastalkingEndpoints.SmsSubscription),
-			africastalkingkitsvr.DecodeSmsSubscriptionRequest(mux, dec),
-			africastalkingkitsvr.EncodeSmsSubscriptionResponse(enc),
+		africastalkingSubNotifierHandler = kithttp.NewServer(
+			endpoint.Endpoint(africastalkingEndpoints.SubNotifier),
+			africastalkingkitsvr.DecodeSubNotifierRequest(mux, dec),
+			africastalkingkitsvr.EncodeSubNotifierResponse(enc),
 		)
-		africastalkingVoiceNotificationHandler = kithttp.NewServer(
-			endpoint.Endpoint(africastalkingEndpoints.VoiceNotification),
-			africastalkingkitsvr.DecodeVoiceNotificationRequest(mux, dec),
-			africastalkingkitsvr.EncodeVoiceNotificationResponse(enc),
+		africastalkingVoiceNotifierHandler = kithttp.NewServer(
+			endpoint.Endpoint(africastalkingEndpoints.VoiceNotifier),
+			africastalkingkitsvr.DecodeVoiceNotifierRequest(mux, dec),
+			africastalkingkitsvr.EncodeVoiceNotifierResponse(enc),
 		)
-		africastalkingTransferEventHandler = kithttp.NewServer(
-			endpoint.Endpoint(africastalkingEndpoints.TransferEvent),
-			africastalkingkitsvr.DecodeTransferEventRequest(mux, dec),
-			africastalkingkitsvr.EncodeTransferEventResponse(enc),
+		africastalkingTransferEventNotifierHandler = kithttp.NewServer(
+			endpoint.Endpoint(africastalkingEndpoints.TransferEventNotifier),
+			africastalkingkitsvr.DecodeTransferEventNotifierRequest(mux, dec),
+			africastalkingkitsvr.EncodeTransferEventNotifierResponse(enc),
 		)
 		africastalkingUssdNotifierHandler = kithttp.NewServer(
 			endpoint.Endpoint(africastalkingEndpoints.UssdNotifier),
@@ -145,12 +145,12 @@ func handleHTTPServer(ctx context.Context, u *url.URL, africastalkingEndpoints *
 	}
 
 	// Configure the mux.
-	africastalkingkitsvr.MountSmsDeliveryReportHandler(mux, africastalkingSmsDeliveryReportHandler)
-	africastalkingkitsvr.MountSmsIncomingMessageHandler(mux, africastalkingSmsIncomingMessageHandler)
-	africastalkingkitsvr.MountSmsBulkOptoutHandler(mux, africastalkingSmsBulkOptoutHandler)
-	africastalkingkitsvr.MountSmsSubscriptionHandler(mux, africastalkingSmsSubscriptionHandler)
-	africastalkingkitsvr.MountVoiceNotificationHandler(mux, africastalkingVoiceNotificationHandler)
-	africastalkingkitsvr.MountTransferEventHandler(mux, africastalkingTransferEventHandler)
+	africastalkingkitsvr.MountDeliveryReportNotifierHandler(mux, africastalkingDeliveryReportNotifierHandler)
+	africastalkingkitsvr.MountIncomingMessageNotifierHandler(mux, africastalkingIncomingMessageNotifierHandler)
+	africastalkingkitsvr.MountBulkOptOutNotifierHandler(mux, africastalkingBulkOptOutNotifierHandler)
+	africastalkingkitsvr.MountSubNotifierHandler(mux, africastalkingSubNotifierHandler)
+	africastalkingkitsvr.MountVoiceNotifierHandler(mux, africastalkingVoiceNotifierHandler)
+	africastalkingkitsvr.MountTransferEventNotifierHandler(mux, africastalkingTransferEventNotifierHandler)
 	africastalkingkitsvr.MountUssdNotifierHandler(mux, africastalkingUssdNotifierHandler)
 	africastalkingkitsvr.MountValidationNotifierHandler(mux, africastalkingValidationNotifierHandler)
 	africastalkingkitsvr.MountStatusNotifierHandler(mux, africastalkingStatusNotifierHandler)

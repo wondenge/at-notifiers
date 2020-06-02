@@ -15,18 +15,18 @@ import (
 	goa "goa.design/goa/v3/pkg"
 )
 
-// BuildSmsDeliveryReportPayload builds the payload for the africastalking
-// sms_delivery_report endpoint from CLI flags.
-func BuildSmsDeliveryReportPayload(africastalkingSmsDeliveryReportBody string) (*africastalking.DeliveryReport, error) {
+// BuildDeliveryReportNotifierPayload builds the payload for the africastalking
+// delivery_report_notifier endpoint from CLI flags.
+func BuildDeliveryReportNotifierPayload(africastalkingDeliveryReportNotifierBody string) (*africastalking.DeliveryReportPayload, error) {
 	var err error
-	var body SmsDeliveryReportRequestBody
+	var body DeliveryReportNotifierRequestBody
 	{
-		err = json.Unmarshal([]byte(africastalkingSmsDeliveryReportBody), &body)
+		err = json.Unmarshal([]byte(africastalkingDeliveryReportNotifierBody), &body)
 		if err != nil {
 			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"failureReason\": \"UserAccountSuspended\",\n      \"id\": \"Exercitationem earum et id inventore voluptatem odit.\",\n      \"networkCode\": \"65001\",\n      \"phoneNumber\": \"Eos quam.\",\n      \"retryCount\": \"Sed harum sapiente sed quis.\",\n      \"status\": \"Failed\"\n   }'")
 		}
 	}
-	v := &africastalking.DeliveryReport{
+	v := &africastalking.DeliveryReportPayload{
 		ID:            body.ID,
 		Status:        body.Status,
 		PhoneNumber:   body.PhoneNumber,
@@ -38,18 +38,18 @@ func BuildSmsDeliveryReportPayload(africastalkingSmsDeliveryReportBody string) (
 	return v, nil
 }
 
-// BuildSmsIncomingMessagePayload builds the payload for the africastalking
-// sms_incoming_message endpoint from CLI flags.
-func BuildSmsIncomingMessagePayload(africastalkingSmsIncomingMessageBody string) (*africastalking.IncomingMessage, error) {
+// BuildIncomingMessageNotifierPayload builds the payload for the
+// africastalking incoming_message_notifier endpoint from CLI flags.
+func BuildIncomingMessageNotifierPayload(africastalkingIncomingMessageNotifierBody string) (*africastalking.IncomingMessagePayload, error) {
 	var err error
-	var body SmsIncomingMessageRequestBody
+	var body IncomingMessageNotifierRequestBody
 	{
-		err = json.Unmarshal([]byte(africastalkingSmsIncomingMessageBody), &body)
+		err = json.Unmarshal([]byte(africastalkingIncomingMessageNotifierBody), &body)
 		if err != nil {
 			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"date\": \"1997-09-28\",\n      \"from\": \"Enim voluptatem.\",\n      \"id\": \"Qui ullam optio.\",\n      \"linkId\": \"Ducimus dolores ipsum ut rerum saepe.\",\n      \"networkCode\": \"63907\",\n      \"text\": \"Distinctio ut omnis omnis deserunt.\",\n      \"to\": \"Vitae quaerat voluptas.\"\n   }'")
 		}
 	}
-	v := &africastalking.IncomingMessage{
+	v := &africastalking.IncomingMessagePayload{
 		Date:        body.Date,
 		From:        body.From,
 		ID:          body.ID,
@@ -62,18 +62,18 @@ func BuildSmsIncomingMessagePayload(africastalkingSmsIncomingMessageBody string)
 	return v, nil
 }
 
-// BuildSmsBulkOptoutPayload builds the payload for the africastalking
-// sms_bulk_optout endpoint from CLI flags.
-func BuildSmsBulkOptoutPayload(africastalkingSmsBulkOptoutBody string) (*africastalking.BulkSMSOptOut, error) {
+// BuildBulkOptOutNotifierPayload builds the payload for the africastalking
+// bulk_optOut_notifier endpoint from CLI flags.
+func BuildBulkOptOutNotifierPayload(africastalkingBulkOptOutNotifierBody string) (*africastalking.BulkSMSOptOutPayload, error) {
 	var err error
-	var body SmsBulkOptoutRequestBody
+	var body BulkOptOutNotifierRequestBody
 	{
-		err = json.Unmarshal([]byte(africastalkingSmsBulkOptoutBody), &body)
+		err = json.Unmarshal([]byte(africastalkingBulkOptOutNotifierBody), &body)
 		if err != nil {
 			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"phoneNumber\": \"Tenetur sunt quam.\",\n      \"senderId\": \"Tempora impedit accusantium eveniet maiores occaecati.\"\n   }'")
 		}
 	}
-	v := &africastalking.BulkSMSOptOut{
+	v := &africastalking.BulkSMSOptOutPayload{
 		SenderID:    body.SenderID,
 		PhoneNumber: body.PhoneNumber,
 	}
@@ -81,18 +81,18 @@ func BuildSmsBulkOptoutPayload(africastalkingSmsBulkOptoutBody string) (*africas
 	return v, nil
 }
 
-// BuildSmsSubscriptionPayload builds the payload for the africastalking
-// sms_subscription endpoint from CLI flags.
-func BuildSmsSubscriptionPayload(africastalkingSmsSubscriptionBody string) (*africastalking.SubscriptionNotification, error) {
+// BuildSubNotifierPayload builds the payload for the africastalking
+// sub_notifier endpoint from CLI flags.
+func BuildSubNotifierPayload(africastalkingSubNotifierBody string) (*africastalking.SubNotificationPayload, error) {
 	var err error
-	var body SmsSubscriptionRequestBody
+	var body SubNotifierRequestBody
 	{
-		err = json.Unmarshal([]byte(africastalkingSmsSubscriptionBody), &body)
+		err = json.Unmarshal([]byte(africastalkingSubNotifierBody), &body)
 		if err != nil {
 			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"keyword\": \"Non et pariatur non cumque velit laborum.\",\n      \"phoneNumber\": \"Aut quasi quis animi culpa natus.\",\n      \"shortCode\": \"Quo eos porro tempore voluptatum voluptatum qui.\",\n      \"updateType\": \"deletion\"\n   }'")
 		}
 	}
-	v := &africastalking.SubscriptionNotification{
+	v := &africastalking.SubNotificationPayload{
 		PhoneNumber: body.PhoneNumber,
 		ShortCode:   body.ShortCode,
 		Keyword:     body.Keyword,
@@ -102,18 +102,18 @@ func BuildSmsSubscriptionPayload(africastalkingSmsSubscriptionBody string) (*afr
 	return v, nil
 }
 
-// BuildVoiceNotificationPayload builds the payload for the africastalking
-// voice_notification endpoint from CLI flags.
-func BuildVoiceNotificationPayload(africastalkingVoiceNotificationBody string) (*africastalking.VoiceNotification1, error) {
+// BuildVoiceNotifierPayload builds the payload for the africastalking
+// voice_notifier endpoint from CLI flags.
+func BuildVoiceNotifierPayload(africastalkingVoiceNotifierBody string) (*africastalking.VoiceNotificationPayload, error) {
 	var err error
-	var body VoiceNotificationRequestBody
+	var body VoiceNotifierRequestBody
 	{
-		err = json.Unmarshal([]byte(africastalkingVoiceNotificationBody), &body)
+		err = json.Unmarshal([]byte(africastalkingVoiceNotifierBody), &body)
 		if err != nil {
 			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"amount\": \"Itaque atque sed molestias molestiae ea praesentium.\",\n      \"callSessionState\": \"Totam odit dolorem qui dolor eos.\",\n      \"callStartTime\": \"Et temporibus nisi nobis corrupti tempora.\",\n      \"callerCountryCode\": \"Qui quis a id sapiente quia nam.\",\n      \"callerNumber\": \"+254711XXXYYY\",\n      \"currencyCode\": \"Quis inventore eius.\",\n      \"destinationNumber\": \"+254711XXXYYY\",\n      \"dialDestinationNumber\": \"Ducimus voluptas adipisci optio.\",\n      \"dialDurationInSeconds\": \"Iure est deleniti praesentium fugit quo.\",\n      \"dialStartTime\": \"Et voluptatibus necessitatibus quo animi.\",\n      \"direction\": \"Ut consequatur.\",\n      \"dtmfDigits\": \"Atque culpa ducimus dolorem et minus aliquid.\",\n      \"durationInSeconds\": \"Explicabo blanditiis consectetur eligendi ut.\",\n      \"hangupCause\": \"USER_NOT_REGISTERED\",\n      \"isActive\": \"Nobis distinctio.\",\n      \"recordingUrl\": \"Voluptas occaecati est ad aspernatur iste qui.\",\n      \"sessionId\": \"At at non laborum eius id.\"\n   }'")
 		}
 	}
-	v := &africastalking.VoiceNotification1{
+	v := &africastalking.VoiceNotificationPayload{
 		IsActive:              body.IsActive,
 		SessionID:             body.SessionID,
 		Direction:             body.Direction,
@@ -136,18 +136,18 @@ func BuildVoiceNotificationPayload(africastalkingVoiceNotificationBody string) (
 	return v, nil
 }
 
-// BuildTransferEventPayload builds the payload for the africastalking
-// transfer_event endpoint from CLI flags.
-func BuildTransferEventPayload(africastalkingTransferEventBody string) (*africastalking.CallTransferEvent, error) {
+// BuildTransferEventNotifierPayload builds the payload for the africastalking
+// transfer_event_notifier endpoint from CLI flags.
+func BuildTransferEventNotifierPayload(africastalkingTransferEventNotifierBody string) (*africastalking.TransferEventPayload, error) {
 	var err error
-	var body TransferEventRequestBody
+	var body TransferEventNotifierRequestBody
 	{
-		err = json.Unmarshal([]byte(africastalkingTransferEventBody), &body)
+		err = json.Unmarshal([]byte(africastalkingTransferEventNotifierBody), &body)
 		if err != nil {
 			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"callSessionState\": \"Transferred\",\n      \"callTransferHangupCause\": \"NotAllowed\",\n      \"callTransferParam\": \"Doloremque reiciendis iusto eligendi repellat.\",\n      \"callTransferState\": \" Active\",\n      \"callTransferredToNumber\": \"Sunt praesentium et repellat.\",\n      \"isActive\": \"1\",\n      \"status\": \"Success\"\n   }'")
 		}
 	}
-	v := &africastalking.CallTransferEvent{
+	v := &africastalking.TransferEventPayload{
 		CallSessionState:        body.CallSessionState,
 		IsActive:                body.IsActive,
 		Status:                  body.Status,
@@ -205,7 +205,7 @@ func BuildValidationNotifierPayload(africastalkingValidationNotifierBody string)
 
 // BuildStatusNotifierPayload builds the payload for the africastalking
 // status_notifier endpoint from CLI flags.
-func BuildStatusNotifierPayload(africastalkingStatusNotifierBody string) (*africastalking.AirtimeStatus, error) {
+func BuildStatusNotifierPayload(africastalkingStatusNotifierBody string) (*africastalking.AirtimeStatusPayload, error) {
 	var err error
 	var body StatusNotifierRequestBody
 	{
@@ -214,7 +214,7 @@ func BuildStatusNotifierPayload(africastalkingStatusNotifierBody string) (*afric
 			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"requestId\": \"ATQid_SampleTxnId123\",\n      \"status\": \"Success\"\n   }'")
 		}
 	}
-	v := &africastalking.AirtimeStatus{
+	v := &africastalking.AirtimeStatusPayload{
 		RequestID: body.RequestID,
 		Status:    body.Status,
 	}
@@ -224,7 +224,7 @@ func BuildStatusNotifierPayload(africastalkingStatusNotifierBody string) (*afric
 
 // BuildPaymentNotifierPayload builds the payload for the africastalking
 // payment_notifier endpoint from CLI flags.
-func BuildPaymentNotifierPayload(africastalkingPaymentNotifierBody string) (*africastalking.PaymentNotification, error) {
+func BuildPaymentNotifierPayload(africastalkingPaymentNotifierBody string) (*africastalking.PaymentNotificationPayload, error) {
 	var err error
 	var body PaymentNotifierRequestBody
 	{
@@ -251,7 +251,7 @@ func BuildPaymentNotifierPayload(africastalkingPaymentNotifierBody string) (*afr
 			return nil, err
 		}
 	}
-	v := &africastalking.PaymentNotification{
+	v := &africastalking.PaymentNotificationPayload{
 		TransactionID:    body.TransactionID,
 		Category:         body.Category,
 		Provider:         body.Provider,
@@ -278,7 +278,7 @@ func BuildPaymentNotifierPayload(africastalkingPaymentNotifierBody string) (*afr
 
 // BuildC2bValidationNotifierPayload builds the payload for the africastalking
 // c2b_validation_notifier endpoint from CLI flags.
-func BuildC2bValidationNotifierPayload(africastalkingC2bValidationNotifierBody string) (*africastalking.C2BValidationNotification, error) {
+func BuildC2bValidationNotifierPayload(africastalkingC2bValidationNotifierBody string) (*africastalking.C2BValidationNotificationPayload, error) {
 	var err error
 	var body C2bValidationNotifierRequestBody
 	{
@@ -296,7 +296,7 @@ func BuildC2bValidationNotifierPayload(africastalkingC2bValidationNotifierBody s
 			return nil, err
 		}
 	}
-	v := &africastalking.C2BValidationNotification{
+	v := &africastalking.C2BValidationNotificationPayload{
 		Provider:      body.Provider,
 		ClientAccount: body.ClientAccount,
 		ProductName:   body.ProductName,
@@ -347,7 +347,7 @@ func BuildB2cValidationNotifierPayload(africastalkingB2cValidationNotifierBody s
 
 // BuildIotNotifierPayload builds the payload for the africastalking
 // iot_notifier endpoint from CLI flags.
-func BuildIotNotifierPayload(africastalkingIotNotifierBody string) (*africastalking.IoTNotification, error) {
+func BuildIotNotifierPayload(africastalkingIotNotifierBody string) (*africastalking.IoTNotificationPayload, error) {
 	var err error
 	var body IotNotifierRequestBody
 	{
@@ -356,7 +356,7 @@ func BuildIotNotifierPayload(africastalkingIotNotifierBody string) (*africastalk
 			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"payload\": \"42\",\n      \"topic\": \"myusername/devicegroup/sensor/id/1/temperature\"\n   }'")
 		}
 	}
-	v := &africastalking.IoTNotification{
+	v := &africastalking.IoTNotificationPayload{
 		Payload: body.Payload,
 		Topic:   body.Topic,
 	}

@@ -19,20 +19,20 @@ import (
 
 // Server lists the africastalking service endpoint HTTP handlers.
 type Server struct {
-	Mounts                []*MountPoint
-	SmsDeliveryReport     http.Handler
-	SmsIncomingMessage    http.Handler
-	SmsBulkOptout         http.Handler
-	SmsSubscription       http.Handler
-	VoiceNotification     http.Handler
-	TransferEvent         http.Handler
-	UssdNotifier          http.Handler
-	ValidationNotifier    http.Handler
-	StatusNotifier        http.Handler
-	PaymentNotifier       http.Handler
-	C2bValidationNotifier http.Handler
-	B2cValidationNotifier http.Handler
-	IotNotifier           http.Handler
+	Mounts                  []*MountPoint
+	DeliveryReportNotifier  http.Handler
+	IncomingMessageNotifier http.Handler
+	BulkOptOutNotifier      http.Handler
+	SubNotifier             http.Handler
+	VoiceNotifier           http.Handler
+	TransferEventNotifier   http.Handler
+	UssdNotifier            http.Handler
+	ValidationNotifier      http.Handler
+	StatusNotifier          http.Handler
+	PaymentNotifier         http.Handler
+	C2bValidationNotifier   http.Handler
+	B2cValidationNotifier   http.Handler
+	IotNotifier             http.Handler
 }
 
 // ErrorNamer is an interface implemented by generated error structs that
@@ -68,12 +68,12 @@ func New(
 ) *Server {
 	return &Server{
 		Mounts: []*MountPoint{
-			{"SmsDeliveryReport", "POST", "/callbacks/africastalking/sms/deliveryreport"},
-			{"SmsIncomingMessage", "POST", "/callbacks/africastalking/sms/incomingmessage"},
-			{"SmsBulkOptout", "POST", "/callbacks/africastalking/sms/bulksmsoptout"},
-			{"SmsSubscription", "POST", "/callbacks/africastalking/sms/subscription"},
-			{"VoiceNotification", "POST", "/callbacks/africastalking/voice/notifications"},
-			{"TransferEvent", "POST", "/callbacks/africastalking/voice/transferevents"},
+			{"DeliveryReportNotifier", "POST", "/callbacks/africastalking/sms/deliveryreport"},
+			{"IncomingMessageNotifier", "POST", "/callbacks/africastalking/sms/incomingmessage"},
+			{"BulkOptOutNotifier", "POST", "/callbacks/africastalking/sms/bulksmsoptout"},
+			{"SubNotifier", "POST", "/callbacks/africastalking/sms/subscription"},
+			{"VoiceNotifier", "POST", "/callbacks/africastalking/voice/notifications"},
+			{"TransferEventNotifier", "POST", "/callbacks/africastalking/voice/transferevents"},
 			{"UssdNotifier", "POST", "/callbacks/africastalking/ussd/sessions"},
 			{"ValidationNotifier", "POST", "/callbacks/africastalking/airtime/validation"},
 			{"StatusNotifier", "POST", "/callbacks/africastalking/airtime/status"},
@@ -82,19 +82,19 @@ func New(
 			{"B2cValidationNotifier", "POST", "/callbacks/africastalking/payments/b2c/validation"},
 			{"IotNotifier", "POST", "/callbacks/africastalking/iot/events"},
 		},
-		SmsDeliveryReport:     NewSmsDeliveryReportHandler(e.SmsDeliveryReport, mux, decoder, encoder, errhandler, formatter),
-		SmsIncomingMessage:    NewSmsIncomingMessageHandler(e.SmsIncomingMessage, mux, decoder, encoder, errhandler, formatter),
-		SmsBulkOptout:         NewSmsBulkOptoutHandler(e.SmsBulkOptout, mux, decoder, encoder, errhandler, formatter),
-		SmsSubscription:       NewSmsSubscriptionHandler(e.SmsSubscription, mux, decoder, encoder, errhandler, formatter),
-		VoiceNotification:     NewVoiceNotificationHandler(e.VoiceNotification, mux, decoder, encoder, errhandler, formatter),
-		TransferEvent:         NewTransferEventHandler(e.TransferEvent, mux, decoder, encoder, errhandler, formatter),
-		UssdNotifier:          NewUssdNotifierHandler(e.UssdNotifier, mux, decoder, encoder, errhandler, formatter),
-		ValidationNotifier:    NewValidationNotifierHandler(e.ValidationNotifier, mux, decoder, encoder, errhandler, formatter),
-		StatusNotifier:        NewStatusNotifierHandler(e.StatusNotifier, mux, decoder, encoder, errhandler, formatter),
-		PaymentNotifier:       NewPaymentNotifierHandler(e.PaymentNotifier, mux, decoder, encoder, errhandler, formatter),
-		C2bValidationNotifier: NewC2bValidationNotifierHandler(e.C2bValidationNotifier, mux, decoder, encoder, errhandler, formatter),
-		B2cValidationNotifier: NewB2cValidationNotifierHandler(e.B2cValidationNotifier, mux, decoder, encoder, errhandler, formatter),
-		IotNotifier:           NewIotNotifierHandler(e.IotNotifier, mux, decoder, encoder, errhandler, formatter),
+		DeliveryReportNotifier:  NewDeliveryReportNotifierHandler(e.DeliveryReportNotifier, mux, decoder, encoder, errhandler, formatter),
+		IncomingMessageNotifier: NewIncomingMessageNotifierHandler(e.IncomingMessageNotifier, mux, decoder, encoder, errhandler, formatter),
+		BulkOptOutNotifier:      NewBulkOptOutNotifierHandler(e.BulkOptOutNotifier, mux, decoder, encoder, errhandler, formatter),
+		SubNotifier:             NewSubNotifierHandler(e.SubNotifier, mux, decoder, encoder, errhandler, formatter),
+		VoiceNotifier:           NewVoiceNotifierHandler(e.VoiceNotifier, mux, decoder, encoder, errhandler, formatter),
+		TransferEventNotifier:   NewTransferEventNotifierHandler(e.TransferEventNotifier, mux, decoder, encoder, errhandler, formatter),
+		UssdNotifier:            NewUssdNotifierHandler(e.UssdNotifier, mux, decoder, encoder, errhandler, formatter),
+		ValidationNotifier:      NewValidationNotifierHandler(e.ValidationNotifier, mux, decoder, encoder, errhandler, formatter),
+		StatusNotifier:          NewStatusNotifierHandler(e.StatusNotifier, mux, decoder, encoder, errhandler, formatter),
+		PaymentNotifier:         NewPaymentNotifierHandler(e.PaymentNotifier, mux, decoder, encoder, errhandler, formatter),
+		C2bValidationNotifier:   NewC2bValidationNotifierHandler(e.C2bValidationNotifier, mux, decoder, encoder, errhandler, formatter),
+		B2cValidationNotifier:   NewB2cValidationNotifierHandler(e.B2cValidationNotifier, mux, decoder, encoder, errhandler, formatter),
+		IotNotifier:             NewIotNotifierHandler(e.IotNotifier, mux, decoder, encoder, errhandler, formatter),
 	}
 }
 
@@ -103,12 +103,12 @@ func (s *Server) Service() string { return "africastalking" }
 
 // Use wraps the server handlers with the given middleware.
 func (s *Server) Use(m func(http.Handler) http.Handler) {
-	s.SmsDeliveryReport = m(s.SmsDeliveryReport)
-	s.SmsIncomingMessage = m(s.SmsIncomingMessage)
-	s.SmsBulkOptout = m(s.SmsBulkOptout)
-	s.SmsSubscription = m(s.SmsSubscription)
-	s.VoiceNotification = m(s.VoiceNotification)
-	s.TransferEvent = m(s.TransferEvent)
+	s.DeliveryReportNotifier = m(s.DeliveryReportNotifier)
+	s.IncomingMessageNotifier = m(s.IncomingMessageNotifier)
+	s.BulkOptOutNotifier = m(s.BulkOptOutNotifier)
+	s.SubNotifier = m(s.SubNotifier)
+	s.VoiceNotifier = m(s.VoiceNotifier)
+	s.TransferEventNotifier = m(s.TransferEventNotifier)
 	s.UssdNotifier = m(s.UssdNotifier)
 	s.ValidationNotifier = m(s.ValidationNotifier)
 	s.StatusNotifier = m(s.StatusNotifier)
@@ -120,12 +120,12 @@ func (s *Server) Use(m func(http.Handler) http.Handler) {
 
 // Mount configures the mux to serve the africastalking endpoints.
 func Mount(mux goahttp.Muxer, h *Server) {
-	MountSmsDeliveryReportHandler(mux, h.SmsDeliveryReport)
-	MountSmsIncomingMessageHandler(mux, h.SmsIncomingMessage)
-	MountSmsBulkOptoutHandler(mux, h.SmsBulkOptout)
-	MountSmsSubscriptionHandler(mux, h.SmsSubscription)
-	MountVoiceNotificationHandler(mux, h.VoiceNotification)
-	MountTransferEventHandler(mux, h.TransferEvent)
+	MountDeliveryReportNotifierHandler(mux, h.DeliveryReportNotifier)
+	MountIncomingMessageNotifierHandler(mux, h.IncomingMessageNotifier)
+	MountBulkOptOutNotifierHandler(mux, h.BulkOptOutNotifier)
+	MountSubNotifierHandler(mux, h.SubNotifier)
+	MountVoiceNotifierHandler(mux, h.VoiceNotifier)
+	MountTransferEventNotifierHandler(mux, h.TransferEventNotifier)
 	MountUssdNotifierHandler(mux, h.UssdNotifier)
 	MountValidationNotifierHandler(mux, h.ValidationNotifier)
 	MountStatusNotifierHandler(mux, h.StatusNotifier)
@@ -135,9 +135,9 @@ func Mount(mux goahttp.Muxer, h *Server) {
 	MountIotNotifierHandler(mux, h.IotNotifier)
 }
 
-// MountSmsDeliveryReportHandler configures the mux to serve the
-// "africastalking" service "sms_delivery_report" endpoint.
-func MountSmsDeliveryReportHandler(mux goahttp.Muxer, h http.Handler) {
+// MountDeliveryReportNotifierHandler configures the mux to serve the
+// "africastalking" service "delivery_report_notifier" endpoint.
+func MountDeliveryReportNotifierHandler(mux goahttp.Muxer, h http.Handler) {
 	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
@@ -147,10 +147,10 @@ func MountSmsDeliveryReportHandler(mux goahttp.Muxer, h http.Handler) {
 	mux.Handle("POST", "/callbacks/africastalking/sms/deliveryreport", f)
 }
 
-// NewSmsDeliveryReportHandler creates a HTTP handler which loads the HTTP
-// request and calls the "africastalking" service "sms_delivery_report"
+// NewDeliveryReportNotifierHandler creates a HTTP handler which loads the HTTP
+// request and calls the "africastalking" service "delivery_report_notifier"
 // endpoint.
-func NewSmsDeliveryReportHandler(
+func NewDeliveryReportNotifierHandler(
 	endpoint endpoint.Endpoint,
 	mux goahttp.Muxer,
 	decoder func(*http.Request) goahttp.Decoder,
@@ -159,13 +159,13 @@ func NewSmsDeliveryReportHandler(
 	formatter func(err error) goahttp.Statuser,
 ) http.Handler {
 	var (
-		decodeRequest  = DecodeSmsDeliveryReportRequest(mux, decoder)
-		encodeResponse = EncodeSmsDeliveryReportResponse(encoder)
+		decodeRequest  = DecodeDeliveryReportNotifierRequest(mux, decoder)
+		encodeResponse = EncodeDeliveryReportNotifierResponse(encoder)
 		encodeError    = goahttp.ErrorEncoder(encoder, formatter)
 	)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
-		ctx = context.WithValue(ctx, goa.MethodKey, "sms_delivery_report")
+		ctx = context.WithValue(ctx, goa.MethodKey, "delivery_report_notifier")
 		ctx = context.WithValue(ctx, goa.ServiceKey, "africastalking")
 		payload, err := decodeRequest(r)
 		if err != nil {
@@ -187,9 +187,9 @@ func NewSmsDeliveryReportHandler(
 	})
 }
 
-// MountSmsIncomingMessageHandler configures the mux to serve the
-// "africastalking" service "sms_incoming_message" endpoint.
-func MountSmsIncomingMessageHandler(mux goahttp.Muxer, h http.Handler) {
+// MountIncomingMessageNotifierHandler configures the mux to serve the
+// "africastalking" service "incoming_message_notifier" endpoint.
+func MountIncomingMessageNotifierHandler(mux goahttp.Muxer, h http.Handler) {
 	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
@@ -199,10 +199,10 @@ func MountSmsIncomingMessageHandler(mux goahttp.Muxer, h http.Handler) {
 	mux.Handle("POST", "/callbacks/africastalking/sms/incomingmessage", f)
 }
 
-// NewSmsIncomingMessageHandler creates a HTTP handler which loads the HTTP
-// request and calls the "africastalking" service "sms_incoming_message"
-// endpoint.
-func NewSmsIncomingMessageHandler(
+// NewIncomingMessageNotifierHandler creates a HTTP handler which loads the
+// HTTP request and calls the "africastalking" service
+// "incoming_message_notifier" endpoint.
+func NewIncomingMessageNotifierHandler(
 	endpoint endpoint.Endpoint,
 	mux goahttp.Muxer,
 	decoder func(*http.Request) goahttp.Decoder,
@@ -211,13 +211,13 @@ func NewSmsIncomingMessageHandler(
 	formatter func(err error) goahttp.Statuser,
 ) http.Handler {
 	var (
-		decodeRequest  = DecodeSmsIncomingMessageRequest(mux, decoder)
-		encodeResponse = EncodeSmsIncomingMessageResponse(encoder)
+		decodeRequest  = DecodeIncomingMessageNotifierRequest(mux, decoder)
+		encodeResponse = EncodeIncomingMessageNotifierResponse(encoder)
 		encodeError    = goahttp.ErrorEncoder(encoder, formatter)
 	)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
-		ctx = context.WithValue(ctx, goa.MethodKey, "sms_incoming_message")
+		ctx = context.WithValue(ctx, goa.MethodKey, "incoming_message_notifier")
 		ctx = context.WithValue(ctx, goa.ServiceKey, "africastalking")
 		payload, err := decodeRequest(r)
 		if err != nil {
@@ -239,9 +239,9 @@ func NewSmsIncomingMessageHandler(
 	})
 }
 
-// MountSmsBulkOptoutHandler configures the mux to serve the "africastalking"
-// service "sms_bulk_optout" endpoint.
-func MountSmsBulkOptoutHandler(mux goahttp.Muxer, h http.Handler) {
+// MountBulkOptOutNotifierHandler configures the mux to serve the
+// "africastalking" service "bulk_optOut_notifier" endpoint.
+func MountBulkOptOutNotifierHandler(mux goahttp.Muxer, h http.Handler) {
 	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
@@ -251,9 +251,10 @@ func MountSmsBulkOptoutHandler(mux goahttp.Muxer, h http.Handler) {
 	mux.Handle("POST", "/callbacks/africastalking/sms/bulksmsoptout", f)
 }
 
-// NewSmsBulkOptoutHandler creates a HTTP handler which loads the HTTP request
-// and calls the "africastalking" service "sms_bulk_optout" endpoint.
-func NewSmsBulkOptoutHandler(
+// NewBulkOptOutNotifierHandler creates a HTTP handler which loads the HTTP
+// request and calls the "africastalking" service "bulk_optOut_notifier"
+// endpoint.
+func NewBulkOptOutNotifierHandler(
 	endpoint endpoint.Endpoint,
 	mux goahttp.Muxer,
 	decoder func(*http.Request) goahttp.Decoder,
@@ -262,13 +263,13 @@ func NewSmsBulkOptoutHandler(
 	formatter func(err error) goahttp.Statuser,
 ) http.Handler {
 	var (
-		decodeRequest  = DecodeSmsBulkOptoutRequest(mux, decoder)
-		encodeResponse = EncodeSmsBulkOptoutResponse(encoder)
+		decodeRequest  = DecodeBulkOptOutNotifierRequest(mux, decoder)
+		encodeResponse = EncodeBulkOptOutNotifierResponse(encoder)
 		encodeError    = goahttp.ErrorEncoder(encoder, formatter)
 	)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
-		ctx = context.WithValue(ctx, goa.MethodKey, "sms_bulk_optout")
+		ctx = context.WithValue(ctx, goa.MethodKey, "bulk_optOut_notifier")
 		ctx = context.WithValue(ctx, goa.ServiceKey, "africastalking")
 		payload, err := decodeRequest(r)
 		if err != nil {
@@ -290,9 +291,9 @@ func NewSmsBulkOptoutHandler(
 	})
 }
 
-// MountSmsSubscriptionHandler configures the mux to serve the "africastalking"
-// service "sms_subscription" endpoint.
-func MountSmsSubscriptionHandler(mux goahttp.Muxer, h http.Handler) {
+// MountSubNotifierHandler configures the mux to serve the "africastalking"
+// service "sub_notifier" endpoint.
+func MountSubNotifierHandler(mux goahttp.Muxer, h http.Handler) {
 	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
@@ -302,9 +303,9 @@ func MountSmsSubscriptionHandler(mux goahttp.Muxer, h http.Handler) {
 	mux.Handle("POST", "/callbacks/africastalking/sms/subscription", f)
 }
 
-// NewSmsSubscriptionHandler creates a HTTP handler which loads the HTTP
-// request and calls the "africastalking" service "sms_subscription" endpoint.
-func NewSmsSubscriptionHandler(
+// NewSubNotifierHandler creates a HTTP handler which loads the HTTP request
+// and calls the "africastalking" service "sub_notifier" endpoint.
+func NewSubNotifierHandler(
 	endpoint endpoint.Endpoint,
 	mux goahttp.Muxer,
 	decoder func(*http.Request) goahttp.Decoder,
@@ -313,13 +314,13 @@ func NewSmsSubscriptionHandler(
 	formatter func(err error) goahttp.Statuser,
 ) http.Handler {
 	var (
-		decodeRequest  = DecodeSmsSubscriptionRequest(mux, decoder)
-		encodeResponse = EncodeSmsSubscriptionResponse(encoder)
+		decodeRequest  = DecodeSubNotifierRequest(mux, decoder)
+		encodeResponse = EncodeSubNotifierResponse(encoder)
 		encodeError    = goahttp.ErrorEncoder(encoder, formatter)
 	)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
-		ctx = context.WithValue(ctx, goa.MethodKey, "sms_subscription")
+		ctx = context.WithValue(ctx, goa.MethodKey, "sub_notifier")
 		ctx = context.WithValue(ctx, goa.ServiceKey, "africastalking")
 		payload, err := decodeRequest(r)
 		if err != nil {
@@ -341,9 +342,9 @@ func NewSmsSubscriptionHandler(
 	})
 }
 
-// MountVoiceNotificationHandler configures the mux to serve the
-// "africastalking" service "voice_notification" endpoint.
-func MountVoiceNotificationHandler(mux goahttp.Muxer, h http.Handler) {
+// MountVoiceNotifierHandler configures the mux to serve the "africastalking"
+// service "voice_notifier" endpoint.
+func MountVoiceNotifierHandler(mux goahttp.Muxer, h http.Handler) {
 	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
@@ -353,9 +354,9 @@ func MountVoiceNotificationHandler(mux goahttp.Muxer, h http.Handler) {
 	mux.Handle("POST", "/callbacks/africastalking/voice/notifications", f)
 }
 
-// NewVoiceNotificationHandler creates a HTTP handler which loads the HTTP
-// request and calls the "africastalking" service "voice_notification" endpoint.
-func NewVoiceNotificationHandler(
+// NewVoiceNotifierHandler creates a HTTP handler which loads the HTTP request
+// and calls the "africastalking" service "voice_notifier" endpoint.
+func NewVoiceNotifierHandler(
 	endpoint endpoint.Endpoint,
 	mux goahttp.Muxer,
 	decoder func(*http.Request) goahttp.Decoder,
@@ -364,13 +365,13 @@ func NewVoiceNotificationHandler(
 	formatter func(err error) goahttp.Statuser,
 ) http.Handler {
 	var (
-		decodeRequest  = DecodeVoiceNotificationRequest(mux, decoder)
-		encodeResponse = EncodeVoiceNotificationResponse(encoder)
+		decodeRequest  = DecodeVoiceNotifierRequest(mux, decoder)
+		encodeResponse = EncodeVoiceNotifierResponse(encoder)
 		encodeError    = goahttp.ErrorEncoder(encoder, formatter)
 	)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
-		ctx = context.WithValue(ctx, goa.MethodKey, "voice_notification")
+		ctx = context.WithValue(ctx, goa.MethodKey, "voice_notifier")
 		ctx = context.WithValue(ctx, goa.ServiceKey, "africastalking")
 		payload, err := decodeRequest(r)
 		if err != nil {
@@ -392,9 +393,9 @@ func NewVoiceNotificationHandler(
 	})
 }
 
-// MountTransferEventHandler configures the mux to serve the "africastalking"
-// service "transfer_event" endpoint.
-func MountTransferEventHandler(mux goahttp.Muxer, h http.Handler) {
+// MountTransferEventNotifierHandler configures the mux to serve the
+// "africastalking" service "transfer_event_notifier" endpoint.
+func MountTransferEventNotifierHandler(mux goahttp.Muxer, h http.Handler) {
 	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
@@ -404,9 +405,10 @@ func MountTransferEventHandler(mux goahttp.Muxer, h http.Handler) {
 	mux.Handle("POST", "/callbacks/africastalking/voice/transferevents", f)
 }
 
-// NewTransferEventHandler creates a HTTP handler which loads the HTTP request
-// and calls the "africastalking" service "transfer_event" endpoint.
-func NewTransferEventHandler(
+// NewTransferEventNotifierHandler creates a HTTP handler which loads the HTTP
+// request and calls the "africastalking" service "transfer_event_notifier"
+// endpoint.
+func NewTransferEventNotifierHandler(
 	endpoint endpoint.Endpoint,
 	mux goahttp.Muxer,
 	decoder func(*http.Request) goahttp.Decoder,
@@ -415,13 +417,13 @@ func NewTransferEventHandler(
 	formatter func(err error) goahttp.Statuser,
 ) http.Handler {
 	var (
-		decodeRequest  = DecodeTransferEventRequest(mux, decoder)
-		encodeResponse = EncodeTransferEventResponse(encoder)
+		decodeRequest  = DecodeTransferEventNotifierRequest(mux, decoder)
+		encodeResponse = EncodeTransferEventNotifierResponse(encoder)
 		encodeError    = goahttp.ErrorEncoder(encoder, formatter)
 	)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
-		ctx = context.WithValue(ctx, goa.MethodKey, "transfer_event")
+		ctx = context.WithValue(ctx, goa.MethodKey, "transfer_event_notifier")
 		ctx = context.WithValue(ctx, goa.ServiceKey, "africastalking")
 		payload, err := decodeRequest(r)
 		if err != nil {

@@ -20,38 +20,38 @@ func NewAfricastalking(logger log.Logger) africastalking.Service {
 }
 
 // Adds new SMS Delivery Report to our callback URL and return its ID.
-func (s *africastalkingsrvc) SmsDeliveryReport(ctx context.Context, p *africastalking.DeliveryReport) (res string, err error) {
-	s.logger.Log("info", fmt.Sprintf("africastalking.sms_delivery_report"))
+func (s *africastalkingsrvc) DeliveryReportNotifier(ctx context.Context, p *africastalking.DeliveryReportPayload) (res string, err error) {
+	s.logger.Log("info", fmt.Sprintf("africastalking.delivery_report_notifier"))
 	return
 }
 
 // Adds new SMS Incoming Message to our callback URL and return its ID.
-func (s *africastalkingsrvc) SmsIncomingMessage(ctx context.Context, p *africastalking.IncomingMessage) (res string, err error) {
-	s.logger.Log("info", fmt.Sprintf("africastalking.sms_incoming_message"))
+func (s *africastalkingsrvc) IncomingMessageNotifier(ctx context.Context, p *africastalking.IncomingMessagePayload) (res string, err error) {
+	s.logger.Log("info", fmt.Sprintf("africastalking.incoming_message_notifier"))
 	return
 }
 
 // Adds new SMS Bulk OptOut to our callback URL and return its ID.
-func (s *africastalkingsrvc) SmsBulkOptout(ctx context.Context, p *africastalking.BulkSMSOptOut) (res string, err error) {
-	s.logger.Log("info", fmt.Sprintf("africastalking.sms_bulk_optout"))
+func (s *africastalkingsrvc) BulkOptOutNotifier(ctx context.Context, p *africastalking.BulkSMSOptOutPayload) (res string, err error) {
+	s.logger.Log("info", fmt.Sprintf("africastalking.bulk_optOut_notifier"))
 	return
 }
 
 // Adds new SMS subscription to our callback URL and return its ID.
-func (s *africastalkingsrvc) SmsSubscription(ctx context.Context, p *africastalking.SubscriptionNotification) (res string, err error) {
-	s.logger.Log("info", fmt.Sprintf("africastalking.sms_subscription"))
+func (s *africastalkingsrvc) SubNotifier(ctx context.Context, p *africastalking.SubNotificationPayload) (res string, err error) {
+	s.logger.Log("info", fmt.Sprintf("africastalking.sub_notifier"))
 	return
 }
 
 // Adds new Voice Notification to our callback URL and return its ID.
-func (s *africastalkingsrvc) VoiceNotification(ctx context.Context, p *africastalking.VoiceNotification1) (res string, err error) {
-	s.logger.Log("info", fmt.Sprintf("africastalking.voice_notification"))
+func (s *africastalkingsrvc) VoiceNotifier(ctx context.Context, p *africastalking.VoiceNotificationPayload) (res string, err error) {
+	s.logger.Log("info", fmt.Sprintf("africastalking.voice_notifier"))
 	return
 }
 
 // Adds new Event Notification to our callback URL and return its ID.
-func (s *africastalkingsrvc) TransferEvent(ctx context.Context, p *africastalking.CallTransferEvent) (res string, err error) {
-	s.logger.Log("info", fmt.Sprintf("africastalking.transfer_event"))
+func (s *africastalkingsrvc) TransferEventNotifier(ctx context.Context, p *africastalking.TransferEventPayload) (res string, err error) {
+	s.logger.Log("info", fmt.Sprintf("africastalking.transfer_event_notifier"))
 	return
 }
 
@@ -71,19 +71,19 @@ func (s *africastalkingsrvc) ValidationNotifier(ctx context.Context, p *africast
 }
 
 // Adds new Airtime Status Notification to our callback URL and return its ID.
-func (s *africastalkingsrvc) StatusNotifier(ctx context.Context, p *africastalking.AirtimeStatus) (res string, err error) {
+func (s *africastalkingsrvc) StatusNotifier(ctx context.Context, p *africastalking.AirtimeStatusPayload) (res string, err error) {
 	s.logger.Log("info", fmt.Sprintf("africastalking.status_notifier"))
 	return
 }
 
 // Adds new Payment Notification to our callback URL and return its ID.
-func (s *africastalkingsrvc) PaymentNotifier(ctx context.Context, p *africastalking.PaymentNotification) (res string, err error) {
+func (s *africastalkingsrvc) PaymentNotifier(ctx context.Context, p *africastalking.PaymentNotificationPayload) (res string, err error) {
 	s.logger.Log("info", fmt.Sprintf("africastalking.payment_notifier"))
 	return
 }
 
 // Adds new C2B Validation Notification to our callback URL and return its ID.
-func (s *africastalkingsrvc) C2bValidationNotifier(ctx context.Context, p *africastalking.C2BValidationNotification) (res string, err error) {
+func (s *africastalkingsrvc) C2bValidationNotifier(ctx context.Context, p *africastalking.C2BValidationNotificationPayload) (res string, err error) {
 	s.logger.Log("info", fmt.Sprintf("africastalking.c2b_validation_notifier"))
 	return
 }
@@ -96,7 +96,7 @@ func (s *africastalkingsrvc) B2cValidationNotifier(ctx context.Context, p *afric
 }
 
 // Adds new IoT Notification to our callback URL and return its ID.
-func (s *africastalkingsrvc) IotNotifier(ctx context.Context, p *africastalking.IoTNotification) (res string, err error) {
+func (s *africastalkingsrvc) IotNotifier(ctx context.Context, p *africastalking.IoTNotificationPayload) (res string, err error) {
 	s.logger.Log("info", fmt.Sprintf("africastalking.iot_notifier"))
 	return
 }

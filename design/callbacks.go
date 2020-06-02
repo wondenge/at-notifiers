@@ -7,24 +7,16 @@ import (
 	_ "goa.design/plugins/v3/zaplogger" // Enables ZapLogger Plugin
 )
 
-/*
-	 SMS Callback Service.
- 	 This service hosts the following notifications.
-     1. Delivery Reports.
-     2. Incoming Messages.
-     3. Bulk SMS Opt Out.
-     4. Subscription Notification.
-*/
 var _ = Service("africastalking", func() {
 	HTTP(func() {
 		Path("/callbacks/africastalking")
 	})
 
 	// Sent whenever an MSP confirms or rejects delivery of a message.
-	Method("sms_delivery_report", func() {
+	Method("delivery_report_notifier", func() {
 
 		Description("Adds new SMS Delivery Report to our callback URL and return its ID.")
-		Payload(DeliveryReport)
+		Payload(DeliveryReportPayload)
 		Result(String)
 		HTTP(func() {
 			POST("/sms/deliveryreport")
@@ -34,10 +26,10 @@ var _ = Service("africastalking", func() {
 
 	// Sent whenever a message is sent to any of your registered
 	// shortcodes.
-	Method("sms_incoming_message", func() {
+	Method("incoming_message_notifier", func() {
 
 		Description("Adds new SMS Incoming Message to our callback URL and return its ID.")
-		Payload(IncomingMessage)
+		Payload(IncomingMessagePayload)
 		Result(String)
 		HTTP(func() {
 			POST("/sms/incomingmessage")
@@ -47,9 +39,9 @@ var _ = Service("africastalking", func() {
 
 	// Sent whenever a user opts out of receiving messages from your
 	// alphanumeric sender ID
-	Method("sms_bulk_optout", func() {
+	Method("bulk_optOut_notifier", func() {
 		Description("Adds new SMS Bulk OptOut to our callback URL and return its ID.")
-		Payload(BulkSMSOptOut)
+		Payload(BulkSMSOptOutPayload)
 		Result(String)
 		HTTP(func() {
 			POST("/sms/bulksmsoptout")
@@ -59,9 +51,9 @@ var _ = Service("africastalking", func() {
 
 	// Sent whenever someone subscribes or unsubscribes from any of
 	// your premium SMS products.
-	Method("sms_subscription", func() {
+	Method("sub_notifier", func() {
 		Description("Adds new SMS subscription to our callback URL and return its ID.")
-		Payload(SubscriptionNotification)
+		Payload(SubNotificationPayload)
 		Result(String)
 		HTTP(func() {
 			POST("/sms/subscription")
@@ -70,9 +62,9 @@ var _ = Service("africastalking", func() {
 	})
 
 	// Voice notifications sent from Africa'sTalking gateway.
-	Method("voice_notification", func() {
+	Method("voice_notifier", func() {
 		Description("Adds new Voice Notification to our callback URL and return its ID.")
-		Payload(VoiceNotification)
+		Payload(VoiceNotificationPayload)
 		Result(String)
 		HTTP(func() {
 			POST("/voice/notifications")
@@ -81,9 +73,9 @@ var _ = Service("africastalking", func() {
 	})
 
 	// Sent from AT after call transfer initiated.
-	Method("transfer_event", func() {
+	Method("transfer_event_notifier", func() {
 		Description("Adds new Event Notification to our callback URL and return its ID.")
-		Payload(CallTransferEvent)
+		Payload(TransferEventPayload)
 		Result(String)
 		HTTP(func() {
 			POST("/voice/transferevents")
@@ -114,7 +106,7 @@ var _ = Service("africastalking", func() {
 
 	Method("status_notifier", func() {
 		Description("Adds new Airtime Status Notification to our callback URL and return its ID.")
-		Payload(AirtimeStatus)
+		Payload(AirtimeStatusPayload)
 		Result(String)
 		HTTP(func() {
 			POST("/airtime/status")
@@ -125,7 +117,7 @@ var _ = Service("africastalking", func() {
 	// Payment Notifications
 	Method("payment_notifier", func() {
 		Description("Adds new Payment Notification to our callback URL and return its ID.")
-		Payload(PaymentNotification)
+		Payload(PaymentNotificationPayload)
 		Result(String)
 		HTTP(func() {
 			POST("/payments/events")
@@ -136,7 +128,7 @@ var _ = Service("africastalking", func() {
 	// C2B Validation Notifications
 	Method("c2b_validation_notifier", func() {
 		Description("Adds new C2B Validation Notification to our callback URL and return its ID.")
-		Payload(C2BValidationNotification)
+		Payload(C2BValidationNotificationPayload)
 		Result(String)
 		HTTP(func() {
 			POST("/payments/c2b/validation")
@@ -158,7 +150,7 @@ var _ = Service("africastalking", func() {
 	// IoT Notifications
 	Method("iot_notifier", func() {
 		Description("Adds new IoT Notification to our callback URL and return its ID.")
-		Payload(IoTNotification)
+		Payload(IoTNotificationPayload)
 		Result(String)
 		HTTP(func() {
 			POST("/iot/events")

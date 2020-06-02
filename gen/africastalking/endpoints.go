@@ -15,50 +15,50 @@ import (
 
 // Endpoints wraps the "africastalking" service endpoints.
 type Endpoints struct {
-	SmsDeliveryReport     endpoint.Endpoint
-	SmsIncomingMessage    endpoint.Endpoint
-	SmsBulkOptout         endpoint.Endpoint
-	SmsSubscription       endpoint.Endpoint
-	VoiceNotification     endpoint.Endpoint
-	TransferEvent         endpoint.Endpoint
-	UssdNotifier          endpoint.Endpoint
-	ValidationNotifier    endpoint.Endpoint
-	StatusNotifier        endpoint.Endpoint
-	PaymentNotifier       endpoint.Endpoint
-	C2bValidationNotifier endpoint.Endpoint
-	B2cValidationNotifier endpoint.Endpoint
-	IotNotifier           endpoint.Endpoint
+	DeliveryReportNotifier  endpoint.Endpoint
+	IncomingMessageNotifier endpoint.Endpoint
+	BulkOptOutNotifier      endpoint.Endpoint
+	SubNotifier             endpoint.Endpoint
+	VoiceNotifier           endpoint.Endpoint
+	TransferEventNotifier   endpoint.Endpoint
+	UssdNotifier            endpoint.Endpoint
+	ValidationNotifier      endpoint.Endpoint
+	StatusNotifier          endpoint.Endpoint
+	PaymentNotifier         endpoint.Endpoint
+	C2bValidationNotifier   endpoint.Endpoint
+	B2cValidationNotifier   endpoint.Endpoint
+	IotNotifier             endpoint.Endpoint
 }
 
 // NewEndpoints wraps the methods of the "africastalking" service with
 // endpoints.
 func NewEndpoints(s Service) *Endpoints {
 	return &Endpoints{
-		SmsDeliveryReport:     NewSmsDeliveryReportEndpoint(s),
-		SmsIncomingMessage:    NewSmsIncomingMessageEndpoint(s),
-		SmsBulkOptout:         NewSmsBulkOptoutEndpoint(s),
-		SmsSubscription:       NewSmsSubscriptionEndpoint(s),
-		VoiceNotification:     NewVoiceNotificationEndpoint(s),
-		TransferEvent:         NewTransferEventEndpoint(s),
-		UssdNotifier:          NewUssdNotifierEndpoint(s),
-		ValidationNotifier:    NewValidationNotifierEndpoint(s),
-		StatusNotifier:        NewStatusNotifierEndpoint(s),
-		PaymentNotifier:       NewPaymentNotifierEndpoint(s),
-		C2bValidationNotifier: NewC2bValidationNotifierEndpoint(s),
-		B2cValidationNotifier: NewB2cValidationNotifierEndpoint(s),
-		IotNotifier:           NewIotNotifierEndpoint(s),
+		DeliveryReportNotifier:  NewDeliveryReportNotifierEndpoint(s),
+		IncomingMessageNotifier: NewIncomingMessageNotifierEndpoint(s),
+		BulkOptOutNotifier:      NewBulkOptOutNotifierEndpoint(s),
+		SubNotifier:             NewSubNotifierEndpoint(s),
+		VoiceNotifier:           NewVoiceNotifierEndpoint(s),
+		TransferEventNotifier:   NewTransferEventNotifierEndpoint(s),
+		UssdNotifier:            NewUssdNotifierEndpoint(s),
+		ValidationNotifier:      NewValidationNotifierEndpoint(s),
+		StatusNotifier:          NewStatusNotifierEndpoint(s),
+		PaymentNotifier:         NewPaymentNotifierEndpoint(s),
+		C2bValidationNotifier:   NewC2bValidationNotifierEndpoint(s),
+		B2cValidationNotifier:   NewB2cValidationNotifierEndpoint(s),
+		IotNotifier:             NewIotNotifierEndpoint(s),
 	}
 }
 
 // Use applies the given middleware to all the "africastalking" service
 // endpoints.
 func (e *Endpoints) Use(m func(endpoint.Endpoint) endpoint.Endpoint) {
-	e.SmsDeliveryReport = m(e.SmsDeliveryReport)
-	e.SmsIncomingMessage = m(e.SmsIncomingMessage)
-	e.SmsBulkOptout = m(e.SmsBulkOptout)
-	e.SmsSubscription = m(e.SmsSubscription)
-	e.VoiceNotification = m(e.VoiceNotification)
-	e.TransferEvent = m(e.TransferEvent)
+	e.DeliveryReportNotifier = m(e.DeliveryReportNotifier)
+	e.IncomingMessageNotifier = m(e.IncomingMessageNotifier)
+	e.BulkOptOutNotifier = m(e.BulkOptOutNotifier)
+	e.SubNotifier = m(e.SubNotifier)
+	e.VoiceNotifier = m(e.VoiceNotifier)
+	e.TransferEventNotifier = m(e.TransferEventNotifier)
 	e.UssdNotifier = m(e.UssdNotifier)
 	e.ValidationNotifier = m(e.ValidationNotifier)
 	e.StatusNotifier = m(e.StatusNotifier)
@@ -68,57 +68,57 @@ func (e *Endpoints) Use(m func(endpoint.Endpoint) endpoint.Endpoint) {
 	e.IotNotifier = m(e.IotNotifier)
 }
 
-// NewSmsDeliveryReportEndpoint returns an endpoint function that calls the
-// method "sms_delivery_report" of service "africastalking".
-func NewSmsDeliveryReportEndpoint(s Service) endpoint.Endpoint {
+// NewDeliveryReportNotifierEndpoint returns an endpoint function that calls
+// the method "delivery_report_notifier" of service "africastalking".
+func NewDeliveryReportNotifierEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		p := req.(*DeliveryReport)
-		return s.SmsDeliveryReport(ctx, p)
+		p := req.(*DeliveryReportPayload)
+		return s.DeliveryReportNotifier(ctx, p)
 	}
 }
 
-// NewSmsIncomingMessageEndpoint returns an endpoint function that calls the
-// method "sms_incoming_message" of service "africastalking".
-func NewSmsIncomingMessageEndpoint(s Service) endpoint.Endpoint {
+// NewIncomingMessageNotifierEndpoint returns an endpoint function that calls
+// the method "incoming_message_notifier" of service "africastalking".
+func NewIncomingMessageNotifierEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		p := req.(*IncomingMessage)
-		return s.SmsIncomingMessage(ctx, p)
+		p := req.(*IncomingMessagePayload)
+		return s.IncomingMessageNotifier(ctx, p)
 	}
 }
 
-// NewSmsBulkOptoutEndpoint returns an endpoint function that calls the method
-// "sms_bulk_optout" of service "africastalking".
-func NewSmsBulkOptoutEndpoint(s Service) endpoint.Endpoint {
+// NewBulkOptOutNotifierEndpoint returns an endpoint function that calls the
+// method "bulk_optOut_notifier" of service "africastalking".
+func NewBulkOptOutNotifierEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		p := req.(*BulkSMSOptOut)
-		return s.SmsBulkOptout(ctx, p)
+		p := req.(*BulkSMSOptOutPayload)
+		return s.BulkOptOutNotifier(ctx, p)
 	}
 }
 
-// NewSmsSubscriptionEndpoint returns an endpoint function that calls the
-// method "sms_subscription" of service "africastalking".
-func NewSmsSubscriptionEndpoint(s Service) endpoint.Endpoint {
+// NewSubNotifierEndpoint returns an endpoint function that calls the method
+// "sub_notifier" of service "africastalking".
+func NewSubNotifierEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		p := req.(*SubscriptionNotification)
-		return s.SmsSubscription(ctx, p)
+		p := req.(*SubNotificationPayload)
+		return s.SubNotifier(ctx, p)
 	}
 }
 
-// NewVoiceNotificationEndpoint returns an endpoint function that calls the
-// method "voice_notification" of service "africastalking".
-func NewVoiceNotificationEndpoint(s Service) endpoint.Endpoint {
+// NewVoiceNotifierEndpoint returns an endpoint function that calls the method
+// "voice_notifier" of service "africastalking".
+func NewVoiceNotifierEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		p := req.(*VoiceNotification1)
-		return s.VoiceNotification(ctx, p)
+		p := req.(*VoiceNotificationPayload)
+		return s.VoiceNotifier(ctx, p)
 	}
 }
 
-// NewTransferEventEndpoint returns an endpoint function that calls the method
-// "transfer_event" of service "africastalking".
-func NewTransferEventEndpoint(s Service) endpoint.Endpoint {
+// NewTransferEventNotifierEndpoint returns an endpoint function that calls the
+// method "transfer_event_notifier" of service "africastalking".
+func NewTransferEventNotifierEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		p := req.(*CallTransferEvent)
-		return s.TransferEvent(ctx, p)
+		p := req.(*TransferEventPayload)
+		return s.TransferEventNotifier(ctx, p)
 	}
 }
 
@@ -149,7 +149,7 @@ func NewValidationNotifierEndpoint(s Service) endpoint.Endpoint {
 // "status_notifier" of service "africastalking".
 func NewStatusNotifierEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		p := req.(*AirtimeStatus)
+		p := req.(*AirtimeStatusPayload)
 		return s.StatusNotifier(ctx, p)
 	}
 }
@@ -158,7 +158,7 @@ func NewStatusNotifierEndpoint(s Service) endpoint.Endpoint {
 // method "payment_notifier" of service "africastalking".
 func NewPaymentNotifierEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		p := req.(*PaymentNotification)
+		p := req.(*PaymentNotificationPayload)
 		return s.PaymentNotifier(ctx, p)
 	}
 }
@@ -167,7 +167,7 @@ func NewPaymentNotifierEndpoint(s Service) endpoint.Endpoint {
 // method "c2b_validation_notifier" of service "africastalking".
 func NewC2bValidationNotifierEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		p := req.(*C2BValidationNotification)
+		p := req.(*C2BValidationNotificationPayload)
 		return s.C2bValidationNotifier(ctx, p)
 	}
 }
@@ -185,7 +185,7 @@ func NewB2cValidationNotifierEndpoint(s Service) endpoint.Endpoint {
 // "iot_notifier" of service "africastalking".
 func NewIotNotifierEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		p := req.(*IoTNotification)
+		p := req.(*IoTNotificationPayload)
 		return s.IotNotifier(ctx, p)
 	}
 }

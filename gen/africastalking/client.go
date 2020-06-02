@@ -15,100 +15,100 @@ import (
 
 // Client is the "africastalking" service client.
 type Client struct {
-	SmsDeliveryReportEndpoint     endpoint.Endpoint
-	SmsIncomingMessageEndpoint    endpoint.Endpoint
-	SmsBulkOptoutEndpoint         endpoint.Endpoint
-	SmsSubscriptionEndpoint       endpoint.Endpoint
-	VoiceNotificationEndpoint     endpoint.Endpoint
-	TransferEventEndpoint         endpoint.Endpoint
-	UssdNotifierEndpoint          endpoint.Endpoint
-	ValidationNotifierEndpoint    endpoint.Endpoint
-	StatusNotifierEndpoint        endpoint.Endpoint
-	PaymentNotifierEndpoint       endpoint.Endpoint
-	C2bValidationNotifierEndpoint endpoint.Endpoint
-	B2cValidationNotifierEndpoint endpoint.Endpoint
-	IotNotifierEndpoint           endpoint.Endpoint
+	DeliveryReportNotifierEndpoint  endpoint.Endpoint
+	IncomingMessageNotifierEndpoint endpoint.Endpoint
+	BulkOptOutNotifierEndpoint      endpoint.Endpoint
+	SubNotifierEndpoint             endpoint.Endpoint
+	VoiceNotifierEndpoint           endpoint.Endpoint
+	TransferEventNotifierEndpoint   endpoint.Endpoint
+	UssdNotifierEndpoint            endpoint.Endpoint
+	ValidationNotifierEndpoint      endpoint.Endpoint
+	StatusNotifierEndpoint          endpoint.Endpoint
+	PaymentNotifierEndpoint         endpoint.Endpoint
+	C2bValidationNotifierEndpoint   endpoint.Endpoint
+	B2cValidationNotifierEndpoint   endpoint.Endpoint
+	IotNotifierEndpoint             endpoint.Endpoint
 }
 
 // NewClient initializes a "africastalking" service client given the endpoints.
-func NewClient(smsDeliveryReport, smsIncomingMessage, smsBulkOptout, smsSubscription, voiceNotification, transferEvent, ussdNotifier, validationNotifier, statusNotifier, paymentNotifier, c2bValidationNotifier, b2cValidationNotifier, iotNotifier endpoint.Endpoint) *Client {
+func NewClient(deliveryReportNotifier, incomingMessageNotifier, bulkOptOutNotifier, subNotifier, voiceNotifier, transferEventNotifier, ussdNotifier, validationNotifier, statusNotifier, paymentNotifier, c2bValidationNotifier, b2cValidationNotifier, iotNotifier endpoint.Endpoint) *Client {
 	return &Client{
-		SmsDeliveryReportEndpoint:     smsDeliveryReport,
-		SmsIncomingMessageEndpoint:    smsIncomingMessage,
-		SmsBulkOptoutEndpoint:         smsBulkOptout,
-		SmsSubscriptionEndpoint:       smsSubscription,
-		VoiceNotificationEndpoint:     voiceNotification,
-		TransferEventEndpoint:         transferEvent,
-		UssdNotifierEndpoint:          ussdNotifier,
-		ValidationNotifierEndpoint:    validationNotifier,
-		StatusNotifierEndpoint:        statusNotifier,
-		PaymentNotifierEndpoint:       paymentNotifier,
-		C2bValidationNotifierEndpoint: c2bValidationNotifier,
-		B2cValidationNotifierEndpoint: b2cValidationNotifier,
-		IotNotifierEndpoint:           iotNotifier,
+		DeliveryReportNotifierEndpoint:  deliveryReportNotifier,
+		IncomingMessageNotifierEndpoint: incomingMessageNotifier,
+		BulkOptOutNotifierEndpoint:      bulkOptOutNotifier,
+		SubNotifierEndpoint:             subNotifier,
+		VoiceNotifierEndpoint:           voiceNotifier,
+		TransferEventNotifierEndpoint:   transferEventNotifier,
+		UssdNotifierEndpoint:            ussdNotifier,
+		ValidationNotifierEndpoint:      validationNotifier,
+		StatusNotifierEndpoint:          statusNotifier,
+		PaymentNotifierEndpoint:         paymentNotifier,
+		C2bValidationNotifierEndpoint:   c2bValidationNotifier,
+		B2cValidationNotifierEndpoint:   b2cValidationNotifier,
+		IotNotifierEndpoint:             iotNotifier,
 	}
 }
 
-// SmsDeliveryReport calls the "sms_delivery_report" endpoint of the
+// DeliveryReportNotifier calls the "delivery_report_notifier" endpoint of the
 // "africastalking" service.
-func (c *Client) SmsDeliveryReport(ctx context.Context, p *DeliveryReport) (res string, err error) {
+func (c *Client) DeliveryReportNotifier(ctx context.Context, p *DeliveryReportPayload) (res string, err error) {
 	var ires interface{}
-	ires, err = c.SmsDeliveryReportEndpoint(ctx, p)
+	ires, err = c.DeliveryReportNotifierEndpoint(ctx, p)
 	if err != nil {
 		return
 	}
 	return ires.(string), nil
 }
 
-// SmsIncomingMessage calls the "sms_incoming_message" endpoint of the
-// "africastalking" service.
-func (c *Client) SmsIncomingMessage(ctx context.Context, p *IncomingMessage) (res string, err error) {
+// IncomingMessageNotifier calls the "incoming_message_notifier" endpoint of
+// the "africastalking" service.
+func (c *Client) IncomingMessageNotifier(ctx context.Context, p *IncomingMessagePayload) (res string, err error) {
 	var ires interface{}
-	ires, err = c.SmsIncomingMessageEndpoint(ctx, p)
+	ires, err = c.IncomingMessageNotifierEndpoint(ctx, p)
 	if err != nil {
 		return
 	}
 	return ires.(string), nil
 }
 
-// SmsBulkOptout calls the "sms_bulk_optout" endpoint of the "africastalking"
+// BulkOptOutNotifier calls the "bulk_optOut_notifier" endpoint of the
+// "africastalking" service.
+func (c *Client) BulkOptOutNotifier(ctx context.Context, p *BulkSMSOptOutPayload) (res string, err error) {
+	var ires interface{}
+	ires, err = c.BulkOptOutNotifierEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(string), nil
+}
+
+// SubNotifier calls the "sub_notifier" endpoint of the "africastalking"
 // service.
-func (c *Client) SmsBulkOptout(ctx context.Context, p *BulkSMSOptOut) (res string, err error) {
+func (c *Client) SubNotifier(ctx context.Context, p *SubNotificationPayload) (res string, err error) {
 	var ires interface{}
-	ires, err = c.SmsBulkOptoutEndpoint(ctx, p)
+	ires, err = c.SubNotifierEndpoint(ctx, p)
 	if err != nil {
 		return
 	}
 	return ires.(string), nil
 }
 
-// SmsSubscription calls the "sms_subscription" endpoint of the
-// "africastalking" service.
-func (c *Client) SmsSubscription(ctx context.Context, p *SubscriptionNotification) (res string, err error) {
-	var ires interface{}
-	ires, err = c.SmsSubscriptionEndpoint(ctx, p)
-	if err != nil {
-		return
-	}
-	return ires.(string), nil
-}
-
-// VoiceNotification calls the "voice_notification" endpoint of the
-// "africastalking" service.
-func (c *Client) VoiceNotification(ctx context.Context, p *VoiceNotification1) (res string, err error) {
-	var ires interface{}
-	ires, err = c.VoiceNotificationEndpoint(ctx, p)
-	if err != nil {
-		return
-	}
-	return ires.(string), nil
-}
-
-// TransferEvent calls the "transfer_event" endpoint of the "africastalking"
+// VoiceNotifier calls the "voice_notifier" endpoint of the "africastalking"
 // service.
-func (c *Client) TransferEvent(ctx context.Context, p *CallTransferEvent) (res string, err error) {
+func (c *Client) VoiceNotifier(ctx context.Context, p *VoiceNotificationPayload) (res string, err error) {
 	var ires interface{}
-	ires, err = c.TransferEventEndpoint(ctx, p)
+	ires, err = c.VoiceNotifierEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(string), nil
+}
+
+// TransferEventNotifier calls the "transfer_event_notifier" endpoint of the
+// "africastalking" service.
+func (c *Client) TransferEventNotifier(ctx context.Context, p *TransferEventPayload) (res string, err error) {
+	var ires interface{}
+	ires, err = c.TransferEventNotifierEndpoint(ctx, p)
 	if err != nil {
 		return
 	}
@@ -139,7 +139,7 @@ func (c *Client) ValidationNotifier(ctx context.Context, p *AirtimeValidationPay
 
 // StatusNotifier calls the "status_notifier" endpoint of the "africastalking"
 // service.
-func (c *Client) StatusNotifier(ctx context.Context, p *AirtimeStatus) (res string, err error) {
+func (c *Client) StatusNotifier(ctx context.Context, p *AirtimeStatusPayload) (res string, err error) {
 	var ires interface{}
 	ires, err = c.StatusNotifierEndpoint(ctx, p)
 	if err != nil {
@@ -150,7 +150,7 @@ func (c *Client) StatusNotifier(ctx context.Context, p *AirtimeStatus) (res stri
 
 // PaymentNotifier calls the "payment_notifier" endpoint of the
 // "africastalking" service.
-func (c *Client) PaymentNotifier(ctx context.Context, p *PaymentNotification) (res string, err error) {
+func (c *Client) PaymentNotifier(ctx context.Context, p *PaymentNotificationPayload) (res string, err error) {
 	var ires interface{}
 	ires, err = c.PaymentNotifierEndpoint(ctx, p)
 	if err != nil {
@@ -161,7 +161,7 @@ func (c *Client) PaymentNotifier(ctx context.Context, p *PaymentNotification) (r
 
 // C2bValidationNotifier calls the "c2b_validation_notifier" endpoint of the
 // "africastalking" service.
-func (c *Client) C2bValidationNotifier(ctx context.Context, p *C2BValidationNotification) (res string, err error) {
+func (c *Client) C2bValidationNotifier(ctx context.Context, p *C2BValidationNotificationPayload) (res string, err error) {
 	var ires interface{}
 	ires, err = c.C2bValidationNotifierEndpoint(ctx, p)
 	if err != nil {
@@ -183,7 +183,7 @@ func (c *Client) B2cValidationNotifier(ctx context.Context, p *B2CValidationNoti
 
 // IotNotifier calls the "iot_notifier" endpoint of the "africastalking"
 // service.
-func (c *Client) IotNotifier(ctx context.Context, p *IoTNotification) (res string, err error) {
+func (c *Client) IotNotifier(ctx context.Context, p *IoTNotificationPayload) (res string, err error) {
 	var ires interface{}
 	ires, err = c.IotNotifierEndpoint(ctx, p)
 	if err != nil {

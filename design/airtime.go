@@ -54,7 +54,7 @@ var AirtimeValidationResponse = Type("AirtimeValidationResponse", func() {
 // Status notification content
 // Airtime status notifications are sent as HTTP POST requests to the status callback
 // URL provided and contain the following parameters:
-var AirtimeStatus = Type("AirtimeStatus", func() {
+var AirtimeStatusPayload = Type("AirtimeStatusPayload", func() {
 	Attribute("requestId", String, func() {
 		Description("The request ID sent back as a response to the airtime send request.")
 		Example("ATQid_SampleTxnId123")

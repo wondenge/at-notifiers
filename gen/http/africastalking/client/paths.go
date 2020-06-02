@@ -7,33 +7,33 @@
 
 package client
 
-// SmsDeliveryReportAfricastalkingPath returns the URL path to the africastalking service sms_delivery_report HTTP endpoint.
-func SmsDeliveryReportAfricastalkingPath() string {
+// DeliveryReportNotifierAfricastalkingPath returns the URL path to the africastalking service delivery_report_notifier HTTP endpoint.
+func DeliveryReportNotifierAfricastalkingPath() string {
 	return "/callbacks/africastalking/sms/deliveryreport"
 }
 
-// SmsIncomingMessageAfricastalkingPath returns the URL path to the africastalking service sms_incoming_message HTTP endpoint.
-func SmsIncomingMessageAfricastalkingPath() string {
+// IncomingMessageNotifierAfricastalkingPath returns the URL path to the africastalking service incoming_message_notifier HTTP endpoint.
+func IncomingMessageNotifierAfricastalkingPath() string {
 	return "/callbacks/africastalking/sms/incomingmessage"
 }
 
-// SmsBulkOptoutAfricastalkingPath returns the URL path to the africastalking service sms_bulk_optout HTTP endpoint.
-func SmsBulkOptoutAfricastalkingPath() string {
+// BulkOptOutNotifierAfricastalkingPath returns the URL path to the africastalking service bulk_optOut_notifier HTTP endpoint.
+func BulkOptOutNotifierAfricastalkingPath() string {
 	return "/callbacks/africastalking/sms/bulksmsoptout"
 }
 
-// SmsSubscriptionAfricastalkingPath returns the URL path to the africastalking service sms_subscription HTTP endpoint.
-func SmsSubscriptionAfricastalkingPath() string {
+// SubNotifierAfricastalkingPath returns the URL path to the africastalking service sub_notifier HTTP endpoint.
+func SubNotifierAfricastalkingPath() string {
 	return "/callbacks/africastalking/sms/subscription"
 }
 
-// VoiceNotificationAfricastalkingPath returns the URL path to the africastalking service voice_notification HTTP endpoint.
-func VoiceNotificationAfricastalkingPath() string {
+// VoiceNotifierAfricastalkingPath returns the URL path to the africastalking service voice_notifier HTTP endpoint.
+func VoiceNotifierAfricastalkingPath() string {
 	return "/callbacks/africastalking/voice/notifications"
 }
 
-// TransferEventAfricastalkingPath returns the URL path to the africastalking service transfer_event HTTP endpoint.
-func TransferEventAfricastalkingPath() string {
+// TransferEventNotifierAfricastalkingPath returns the URL path to the africastalking service transfer_event_notifier HTTP endpoint.
+func TransferEventNotifierAfricastalkingPath() string {
 	return "/callbacks/africastalking/voice/transferevents"
 }
 

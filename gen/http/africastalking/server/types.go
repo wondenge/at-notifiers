@@ -13,9 +13,9 @@ import (
 	goa "goa.design/goa/v3/pkg"
 )
 
-// SmsDeliveryReportRequestBody is the type of the "africastalking" service
-// "sms_delivery_report" endpoint HTTP request body.
-type SmsDeliveryReportRequestBody struct {
+// DeliveryReportNotifierRequestBody is the type of the "africastalking"
+// service "delivery_report_notifier" endpoint HTTP request body.
+type DeliveryReportNotifierRequestBody struct {
 	// A unique identifier for each message.
 	ID *string `form:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
 	// The status of the message.
@@ -31,9 +31,9 @@ type SmsDeliveryReportRequestBody struct {
 	RetryCount *string `form:"retryCount,omitempty" json:"retryCount,omitempty" xml:"retryCount,omitempty"`
 }
 
-// SmsIncomingMessageRequestBody is the type of the "africastalking" service
-// "sms_incoming_message" endpoint HTTP request body.
-type SmsIncomingMessageRequestBody struct {
+// IncomingMessageNotifierRequestBody is the type of the "africastalking"
+// service "incoming_message_notifier" endpoint HTTP request body.
+type IncomingMessageNotifierRequestBody struct {
 	// The date and time when the message was received.
 	Date *string `form:"date,omitempty" json:"date,omitempty" xml:"date,omitempty"`
 	// The number that sent the message.
@@ -51,18 +51,18 @@ type SmsIncomingMessageRequestBody struct {
 	NetworkCode *string `form:"networkCode,omitempty" json:"networkCode,omitempty" xml:"networkCode,omitempty"`
 }
 
-// SmsBulkOptoutRequestBody is the type of the "africastalking" service
-// "sms_bulk_optout" endpoint HTTP request body.
-type SmsBulkOptoutRequestBody struct {
+// BulkOptOutNotifierRequestBody is the type of the "africastalking" service
+// "bulk_optOut_notifier" endpoint HTTP request body.
+type BulkOptOutNotifierRequestBody struct {
 	// Shortcode/Alphanumeric Sender ID the user opted out from.
 	SenderID *string `form:"senderId,omitempty" json:"senderId,omitempty" xml:"senderId,omitempty"`
 	// Mobile phone number of the subscriber who opted out.
 	PhoneNumber *string `form:"phoneNumber,omitempty" json:"phoneNumber,omitempty" xml:"phoneNumber,omitempty"`
 }
 
-// SmsSubscriptionRequestBody is the type of the "africastalking" service
-// "sms_subscription" endpoint HTTP request body.
-type SmsSubscriptionRequestBody struct {
+// SubNotifierRequestBody is the type of the "africastalking" service
+// "sub_notifier" endpoint HTTP request body.
+type SubNotifierRequestBody struct {
 	// Mobile phone number to subscribe or unsubscribe.
 	PhoneNumber *string `form:"phoneNumber,omitempty" json:"phoneNumber,omitempty" xml:"phoneNumber,omitempty"`
 	// The short code that has this product.
@@ -73,9 +73,9 @@ type SmsSubscriptionRequestBody struct {
 	UpdateType *string `form:"updateType,omitempty" json:"updateType,omitempty" xml:"updateType,omitempty"`
 }
 
-// VoiceNotificationRequestBody is the type of the "africastalking" service
-// "voice_notification" endpoint HTTP request body.
-type VoiceNotificationRequestBody struct {
+// VoiceNotifierRequestBody is the type of the "africastalking" service
+// "voice_notifier" endpoint HTTP request body.
+type VoiceNotifierRequestBody struct {
 	// Lets us know whether the call is in session state
 	IsActive *string `form:"isActive,omitempty" json:"isActive,omitempty" xml:"isActive,omitempty"`
 	// A unique identifier generated during each call session
@@ -112,9 +112,9 @@ type VoiceNotificationRequestBody struct {
 	HangupCause *string `form:"hangupCause,omitempty" json:"hangupCause,omitempty" xml:"hangupCause,omitempty"`
 }
 
-// TransferEventRequestBody is the type of the "africastalking" service
-// "transfer_event" endpoint HTTP request body.
-type TransferEventRequestBody struct {
+// TransferEventNotifierRequestBody is the type of the "africastalking" service
+// "transfer_event_notifier" endpoint HTTP request body.
+type TransferEventNotifierRequestBody struct {
 	CallSessionState *string `form:"callSessionState,omitempty" json:"callSessionState,omitempty" xml:"callSessionState,omitempty"`
 	IsActive         *string `form:"isActive,omitempty" json:"isActive,omitempty" xml:"isActive,omitempty"`
 	Status           *string `form:"status,omitempty" json:"status,omitempty" xml:"status,omitempty"`
@@ -301,10 +301,10 @@ func NewB2cValidationNotifierResponseBody(res *africastalking.B2CValidationNotif
 	return body
 }
 
-// NewSmsDeliveryReportDeliveryReport builds a africastalking service
-// sms_delivery_report endpoint payload.
-func NewSmsDeliveryReportDeliveryReport(body *SmsDeliveryReportRequestBody) *africastalking.DeliveryReport {
-	v := &africastalking.DeliveryReport{
+// NewDeliveryReportNotifierDeliveryReportPayload builds a africastalking
+// service delivery_report_notifier endpoint payload.
+func NewDeliveryReportNotifierDeliveryReportPayload(body *DeliveryReportNotifierRequestBody) *africastalking.DeliveryReportPayload {
+	v := &africastalking.DeliveryReportPayload{
 		ID:            body.ID,
 		Status:        body.Status,
 		PhoneNumber:   body.PhoneNumber,
@@ -316,10 +316,10 @@ func NewSmsDeliveryReportDeliveryReport(body *SmsDeliveryReportRequestBody) *afr
 	return v
 }
 
-// NewSmsIncomingMessageIncomingMessage builds a africastalking service
-// sms_incoming_message endpoint payload.
-func NewSmsIncomingMessageIncomingMessage(body *SmsIncomingMessageRequestBody) *africastalking.IncomingMessage {
-	v := &africastalking.IncomingMessage{
+// NewIncomingMessageNotifierIncomingMessagePayload builds a africastalking
+// service incoming_message_notifier endpoint payload.
+func NewIncomingMessageNotifierIncomingMessagePayload(body *IncomingMessageNotifierRequestBody) *africastalking.IncomingMessagePayload {
+	v := &africastalking.IncomingMessagePayload{
 		Date:        body.Date,
 		From:        body.From,
 		ID:          body.ID,
@@ -332,10 +332,10 @@ func NewSmsIncomingMessageIncomingMessage(body *SmsIncomingMessageRequestBody) *
 	return v
 }
 
-// NewSmsBulkOptoutBulkSMSOptOut builds a africastalking service
-// sms_bulk_optout endpoint payload.
-func NewSmsBulkOptoutBulkSMSOptOut(body *SmsBulkOptoutRequestBody) *africastalking.BulkSMSOptOut {
-	v := &africastalking.BulkSMSOptOut{
+// NewBulkOptOutNotifierBulkSMSOptOutPayload builds a africastalking service
+// bulk_optOut_notifier endpoint payload.
+func NewBulkOptOutNotifierBulkSMSOptOutPayload(body *BulkOptOutNotifierRequestBody) *africastalking.BulkSMSOptOutPayload {
+	v := &africastalking.BulkSMSOptOutPayload{
 		SenderID:    body.SenderID,
 		PhoneNumber: body.PhoneNumber,
 	}
@@ -343,10 +343,10 @@ func NewSmsBulkOptoutBulkSMSOptOut(body *SmsBulkOptoutRequestBody) *africastalki
 	return v
 }
 
-// NewSmsSubscriptionSubscriptionNotification builds a africastalking service
-// sms_subscription endpoint payload.
-func NewSmsSubscriptionSubscriptionNotification(body *SmsSubscriptionRequestBody) *africastalking.SubscriptionNotification {
-	v := &africastalking.SubscriptionNotification{
+// NewSubNotifierSubNotificationPayload builds a africastalking service
+// sub_notifier endpoint payload.
+func NewSubNotifierSubNotificationPayload(body *SubNotifierRequestBody) *africastalking.SubNotificationPayload {
+	v := &africastalking.SubNotificationPayload{
 		PhoneNumber: body.PhoneNumber,
 		ShortCode:   body.ShortCode,
 		Keyword:     body.Keyword,
@@ -356,10 +356,10 @@ func NewSmsSubscriptionSubscriptionNotification(body *SmsSubscriptionRequestBody
 	return v
 }
 
-// NewVoiceNotification1 builds a africastalking service voice_notification
-// endpoint payload.
-func NewVoiceNotification1(body *VoiceNotificationRequestBody) *africastalking.VoiceNotification1 {
-	v := &africastalking.VoiceNotification1{
+// NewVoiceNotifierVoiceNotificationPayload builds a africastalking service
+// voice_notifier endpoint payload.
+func NewVoiceNotifierVoiceNotificationPayload(body *VoiceNotifierRequestBody) *africastalking.VoiceNotificationPayload {
+	v := &africastalking.VoiceNotificationPayload{
 		SessionID:             body.SessionID,
 		Direction:             body.Direction,
 		DestinationNumber:     body.DestinationNumber,
@@ -387,10 +387,10 @@ func NewVoiceNotification1(body *VoiceNotificationRequestBody) *africastalking.V
 	return v
 }
 
-// NewTransferEventCallTransferEvent builds a africastalking service
-// transfer_event endpoint payload.
-func NewTransferEventCallTransferEvent(body *TransferEventRequestBody) *africastalking.CallTransferEvent {
-	v := &africastalking.CallTransferEvent{
+// NewTransferEventNotifierTransferEventPayload builds a africastalking service
+// transfer_event_notifier endpoint payload.
+func NewTransferEventNotifierTransferEventPayload(body *TransferEventNotifierRequestBody) *africastalking.TransferEventPayload {
+	v := &africastalking.TransferEventPayload{
 		CallSessionState:        body.CallSessionState,
 		Status:                  body.Status,
 		CallTransferParam:       body.CallTransferParam,
@@ -435,10 +435,10 @@ func NewValidationNotifierAirtimeValidationPayload(body *ValidationNotifierReque
 	return v
 }
 
-// NewStatusNotifierAirtimeStatus builds a africastalking service
+// NewStatusNotifierAirtimeStatusPayload builds a africastalking service
 // status_notifier endpoint payload.
-func NewStatusNotifierAirtimeStatus(body *StatusNotifierRequestBody) *africastalking.AirtimeStatus {
-	v := &africastalking.AirtimeStatus{
+func NewStatusNotifierAirtimeStatusPayload(body *StatusNotifierRequestBody) *africastalking.AirtimeStatusPayload {
+	v := &africastalking.AirtimeStatusPayload{
 		RequestID: body.RequestID,
 		Status:    body.Status,
 	}
@@ -446,10 +446,10 @@ func NewStatusNotifierAirtimeStatus(body *StatusNotifierRequestBody) *africastal
 	return v
 }
 
-// NewPaymentNotifierPaymentNotification builds a africastalking service
+// NewPaymentNotifierPaymentNotificationPayload builds a africastalking service
 // payment_notifier endpoint payload.
-func NewPaymentNotifierPaymentNotification(body *PaymentNotifierRequestBody) *africastalking.PaymentNotification {
-	v := &africastalking.PaymentNotification{
+func NewPaymentNotifierPaymentNotificationPayload(body *PaymentNotifierRequestBody) *africastalking.PaymentNotificationPayload {
+	v := &africastalking.PaymentNotificationPayload{
 		TransactionID:    *body.TransactionID,
 		Category:         *body.Category,
 		Provider:         *body.Provider,
@@ -474,10 +474,10 @@ func NewPaymentNotifierPaymentNotification(body *PaymentNotifierRequestBody) *af
 	return v
 }
 
-// NewC2bValidationNotifierC2BValidationNotification builds a africastalking
-// service c2b_validation_notifier endpoint payload.
-func NewC2bValidationNotifierC2BValidationNotification(body *C2bValidationNotifierRequestBody) *africastalking.C2BValidationNotification {
-	v := &africastalking.C2BValidationNotification{
+// NewC2bValidationNotifierC2BValidationNotificationPayload builds a
+// africastalking service c2b_validation_notifier endpoint payload.
+func NewC2bValidationNotifierC2BValidationNotificationPayload(body *C2bValidationNotifierRequestBody) *africastalking.C2BValidationNotificationPayload {
+	v := &africastalking.C2BValidationNotificationPayload{
 		Provider:      *body.Provider,
 		ClientAccount: body.ClientAccount,
 		ProductName:   *body.ProductName,
@@ -516,10 +516,10 @@ func NewB2cValidationNotifierB2CValidationNotificationPayload(body *B2cValidatio
 	return v
 }
 
-// NewIotNotifierIoTNotification builds a africastalking service iot_notifier
-// endpoint payload.
-func NewIotNotifierIoTNotification(body *IotNotifierRequestBody) *africastalking.IoTNotification {
-	v := &africastalking.IoTNotification{
+// NewIotNotifierIoTNotificationPayload builds a africastalking service
+// iot_notifier endpoint payload.
+func NewIotNotifierIoTNotificationPayload(body *IotNotifierRequestBody) *africastalking.IoTNotificationPayload {
+	v := &africastalking.IoTNotificationPayload{
 		Payload: body.Payload,
 		Topic:   body.Topic,
 	}
@@ -527,9 +527,9 @@ func NewIotNotifierIoTNotification(body *IotNotifierRequestBody) *africastalking
 	return v
 }
 
-// ValidateSmsDeliveryReportRequestBody runs the validations defined on
-// sms_delivery_report_request_body
-func ValidateSmsDeliveryReportRequestBody(body *SmsDeliveryReportRequestBody) (err error) {
+// ValidateDeliveryReportNotifierRequestBody runs the validations defined on
+// delivery_report_notifier_request_body
+func ValidateDeliveryReportNotifierRequestBody(body *DeliveryReportNotifierRequestBody) (err error) {
 	if body.Status != nil {
 		if !(*body.Status == "Sent" || *body.Status == "Submitted" || *body.Status == "Buffered" || *body.Status == "Rejected" || *body.Status == "Success" || *body.Status == "Failed") {
 			err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.status", *body.Status, []interface{}{"Sent", "Submitted", "Buffered", "Rejected", "Success", "Failed"}))
@@ -548,9 +548,9 @@ func ValidateSmsDeliveryReportRequestBody(body *SmsDeliveryReportRequestBody) (e
 	return
 }
 
-// ValidateSmsIncomingMessageRequestBody runs the validations defined on
-// sms_incoming_message_request_body
-func ValidateSmsIncomingMessageRequestBody(body *SmsIncomingMessageRequestBody) (err error) {
+// ValidateIncomingMessageNotifierRequestBody runs the validations defined on
+// incoming_message_notifier_request_body
+func ValidateIncomingMessageNotifierRequestBody(body *IncomingMessageNotifierRequestBody) (err error) {
 	if body.Date != nil {
 		err = goa.MergeErrors(err, goa.ValidateFormat("body.date", *body.Date, goa.FormatDate))
 	}
@@ -562,9 +562,9 @@ func ValidateSmsIncomingMessageRequestBody(body *SmsIncomingMessageRequestBody) 
 	return
 }
 
-// ValidateSmsSubscriptionRequestBody runs the validations defined on
-// sms_subscription_request_body
-func ValidateSmsSubscriptionRequestBody(body *SmsSubscriptionRequestBody) (err error) {
+// ValidateSubNotifierRequestBody runs the validations defined on
+// sub_notifier_request_body
+func ValidateSubNotifierRequestBody(body *SubNotifierRequestBody) (err error) {
 	if body.UpdateType != nil {
 		if !(*body.UpdateType == "addition" || *body.UpdateType == "deletion") {
 			err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.updateType", *body.UpdateType, []interface{}{"addition", "deletion"}))
@@ -573,9 +573,9 @@ func ValidateSmsSubscriptionRequestBody(body *SmsSubscriptionRequestBody) (err e
 	return
 }
 
-// ValidateVoiceNotificationRequestBody runs the validations defined on
-// voice_notification_request_body
-func ValidateVoiceNotificationRequestBody(body *VoiceNotificationRequestBody) (err error) {
+// ValidateVoiceNotifierRequestBody runs the validations defined on
+// voice_notifier_request_body
+func ValidateVoiceNotifierRequestBody(body *VoiceNotifierRequestBody) (err error) {
 	if body.HangupCause != nil {
 		if !(*body.HangupCause == "NORMAL_CLEARING" || *body.HangupCause == "CALL_REJECTED" || *body.HangupCause == "NORMAL_TEMPORARY_FAILURE" || *body.HangupCause == "RECOVERY_ON_TIMER_EXPIRE" || *body.HangupCause == "ORIGINATOR_CANCEL" || *body.HangupCause == "LOSE_RACE" || *body.HangupCause == "USER_BUSY" || *body.HangupCause == "NO_ANSWER" || *body.HangupCause == "NO_USER_RESPONSE" || *body.HangupCause == "SUBSCRIBER_ABSENT" || *body.HangupCause == "SERVICE_UNAVAILABLE" || *body.HangupCause == "USER_NOT_REGISTERED" || *body.HangupCause == "UNALLOCATED_NUMBER" || *body.HangupCause == "UNSPECIFIED") {
 			err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.hangupCause", *body.HangupCause, []interface{}{"NORMAL_CLEARING", "CALL_REJECTED", "NORMAL_TEMPORARY_FAILURE", "RECOVERY_ON_TIMER_EXPIRE", "ORIGINATOR_CANCEL", "LOSE_RACE", "USER_BUSY", "NO_ANSWER", "NO_USER_RESPONSE", "SUBSCRIBER_ABSENT", "SERVICE_UNAVAILABLE", "USER_NOT_REGISTERED", "UNALLOCATED_NUMBER", "UNSPECIFIED"}))
@@ -584,9 +584,9 @@ func ValidateVoiceNotificationRequestBody(body *VoiceNotificationRequestBody) (e
 	return
 }
 
-// ValidateTransferEventRequestBody runs the validations defined on
-// transfer_event_request_body
-func ValidateTransferEventRequestBody(body *TransferEventRequestBody) (err error) {
+// ValidateTransferEventNotifierRequestBody runs the validations defined on
+// transfer_event_notifier_request_body
+func ValidateTransferEventNotifierRequestBody(body *TransferEventNotifierRequestBody) (err error) {
 	if body.CallSessionState != nil {
 		if !(*body.CallSessionState == "Active" || *body.CallSessionState == "Transferred" || *body.CallSessionState == "TransferCompleted") {
 			err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.callSessionState", *body.CallSessionState, []interface{}{"Active", "Transferred", "TransferCompleted"}))

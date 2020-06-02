@@ -17,29 +17,29 @@ import (
 
 // Client lists the africastalking service endpoint HTTP clients.
 type Client struct {
-	// SmsDeliveryReport Doer is the HTTP client used to make requests to the
-	// sms_delivery_report endpoint.
-	SmsDeliveryReportDoer goahttp.Doer
+	// DeliveryReportNotifier Doer is the HTTP client used to make requests to the
+	// delivery_report_notifier endpoint.
+	DeliveryReportNotifierDoer goahttp.Doer
 
-	// SmsIncomingMessage Doer is the HTTP client used to make requests to the
-	// sms_incoming_message endpoint.
-	SmsIncomingMessageDoer goahttp.Doer
+	// IncomingMessageNotifier Doer is the HTTP client used to make requests to the
+	// incoming_message_notifier endpoint.
+	IncomingMessageNotifierDoer goahttp.Doer
 
-	// SmsBulkOptout Doer is the HTTP client used to make requests to the
-	// sms_bulk_optout endpoint.
-	SmsBulkOptoutDoer goahttp.Doer
+	// BulkOptOutNotifier Doer is the HTTP client used to make requests to the
+	// bulk_optOut_notifier endpoint.
+	BulkOptOutNotifierDoer goahttp.Doer
 
-	// SmsSubscription Doer is the HTTP client used to make requests to the
-	// sms_subscription endpoint.
-	SmsSubscriptionDoer goahttp.Doer
+	// SubNotifier Doer is the HTTP client used to make requests to the
+	// sub_notifier endpoint.
+	SubNotifierDoer goahttp.Doer
 
-	// VoiceNotification Doer is the HTTP client used to make requests to the
-	// voice_notification endpoint.
-	VoiceNotificationDoer goahttp.Doer
+	// VoiceNotifier Doer is the HTTP client used to make requests to the
+	// voice_notifier endpoint.
+	VoiceNotifierDoer goahttp.Doer
 
-	// TransferEvent Doer is the HTTP client used to make requests to the
-	// transfer_event endpoint.
-	TransferEventDoer goahttp.Doer
+	// TransferEventNotifier Doer is the HTTP client used to make requests to the
+	// transfer_event_notifier endpoint.
+	TransferEventNotifierDoer goahttp.Doer
 
 	// UssdNotifier Doer is the HTTP client used to make requests to the
 	// ussd_notifier endpoint.
@@ -90,36 +90,36 @@ func NewClient(
 	restoreBody bool,
 ) *Client {
 	return &Client{
-		SmsDeliveryReportDoer:     doer,
-		SmsIncomingMessageDoer:    doer,
-		SmsBulkOptoutDoer:         doer,
-		SmsSubscriptionDoer:       doer,
-		VoiceNotificationDoer:     doer,
-		TransferEventDoer:         doer,
-		UssdNotifierDoer:          doer,
-		ValidationNotifierDoer:    doer,
-		StatusNotifierDoer:        doer,
-		PaymentNotifierDoer:       doer,
-		C2bValidationNotifierDoer: doer,
-		B2cValidationNotifierDoer: doer,
-		IotNotifierDoer:           doer,
-		RestoreResponseBody:       restoreBody,
-		scheme:                    scheme,
-		host:                      host,
-		decoder:                   dec,
-		encoder:                   enc,
+		DeliveryReportNotifierDoer:  doer,
+		IncomingMessageNotifierDoer: doer,
+		BulkOptOutNotifierDoer:      doer,
+		SubNotifierDoer:             doer,
+		VoiceNotifierDoer:           doer,
+		TransferEventNotifierDoer:   doer,
+		UssdNotifierDoer:            doer,
+		ValidationNotifierDoer:      doer,
+		StatusNotifierDoer:          doer,
+		PaymentNotifierDoer:         doer,
+		C2bValidationNotifierDoer:   doer,
+		B2cValidationNotifierDoer:   doer,
+		IotNotifierDoer:             doer,
+		RestoreResponseBody:         restoreBody,
+		scheme:                      scheme,
+		host:                        host,
+		decoder:                     dec,
+		encoder:                     enc,
 	}
 }
 
-// SmsDeliveryReport returns an endpoint that makes HTTP requests to the
-// africastalking service sms_delivery_report server.
-func (c *Client) SmsDeliveryReport() endpoint.Endpoint {
+// DeliveryReportNotifier returns an endpoint that makes HTTP requests to the
+// africastalking service delivery_report_notifier server.
+func (c *Client) DeliveryReportNotifier() endpoint.Endpoint {
 	var (
-		encodeRequest  = EncodeSmsDeliveryReportRequest(c.encoder)
-		decodeResponse = DecodeSmsDeliveryReportResponse(c.decoder, c.RestoreResponseBody)
+		encodeRequest  = EncodeDeliveryReportNotifierRequest(c.encoder)
+		decodeResponse = DecodeDeliveryReportNotifierResponse(c.decoder, c.RestoreResponseBody)
 	)
 	return func(ctx context.Context, v interface{}) (interface{}, error) {
-		req, err := c.BuildSmsDeliveryReportRequest(ctx, v)
+		req, err := c.BuildDeliveryReportNotifierRequest(ctx, v)
 		if err != nil {
 			return nil, err
 		}
@@ -127,23 +127,23 @@ func (c *Client) SmsDeliveryReport() endpoint.Endpoint {
 		if err != nil {
 			return nil, err
 		}
-		resp, err := c.SmsDeliveryReportDoer.Do(req)
+		resp, err := c.DeliveryReportNotifierDoer.Do(req)
 		if err != nil {
-			return nil, goahttp.ErrRequestError("africastalking", "sms_delivery_report", err)
+			return nil, goahttp.ErrRequestError("africastalking", "delivery_report_notifier", err)
 		}
 		return decodeResponse(resp)
 	}
 }
 
-// SmsIncomingMessage returns an endpoint that makes HTTP requests to the
-// africastalking service sms_incoming_message server.
-func (c *Client) SmsIncomingMessage() endpoint.Endpoint {
+// IncomingMessageNotifier returns an endpoint that makes HTTP requests to the
+// africastalking service incoming_message_notifier server.
+func (c *Client) IncomingMessageNotifier() endpoint.Endpoint {
 	var (
-		encodeRequest  = EncodeSmsIncomingMessageRequest(c.encoder)
-		decodeResponse = DecodeSmsIncomingMessageResponse(c.decoder, c.RestoreResponseBody)
+		encodeRequest  = EncodeIncomingMessageNotifierRequest(c.encoder)
+		decodeResponse = DecodeIncomingMessageNotifierResponse(c.decoder, c.RestoreResponseBody)
 	)
 	return func(ctx context.Context, v interface{}) (interface{}, error) {
-		req, err := c.BuildSmsIncomingMessageRequest(ctx, v)
+		req, err := c.BuildIncomingMessageNotifierRequest(ctx, v)
 		if err != nil {
 			return nil, err
 		}
@@ -151,23 +151,23 @@ func (c *Client) SmsIncomingMessage() endpoint.Endpoint {
 		if err != nil {
 			return nil, err
 		}
-		resp, err := c.SmsIncomingMessageDoer.Do(req)
+		resp, err := c.IncomingMessageNotifierDoer.Do(req)
 		if err != nil {
-			return nil, goahttp.ErrRequestError("africastalking", "sms_incoming_message", err)
+			return nil, goahttp.ErrRequestError("africastalking", "incoming_message_notifier", err)
 		}
 		return decodeResponse(resp)
 	}
 }
 
-// SmsBulkOptout returns an endpoint that makes HTTP requests to the
-// africastalking service sms_bulk_optout server.
-func (c *Client) SmsBulkOptout() endpoint.Endpoint {
+// BulkOptOutNotifier returns an endpoint that makes HTTP requests to the
+// africastalking service bulk_optOut_notifier server.
+func (c *Client) BulkOptOutNotifier() endpoint.Endpoint {
 	var (
-		encodeRequest  = EncodeSmsBulkOptoutRequest(c.encoder)
-		decodeResponse = DecodeSmsBulkOptoutResponse(c.decoder, c.RestoreResponseBody)
+		encodeRequest  = EncodeBulkOptOutNotifierRequest(c.encoder)
+		decodeResponse = DecodeBulkOptOutNotifierResponse(c.decoder, c.RestoreResponseBody)
 	)
 	return func(ctx context.Context, v interface{}) (interface{}, error) {
-		req, err := c.BuildSmsBulkOptoutRequest(ctx, v)
+		req, err := c.BuildBulkOptOutNotifierRequest(ctx, v)
 		if err != nil {
 			return nil, err
 		}
@@ -175,23 +175,23 @@ func (c *Client) SmsBulkOptout() endpoint.Endpoint {
 		if err != nil {
 			return nil, err
 		}
-		resp, err := c.SmsBulkOptoutDoer.Do(req)
+		resp, err := c.BulkOptOutNotifierDoer.Do(req)
 		if err != nil {
-			return nil, goahttp.ErrRequestError("africastalking", "sms_bulk_optout", err)
+			return nil, goahttp.ErrRequestError("africastalking", "bulk_optOut_notifier", err)
 		}
 		return decodeResponse(resp)
 	}
 }
 
-// SmsSubscription returns an endpoint that makes HTTP requests to the
-// africastalking service sms_subscription server.
-func (c *Client) SmsSubscription() endpoint.Endpoint {
+// SubNotifier returns an endpoint that makes HTTP requests to the
+// africastalking service sub_notifier server.
+func (c *Client) SubNotifier() endpoint.Endpoint {
 	var (
-		encodeRequest  = EncodeSmsSubscriptionRequest(c.encoder)
-		decodeResponse = DecodeSmsSubscriptionResponse(c.decoder, c.RestoreResponseBody)
+		encodeRequest  = EncodeSubNotifierRequest(c.encoder)
+		decodeResponse = DecodeSubNotifierResponse(c.decoder, c.RestoreResponseBody)
 	)
 	return func(ctx context.Context, v interface{}) (interface{}, error) {
-		req, err := c.BuildSmsSubscriptionRequest(ctx, v)
+		req, err := c.BuildSubNotifierRequest(ctx, v)
 		if err != nil {
 			return nil, err
 		}
@@ -199,23 +199,23 @@ func (c *Client) SmsSubscription() endpoint.Endpoint {
 		if err != nil {
 			return nil, err
 		}
-		resp, err := c.SmsSubscriptionDoer.Do(req)
+		resp, err := c.SubNotifierDoer.Do(req)
 		if err != nil {
-			return nil, goahttp.ErrRequestError("africastalking", "sms_subscription", err)
+			return nil, goahttp.ErrRequestError("africastalking", "sub_notifier", err)
 		}
 		return decodeResponse(resp)
 	}
 }
 
-// VoiceNotification returns an endpoint that makes HTTP requests to the
-// africastalking service voice_notification server.
-func (c *Client) VoiceNotification() endpoint.Endpoint {
+// VoiceNotifier returns an endpoint that makes HTTP requests to the
+// africastalking service voice_notifier server.
+func (c *Client) VoiceNotifier() endpoint.Endpoint {
 	var (
-		encodeRequest  = EncodeVoiceNotificationRequest(c.encoder)
-		decodeResponse = DecodeVoiceNotificationResponse(c.decoder, c.RestoreResponseBody)
+		encodeRequest  = EncodeVoiceNotifierRequest(c.encoder)
+		decodeResponse = DecodeVoiceNotifierResponse(c.decoder, c.RestoreResponseBody)
 	)
 	return func(ctx context.Context, v interface{}) (interface{}, error) {
-		req, err := c.BuildVoiceNotificationRequest(ctx, v)
+		req, err := c.BuildVoiceNotifierRequest(ctx, v)
 		if err != nil {
 			return nil, err
 		}
@@ -223,23 +223,23 @@ func (c *Client) VoiceNotification() endpoint.Endpoint {
 		if err != nil {
 			return nil, err
 		}
-		resp, err := c.VoiceNotificationDoer.Do(req)
+		resp, err := c.VoiceNotifierDoer.Do(req)
 		if err != nil {
-			return nil, goahttp.ErrRequestError("africastalking", "voice_notification", err)
+			return nil, goahttp.ErrRequestError("africastalking", "voice_notifier", err)
 		}
 		return decodeResponse(resp)
 	}
 }
 
-// TransferEvent returns an endpoint that makes HTTP requests to the
-// africastalking service transfer_event server.
-func (c *Client) TransferEvent() endpoint.Endpoint {
+// TransferEventNotifier returns an endpoint that makes HTTP requests to the
+// africastalking service transfer_event_notifier server.
+func (c *Client) TransferEventNotifier() endpoint.Endpoint {
 	var (
-		encodeRequest  = EncodeTransferEventRequest(c.encoder)
-		decodeResponse = DecodeTransferEventResponse(c.decoder, c.RestoreResponseBody)
+		encodeRequest  = EncodeTransferEventNotifierRequest(c.encoder)
+		decodeResponse = DecodeTransferEventNotifierResponse(c.decoder, c.RestoreResponseBody)
 	)
 	return func(ctx context.Context, v interface{}) (interface{}, error) {
-		req, err := c.BuildTransferEventRequest(ctx, v)
+		req, err := c.BuildTransferEventNotifierRequest(ctx, v)
 		if err != nil {
 			return nil, err
 		}
@@ -247,9 +247,9 @@ func (c *Client) TransferEvent() endpoint.Endpoint {
 		if err != nil {
 			return nil, err
 		}
-		resp, err := c.TransferEventDoer.Do(req)
+		resp, err := c.TransferEventNotifierDoer.Do(req)
 		if err != nil {
-			return nil, goahttp.ErrRequestError("africastalking", "transfer_event", err)
+			return nil, goahttp.ErrRequestError("africastalking", "transfer_event_notifier", err)
 		}
 		return decodeResponse(resp)
 	}

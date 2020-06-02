@@ -16,96 +16,96 @@ import (
 	goahttp "goa.design/goa/v3/http"
 )
 
-// EncodeSmsDeliveryReportResponse returns a go-kit EncodeResponseFunc suitable
-// for encoding africastalking sms_delivery_report responses.
-func EncodeSmsDeliveryReportResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) kithttp.EncodeResponseFunc {
-	return server.EncodeSmsDeliveryReportResponse(encoder)
+// EncodeDeliveryReportNotifierResponse returns a go-kit EncodeResponseFunc
+// suitable for encoding africastalking delivery_report_notifier responses.
+func EncodeDeliveryReportNotifierResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) kithttp.EncodeResponseFunc {
+	return server.EncodeDeliveryReportNotifierResponse(encoder)
 }
 
-// DecodeSmsDeliveryReportRequest returns a go-kit DecodeRequestFunc suitable
-// for decoding africastalking sms_delivery_report requests.
-func DecodeSmsDeliveryReportRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) kithttp.DecodeRequestFunc {
-	dec := server.DecodeSmsDeliveryReportRequest(mux, decoder)
+// DecodeDeliveryReportNotifierRequest returns a go-kit DecodeRequestFunc
+// suitable for decoding africastalking delivery_report_notifier requests.
+func DecodeDeliveryReportNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) kithttp.DecodeRequestFunc {
+	dec := server.DecodeDeliveryReportNotifierRequest(mux, decoder)
 	return func(ctx context.Context, r *http.Request) (interface{}, error) {
 		r = r.WithContext(ctx)
 		return dec(r)
 	}
 }
 
-// EncodeSmsIncomingMessageResponse returns a go-kit EncodeResponseFunc
-// suitable for encoding africastalking sms_incoming_message responses.
-func EncodeSmsIncomingMessageResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) kithttp.EncodeResponseFunc {
-	return server.EncodeSmsIncomingMessageResponse(encoder)
+// EncodeIncomingMessageNotifierResponse returns a go-kit EncodeResponseFunc
+// suitable for encoding africastalking incoming_message_notifier responses.
+func EncodeIncomingMessageNotifierResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) kithttp.EncodeResponseFunc {
+	return server.EncodeIncomingMessageNotifierResponse(encoder)
 }
 
-// DecodeSmsIncomingMessageRequest returns a go-kit DecodeRequestFunc suitable
-// for decoding africastalking sms_incoming_message requests.
-func DecodeSmsIncomingMessageRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) kithttp.DecodeRequestFunc {
-	dec := server.DecodeSmsIncomingMessageRequest(mux, decoder)
+// DecodeIncomingMessageNotifierRequest returns a go-kit DecodeRequestFunc
+// suitable for decoding africastalking incoming_message_notifier requests.
+func DecodeIncomingMessageNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) kithttp.DecodeRequestFunc {
+	dec := server.DecodeIncomingMessageNotifierRequest(mux, decoder)
 	return func(ctx context.Context, r *http.Request) (interface{}, error) {
 		r = r.WithContext(ctx)
 		return dec(r)
 	}
 }
 
-// EncodeSmsBulkOptoutResponse returns a go-kit EncodeResponseFunc suitable for
-// encoding africastalking sms_bulk_optout responses.
-func EncodeSmsBulkOptoutResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) kithttp.EncodeResponseFunc {
-	return server.EncodeSmsBulkOptoutResponse(encoder)
+// EncodeBulkOptOutNotifierResponse returns a go-kit EncodeResponseFunc
+// suitable for encoding africastalking bulk_optOut_notifier responses.
+func EncodeBulkOptOutNotifierResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) kithttp.EncodeResponseFunc {
+	return server.EncodeBulkOptOutNotifierResponse(encoder)
 }
 
-// DecodeSmsBulkOptoutRequest returns a go-kit DecodeRequestFunc suitable for
-// decoding africastalking sms_bulk_optout requests.
-func DecodeSmsBulkOptoutRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) kithttp.DecodeRequestFunc {
-	dec := server.DecodeSmsBulkOptoutRequest(mux, decoder)
+// DecodeBulkOptOutNotifierRequest returns a go-kit DecodeRequestFunc suitable
+// for decoding africastalking bulk_optOut_notifier requests.
+func DecodeBulkOptOutNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) kithttp.DecodeRequestFunc {
+	dec := server.DecodeBulkOptOutNotifierRequest(mux, decoder)
 	return func(ctx context.Context, r *http.Request) (interface{}, error) {
 		r = r.WithContext(ctx)
 		return dec(r)
 	}
 }
 
-// EncodeSmsSubscriptionResponse returns a go-kit EncodeResponseFunc suitable
-// for encoding africastalking sms_subscription responses.
-func EncodeSmsSubscriptionResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) kithttp.EncodeResponseFunc {
-	return server.EncodeSmsSubscriptionResponse(encoder)
+// EncodeSubNotifierResponse returns a go-kit EncodeResponseFunc suitable for
+// encoding africastalking sub_notifier responses.
+func EncodeSubNotifierResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) kithttp.EncodeResponseFunc {
+	return server.EncodeSubNotifierResponse(encoder)
 }
 
-// DecodeSmsSubscriptionRequest returns a go-kit DecodeRequestFunc suitable for
-// decoding africastalking sms_subscription requests.
-func DecodeSmsSubscriptionRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) kithttp.DecodeRequestFunc {
-	dec := server.DecodeSmsSubscriptionRequest(mux, decoder)
+// DecodeSubNotifierRequest returns a go-kit DecodeRequestFunc suitable for
+// decoding africastalking sub_notifier requests.
+func DecodeSubNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) kithttp.DecodeRequestFunc {
+	dec := server.DecodeSubNotifierRequest(mux, decoder)
 	return func(ctx context.Context, r *http.Request) (interface{}, error) {
 		r = r.WithContext(ctx)
 		return dec(r)
 	}
 }
 
-// EncodeVoiceNotificationResponse returns a go-kit EncodeResponseFunc suitable
-// for encoding africastalking voice_notification responses.
-func EncodeVoiceNotificationResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) kithttp.EncodeResponseFunc {
-	return server.EncodeVoiceNotificationResponse(encoder)
+// EncodeVoiceNotifierResponse returns a go-kit EncodeResponseFunc suitable for
+// encoding africastalking voice_notifier responses.
+func EncodeVoiceNotifierResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) kithttp.EncodeResponseFunc {
+	return server.EncodeVoiceNotifierResponse(encoder)
 }
 
-// DecodeVoiceNotificationRequest returns a go-kit DecodeRequestFunc suitable
-// for decoding africastalking voice_notification requests.
-func DecodeVoiceNotificationRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) kithttp.DecodeRequestFunc {
-	dec := server.DecodeVoiceNotificationRequest(mux, decoder)
+// DecodeVoiceNotifierRequest returns a go-kit DecodeRequestFunc suitable for
+// decoding africastalking voice_notifier requests.
+func DecodeVoiceNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) kithttp.DecodeRequestFunc {
+	dec := server.DecodeVoiceNotifierRequest(mux, decoder)
 	return func(ctx context.Context, r *http.Request) (interface{}, error) {
 		r = r.WithContext(ctx)
 		return dec(r)
 	}
 }
 
-// EncodeTransferEventResponse returns a go-kit EncodeResponseFunc suitable for
-// encoding africastalking transfer_event responses.
-func EncodeTransferEventResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) kithttp.EncodeResponseFunc {
-	return server.EncodeTransferEventResponse(encoder)
+// EncodeTransferEventNotifierResponse returns a go-kit EncodeResponseFunc
+// suitable for encoding africastalking transfer_event_notifier responses.
+func EncodeTransferEventNotifierResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) kithttp.EncodeResponseFunc {
+	return server.EncodeTransferEventNotifierResponse(encoder)
 }
 
-// DecodeTransferEventRequest returns a go-kit DecodeRequestFunc suitable for
-// decoding africastalking transfer_event requests.
-func DecodeTransferEventRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) kithttp.DecodeRequestFunc {
-	dec := server.DecodeTransferEventRequest(mux, decoder)
+// DecodeTransferEventNotifierRequest returns a go-kit DecodeRequestFunc
+// suitable for decoding africastalking transfer_event_notifier requests.
+func DecodeTransferEventNotifierRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) kithttp.DecodeRequestFunc {
+	dec := server.DecodeTransferEventNotifierRequest(mux, decoder)
 	return func(ctx context.Context, r *http.Request) (interface{}, error) {
 		r = r.WithContext(ctx)
 		return dec(r)

@@ -16,32 +16,32 @@ import (
 // Service is the africastalking service interface.
 type Service interface {
 	// Adds new SMS Delivery Report to our callback URL and return its ID.
-	SmsDeliveryReport(context.Context, *DeliveryReport) (res string, err error)
+	DeliveryReportNotifier(context.Context, *DeliveryReportPayload) (res string, err error)
 	// Adds new SMS Incoming Message to our callback URL and return its ID.
-	SmsIncomingMessage(context.Context, *IncomingMessage) (res string, err error)
+	IncomingMessageNotifier(context.Context, *IncomingMessagePayload) (res string, err error)
 	// Adds new SMS Bulk OptOut to our callback URL and return its ID.
-	SmsBulkOptout(context.Context, *BulkSMSOptOut) (res string, err error)
+	BulkOptOutNotifier(context.Context, *BulkSMSOptOutPayload) (res string, err error)
 	// Adds new SMS subscription to our callback URL and return its ID.
-	SmsSubscription(context.Context, *SubscriptionNotification) (res string, err error)
+	SubNotifier(context.Context, *SubNotificationPayload) (res string, err error)
 	// Adds new Voice Notification to our callback URL and return its ID.
-	VoiceNotification(context.Context, *VoiceNotification1) (res string, err error)
+	VoiceNotifier(context.Context, *VoiceNotificationPayload) (res string, err error)
 	// Adds new Event Notification to our callback URL and return its ID.
-	TransferEvent(context.Context, *CallTransferEvent) (res string, err error)
+	TransferEventNotifier(context.Context, *TransferEventPayload) (res string, err error)
 	// Adds new USSD Notification to our callback URL and return its ID.
 	UssdNotifier(context.Context, *USSDPayload) (res *USSDResponse, err error)
 	// Adds new Airtime Validation Notification to our callback URL and return its
 	// ID.
 	ValidationNotifier(context.Context, *AirtimeValidationPayload) (res *AirtimeValidationResponse, err error)
 	// Adds new Airtime Status Notification to our callback URL and return its ID.
-	StatusNotifier(context.Context, *AirtimeStatus) (res string, err error)
+	StatusNotifier(context.Context, *AirtimeStatusPayload) (res string, err error)
 	// Adds new Payment Notification to our callback URL and return its ID.
-	PaymentNotifier(context.Context, *PaymentNotification) (res string, err error)
+	PaymentNotifier(context.Context, *PaymentNotificationPayload) (res string, err error)
 	// Adds new C2B Validation Notification to our callback URL and return its ID.
-	C2bValidationNotifier(context.Context, *C2BValidationNotification) (res string, err error)
+	C2bValidationNotifier(context.Context, *C2BValidationNotificationPayload) (res string, err error)
 	// Adds new B2C Validation Notification to our callback URL and return its ID.
 	B2cValidationNotifier(context.Context, *B2CValidationNotificationPayload) (res *B2CValidationNotificationResponse, err error)
 	// Adds new IoT Notification to our callback URL and return its ID.
-	IotNotifier(context.Context, *IoTNotification) (res string, err error)
+	IotNotifier(context.Context, *IoTNotificationPayload) (res string, err error)
 }
 
 // ServiceName is the name of the service as defined in the design. This is the
@@ -52,11 +52,11 @@ const ServiceName = "africastalking"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [13]string{"sms_delivery_report", "sms_incoming_message", "sms_bulk_optout", "sms_subscription", "voice_notification", "transfer_event", "ussd_notifier", "validation_notifier", "status_notifier", "payment_notifier", "c2b_validation_notifier", "b2c_validation_notifier", "iot_notifier"}
+var MethodNames = [13]string{"delivery_report_notifier", "incoming_message_notifier", "bulk_optOut_notifier", "sub_notifier", "voice_notifier", "transfer_event_notifier", "ussd_notifier", "validation_notifier", "status_notifier", "payment_notifier", "c2b_validation_notifier", "b2c_validation_notifier", "iot_notifier"}
 
-// DeliveryReport is the payload type of the africastalking service
-// sms_delivery_report method.
-type DeliveryReport struct {
+// DeliveryReportPayload is the payload type of the africastalking service
+// delivery_report_notifier method.
+type DeliveryReportPayload struct {
 	// A unique identifier for each message.
 	ID *string
 	// The status of the message.
@@ -72,9 +72,9 @@ type DeliveryReport struct {
 	RetryCount *string
 }
 
-// IncomingMessage is the payload type of the africastalking service
-// sms_incoming_message method.
-type IncomingMessage struct {
+// IncomingMessagePayload is the payload type of the africastalking service
+// incoming_message_notifier method.
+type IncomingMessagePayload struct {
 	// The date and time when the message was received.
 	Date *string
 	// The number that sent the message.
@@ -92,18 +92,18 @@ type IncomingMessage struct {
 	NetworkCode *string
 }
 
-// BulkSMSOptOut is the payload type of the africastalking service
-// sms_bulk_optout method.
-type BulkSMSOptOut struct {
+// BulkSMSOptOutPayload is the payload type of the africastalking service
+// bulk_optOut_notifier method.
+type BulkSMSOptOutPayload struct {
 	// Shortcode/Alphanumeric Sender ID the user opted out from.
 	SenderID *string
 	// Mobile phone number of the subscriber who opted out.
 	PhoneNumber *string
 }
 
-// SubscriptionNotification is the payload type of the africastalking service
-// sms_subscription method.
-type SubscriptionNotification struct {
+// SubNotificationPayload is the payload type of the africastalking service
+// sub_notifier method.
+type SubNotificationPayload struct {
 	// Mobile phone number to subscribe or unsubscribe.
 	PhoneNumber *string
 	// The short code that has this product.
@@ -114,9 +114,9 @@ type SubscriptionNotification struct {
 	UpdateType *string
 }
 
-// VoiceNotification1 is the payload type of the africastalking service
-// voice_notification method.
-type VoiceNotification1 struct {
+// VoiceNotificationPayload is the payload type of the africastalking service
+// voice_notifier method.
+type VoiceNotificationPayload struct {
 	// Lets us know whether the call is in session state
 	IsActive string
 	// A unique identifier generated during each call session
@@ -153,9 +153,9 @@ type VoiceNotification1 struct {
 	HangupCause *string
 }
 
-// CallTransferEvent is the payload type of the africastalking service
-// transfer_event method.
-type CallTransferEvent struct {
+// TransferEventPayload is the payload type of the africastalking service
+// transfer_event_notifier method.
+type TransferEventPayload struct {
 	CallSessionState *string
 	IsActive         string
 	Status           *string
@@ -208,18 +208,18 @@ type AirtimeValidationResponse struct {
 	Status *string
 }
 
-// AirtimeStatus is the payload type of the africastalking service
+// AirtimeStatusPayload is the payload type of the africastalking service
 // status_notifier method.
-type AirtimeStatus struct {
+type AirtimeStatusPayload struct {
 	// The request ID sent back as a response to the airtime send request.
 	RequestID *string
 	// The Transaction status.
 	Status *string
 }
 
-// PaymentNotification is the payload type of the africastalking service
+// PaymentNotificationPayload is the payload type of the africastalking service
 // payment_notifier method.
-type PaymentNotification struct {
+type PaymentNotificationPayload struct {
 	// Unique transactionId generated for every payment.
 	TransactionID string
 	// Category of the payment.
@@ -264,9 +264,9 @@ type PaymentNotification struct {
 	TransactionDate *string
 }
 
-// C2BValidationNotification is the payload type of the africastalking service
-// c2b_validation_notifier method.
-type C2BValidationNotification struct {
+// C2BValidationNotificationPayload is the payload type of the africastalking
+// service c2b_validation_notifier method.
+type C2BValidationNotificationPayload struct {
 	// Payment provider that is facilitating this transaction
 	Provider string
 	// Account name used by a mobile subscriber to initiate this transaction.
@@ -305,9 +305,9 @@ type B2CValidationNotificationResponse struct {
 	Status *string
 }
 
-// IoTNotification is the payload type of the africastalking service
+// IoTNotificationPayload is the payload type of the africastalking service
 // iot_notifier method.
-type IoTNotification struct {
+type IoTNotificationPayload struct {
 	// The MQTT packet sent by the publishing device.
 	Payload *string
 	// Message channel to which the message was sent by the publishing MQTT client

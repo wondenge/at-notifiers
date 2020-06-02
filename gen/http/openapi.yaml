@@ -166,15 +166,15 @@ paths:
     post:
       tags:
       - africastalking
-      summary: sms_bulk_optout africastalking
+      summary: bulk_optOut_notifier africastalking
       description: Adds new SMS Bulk OptOut to our callback URL and return its ID.
-      operationId: africastalking#sms_bulk_optout
+      operationId: africastalking#bulk_optOut_notifier
       parameters:
-      - name: sms_bulk_optout_request_body
+      - name: bulk_optOut_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/AfricastalkingSmsBulkOptoutRequestBody'
+          $ref: '#/definitions/AfricastalkingBulkOptOutNotifierRequestBody'
       responses:
         "201":
           description: Created response.
@@ -186,15 +186,15 @@ paths:
     post:
       tags:
       - africastalking
-      summary: sms_delivery_report africastalking
+      summary: delivery_report_notifier africastalking
       description: Adds new SMS Delivery Report to our callback URL and return its ID.
-      operationId: africastalking#sms_delivery_report
+      operationId: africastalking#delivery_report_notifier
       parameters:
-      - name: sms_delivery_report_request_body
+      - name: delivery_report_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/AfricastalkingSmsDeliveryReportRequestBody'
+          $ref: '#/definitions/AfricastalkingDeliveryReportNotifierRequestBody'
       responses:
         "201":
           description: Created response.
@@ -206,15 +206,15 @@ paths:
     post:
       tags:
       - africastalking
-      summary: sms_incoming_message africastalking
+      summary: incoming_message_notifier africastalking
       description: Adds new SMS Incoming Message to our callback URL and return its ID.
-      operationId: africastalking#sms_incoming_message
+      operationId: africastalking#incoming_message_notifier
       parameters:
-      - name: sms_incoming_message_request_body
+      - name: incoming_message_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/AfricastalkingSmsIncomingMessageRequestBody'
+          $ref: '#/definitions/AfricastalkingIncomingMessageNotifierRequestBody'
       responses:
         "201":
           description: Created response.
@@ -226,15 +226,15 @@ paths:
     post:
       tags:
       - africastalking
-      summary: sms_subscription africastalking
+      summary: sub_notifier africastalking
       description: Adds new SMS subscription to our callback URL and return its ID.
-      operationId: africastalking#sms_subscription
+      operationId: africastalking#sub_notifier
       parameters:
-      - name: sms_subscription_request_body
+      - name: sub_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/AfricastalkingSmsSubscriptionRequestBody'
+          $ref: '#/definitions/AfricastalkingSubNotifierRequestBody'
       responses:
         "201":
           description: Created response.
@@ -268,15 +268,15 @@ paths:
     post:
       tags:
       - africastalking
-      summary: voice_notification africastalking
+      summary: voice_notifier africastalking
       description: Adds new Voice Notification to our callback URL and return its ID.
-      operationId: africastalking#voice_notification
+      operationId: africastalking#voice_notifier
       parameters:
-      - name: voice_notification_request_body
+      - name: voice_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/AfricastalkingVoiceNotificationRequestBody'
+          $ref: '#/definitions/AfricastalkingVoiceNotifierRequestBody'
       responses:
         "201":
           description: Created response.
@@ -288,15 +288,15 @@ paths:
     post:
       tags:
       - africastalking
-      summary: transfer_event africastalking
+      summary: transfer_event_notifier africastalking
       description: Adds new Event Notification to our callback URL and return its ID.
-      operationId: africastalking#transfer_event
+      operationId: africastalking#transfer_event_notifier
       parameters:
-      - name: transfer_event_request_body
+      - name: transfer_event_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/AfricastalkingTransferEventRequestBody'
+          $ref: '#/definitions/AfricastalkingTransferEventNotifierRequestBody'
       responses:
         "201":
           description: Created response.
@@ -387,6 +387,21 @@ definitions:
         - Failed
     example:
       status: Validated
+  AfricastalkingBulkOptOutNotifierRequestBody:
+    title: AfricastalkingBulkOptOutNotifierRequestBody
+    type: object
+    properties:
+      phoneNumber:
+        type: string
+        description: Mobile phone number of the subscriber who opted out.
+        example: Excepturi ut aut nesciunt delectus beatae.
+      senderId:
+        type: string
+        description: Shortcode/Alphanumeric Sender ID the user opted out from.
+        example: Possimus vel fugit impedit.
+    example:
+      phoneNumber: Omnis sunt ea eos ut est.
+      senderId: Eveniet illum consequatur recusandae numquam autem ad.
   AfricastalkingC2bValidationNotifierRequestBody:
     title: AfricastalkingC2bValidationNotifierRequestBody
     type: object
@@ -439,6 +454,149 @@ definitions:
     - phoneNumber
     - value
     - providerMetadata
+  AfricastalkingDeliveryReportNotifierRequestBody:
+    title: AfricastalkingDeliveryReportNotifierRequestBody
+    type: object
+    properties:
+      failureReason:
+        type: string
+        description: Only provided if status is Rejected or Failed.
+        example: NotNetworkSubscriber
+        enum:
+        - InsufficientCredit
+        - InvalidLinkId
+        - UserIsInactive
+        - UserInBlackList
+        - UserAccountSuspended
+        - NotNetworkSubscriber
+        - UserNotSubscribedToProduct
+        - UserDoesNotExist
+        - DeliveryFailure
+      id:
+        type: string
+        description: A unique identifier for each message.
+        example: Voluptatem similique.
+      networkCode:
+        type: string
+        description: A unique identifier for the Telco that handled the message.
+        example: "63510"
+        enum:
+        - "62120"
+        - "62130"
+        - "62150"
+        - "62160"
+        - "63510"
+        - "63513"
+        - "63514"
+        - "63902"
+        - "63903"
+        - "63907"
+        - "63999"
+        - "64002"
+        - "64003"
+        - "64004"
+        - "64005"
+        - "64007"
+        - "64009"
+        - "64101"
+        - "64110"
+        - "64111"
+        - "64114"
+        - "65001"
+        - "65010"
+        - "99999"
+      phoneNumber:
+        type: string
+        description: Mobile phone number message was sent out to.
+        example: Corporis at praesentium odio.
+      retryCount:
+        type: string
+        description: Number of times the request to send a message to the device was retried before it succeeded or definitely failed.
+        example: Incidunt sapiente error qui placeat.
+      status:
+        type: string
+        description: The status of the message.
+        example: Rejected
+        enum:
+        - Sent
+        - Submitted
+        - Buffered
+        - Rejected
+        - Success
+        - Failed
+    example:
+      failureReason: InsufficientCredit
+      id: Quos quas quia rerum qui.
+      networkCode: "62120"
+      phoneNumber: Deleniti velit.
+      retryCount: Et aspernatur repellat et.
+      status: Buffered
+  AfricastalkingIncomingMessageNotifierRequestBody:
+    title: AfricastalkingIncomingMessageNotifierRequestBody
+    type: object
+    properties:
+      date:
+        type: string
+        description: The date and time when the message was received.
+        example: "1972-08-02"
+        format: date
+      from:
+        type: string
+        description: The number that sent the message.
+        example: A et iste eaque modi repudiandae.
+      id:
+        type: string
+        description: The internal ID that we use to store this message.
+        example: Ullam voluptas aliquam dolor eos commodi vero.
+      linkId:
+        type: string
+        description: Parameter required when responding to an on-demand user request with a premium message.
+        example: Quidem a voluptatem suscipit quas repudiandae.
+      networkCode:
+        type: string
+        description: A unique identifier for the telco that handled the message.
+        example: "64007"
+        enum:
+        - "62120"
+        - "62130"
+        - "62150"
+        - "62160"
+        - "63510"
+        - "63513"
+        - "63514"
+        - "63902"
+        - "63903"
+        - "63907"
+        - "63999"
+        - "64002"
+        - "64003"
+        - "64004"
+        - "64005"
+        - "64007"
+        - "64009"
+        - "64101"
+        - "64110"
+        - "64111"
+        - "64114"
+        - "65001"
+        - "65010"
+        - "99999"
+      text:
+        type: string
+        description: The message content.
+        example: Assumenda enim fuga placeat occaecati dolore dolores.
+      to:
+        type: string
+        description: The number to which the message was sent.
+        example: Necessitatibus illo nobis occaecati aut qui.
+    example:
+      date: "1975-05-01"
+      from: Harum molestiae dolorem.
+      id: Rerum eligendi laborum doloribus blanditiis aut.
+      linkId: Fugiat voluptatem reprehenderit.
+      networkCode: "62130"
+      text: Sit et harum qui cum totam accusantium.
+      to: Dignissimos ipsa voluptatum illo.
   AfricastalkingIotNotifierRequestBody:
     title: AfricastalkingIotNotifierRequestBody
     type: object
@@ -598,166 +756,26 @@ definitions:
     - description
     - requestMetadata
     - providerMetadata
-  AfricastalkingSmsBulkOptoutRequestBody:
-    title: AfricastalkingSmsBulkOptoutRequestBody
+  AfricastalkingStatusNotifierRequestBody:
+    title: AfricastalkingStatusNotifierRequestBody
     type: object
     properties:
-      phoneNumber:
+      requestId:
         type: string
-        description: Mobile phone number of the subscriber who opted out.
-        example: Excepturi ut aut nesciunt delectus beatae.
-      senderId:
-        type: string
-        description: Shortcode/Alphanumeric Sender ID the user opted out from.
-        example: Possimus vel fugit impedit.
-    example:
-      phoneNumber: Omnis sunt ea eos ut est.
-      senderId: Eveniet illum consequatur recusandae numquam autem ad.
-  AfricastalkingSmsDeliveryReportRequestBody:
-    title: AfricastalkingSmsDeliveryReportRequestBody
-    type: object
-    properties:
-      failureReason:
-        type: string
-        description: Only provided if status is Rejected or Failed.
-        example: NotNetworkSubscriber
-        enum:
-        - InsufficientCredit
-        - InvalidLinkId
-        - UserIsInactive
-        - UserInBlackList
-        - UserAccountSuspended
-        - NotNetworkSubscriber
-        - UserNotSubscribedToProduct
-        - UserDoesNotExist
-        - DeliveryFailure
-      id:
-        type: string
-        description: A unique identifier for each message.
-        example: Voluptatem similique.
-      networkCode:
-        type: string
-        description: A unique identifier for the Telco that handled the message.
-        example: "63510"
-        enum:
-        - "62120"
-        - "62130"
-        - "62150"
-        - "62160"
-        - "63510"
-        - "63513"
-        - "63514"
-        - "63902"
-        - "63903"
-        - "63907"
-        - "63999"
-        - "64002"
-        - "64003"
-        - "64004"
-        - "64005"
-        - "64007"
-        - "64009"
-        - "64101"
-        - "64110"
-        - "64111"
-        - "64114"
-        - "65001"
-        - "65010"
-        - "99999"
-      phoneNumber:
-        type: string
-        description: Mobile phone number message was sent out to.
-        example: Corporis at praesentium odio.
-      retryCount:
-        type: string
-        description: Number of times the request to send a message to the device was retried before it succeeded or definitely failed.
-        example: Incidunt sapiente error qui placeat.
+        description: The request ID sent back as a response to the airtime send request.
+        example: ATQid_SampleTxnId123
       status:
         type: string
-        description: The status of the message.
-        example: Rejected
+        description: The Transaction status.
+        example: Success
         enum:
-        - Sent
-        - Submitted
-        - Buffered
-        - Rejected
         - Success
         - Failed
     example:
-      failureReason: InsufficientCredit
-      id: Quos quas quia rerum qui.
-      networkCode: "62120"
-      phoneNumber: Deleniti velit.
-      retryCount: Et aspernatur repellat et.
-      status: Buffered
-  AfricastalkingSmsIncomingMessageRequestBody:
-    title: AfricastalkingSmsIncomingMessageRequestBody
-    type: object
-    properties:
-      date:
-        type: string
-        description: The date and time when the message was received.
-        example: "1972-08-02"
-        format: date
-      from:
-        type: string
-        description: The number that sent the message.
-        example: A et iste eaque modi repudiandae.
-      id:
-        type: string
-        description: The internal ID that we use to store this message.
-        example: Ullam voluptas aliquam dolor eos commodi vero.
-      linkId:
-        type: string
-        description: Parameter required when responding to an on-demand user request with a premium message.
-        example: Quidem a voluptatem suscipit quas repudiandae.
-      networkCode:
-        type: string
-        description: A unique identifier for the telco that handled the message.
-        example: "64007"
-        enum:
-        - "62120"
-        - "62130"
-        - "62150"
-        - "62160"
-        - "63510"
-        - "63513"
-        - "63514"
-        - "63902"
-        - "63903"
-        - "63907"
-        - "63999"
-        - "64002"
-        - "64003"
-        - "64004"
-        - "64005"
-        - "64007"
-        - "64009"
-        - "64101"
-        - "64110"
-        - "64111"
-        - "64114"
-        - "65001"
-        - "65010"
-        - "99999"
-      text:
-        type: string
-        description: The message content.
-        example: Assumenda enim fuga placeat occaecati dolore dolores.
-      to:
-        type: string
-        description: The number to which the message was sent.
-        example: Necessitatibus illo nobis occaecati aut qui.
-    example:
-      date: "1975-05-01"
-      from: Harum molestiae dolorem.
-      id: Rerum eligendi laborum doloribus blanditiis aut.
-      linkId: Fugiat voluptatem reprehenderit.
-      networkCode: "62130"
-      text: Sit et harum qui cum totam accusantium.
-      to: Dignissimos ipsa voluptatum illo.
-  AfricastalkingSmsSubscriptionRequestBody:
-    title: AfricastalkingSmsSubscriptionRequestBody
+      requestId: ATQid_SampleTxnId123
+      status: Success
+  AfricastalkingSubNotifierRequestBody:
+    title: AfricastalkingSubNotifierRequestBody
     type: object
     properties:
       keyword:
@@ -784,26 +802,8 @@ definitions:
       phoneNumber: Eius illum beatae ipsa.
       shortCode: Qui beatae nesciunt magni numquam eius.
       updateType: addition
-  AfricastalkingStatusNotifierRequestBody:
-    title: AfricastalkingStatusNotifierRequestBody
-    type: object
-    properties:
-      requestId:
-        type: string
-        description: The request ID sent back as a response to the airtime send request.
-        example: ATQid_SampleTxnId123
-      status:
-        type: string
-        description: The Transaction status.
-        example: Success
-        enum:
-        - Success
-        - Failed
-    example:
-      requestId: ATQid_SampleTxnId123
-      status: Success
-  AfricastalkingTransferEventRequestBody:
-    title: AfricastalkingTransferEventRequestBody
+  AfricastalkingTransferEventNotifierRequestBody:
+    title: AfricastalkingTransferEventNotifierRequestBody
     type: object
     properties:
       callSessionState:
@@ -936,8 +936,8 @@ definitions:
         - Failed
     example:
       status: Validated
-  AfricastalkingVoiceNotificationRequestBody:
-    title: AfricastalkingVoiceNotificationRequestBody
+  AfricastalkingVoiceNotifierRequestBody:
+    title: AfricastalkingVoiceNotifierRequestBody
     type: object
     properties:
       amount:

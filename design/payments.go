@@ -47,7 +47,7 @@ import (
 // UserStashTopup: Sent once funds are successfully moved from your
 // payment wallet to your Africa’s Talking Stash.
 
-var PaymentNotification = Type("PaymentNotification ", func() {
+var PaymentNotificationPayload = Type("PaymentNotificationPayload", func() {
 	Attribute("transactionId", String, func() {
 		Description("Unique transactionId generated for every payment.")
 	})
@@ -312,7 +312,7 @@ var PaymentNotification = Type("PaymentNotification ", func() {
 // a validation URL in your account. The POST request that we submit to
 // your validation callback URL will contain a JSON-encoded object that
 // has the following parameters:
-var C2BValidationNotification = Type("C2BValidationNotification", func() {
+var C2BValidationNotificationPayload = Type("C2BValidationNotificationPayload", func() {
 	Attribute("provider", String, func() {
 		Description("Payment provider that is facilitating this transaction")
 		Enum(

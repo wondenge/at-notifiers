@@ -8,10 +8,10 @@ import (
 )
 
 // API describes the global properties of the API server.
-var _ = API("notifier", func() {
+var _ = API("listener", func() {
 
 	// API title.
-	Title("AfricasTalking HTTP Notifiers")
+	Title("AfricasTalking HTTP Listeners")
 
 	// Description of API
 	Description("HTTP service for interacting with callbacks supporting AfricasTalking APIs")
@@ -42,20 +42,20 @@ var _ = API("notifier", func() {
 	})
 
 	// Server describes a single process listening for client requests.
-	Server("atsvr", func() {
-		Description("atsvr hosts callbacks that support AfricasTalking APIs.")
+	Server("at", func() {
+		Description("at hosts all callback services supporting AfricasTalking APIs.")
 
 		// List services hosted by this server.
-		Services("sms", "voice", "ussd", "airtime", "payments", "iot", "health", "swagger")
+		Services("africastalking", "health", "swagger")
 
 		// List the Hosts and their transport URLs.
 		Host("local", func() {
-			Description("Localhost")
+			Description("local host")
 			URI("http://localhost:3000")
 		})
 
 		Host("docker", func() {
-			Description("docker hosts.")
+			Description("docker host")
 
 			// We use 0.0.0.0 so the bind will work in the docker image.
 			// We will not be doing TLS here as we expect the instance to
@@ -63,5 +63,40 @@ var _ = API("notifier", func() {
 			// where the load balancer kubernetes ingress will be responsible for TLS.
 			URI("http://0.0.0.0:8000")
 		})
+	})
+})
+
+var _ = Service("health", func() {
+
+	// HTTP defines the HTTP transport specific
+	// properties of an API, a service or a single method.
+	HTTP(func() {
+		Path("/health")
+	})
+
+	// Defines a single service method
+	Method("show", func() {
+		Description("Health check endpoint.")
+		Result(String)
+		HTTP(func() {
+			GET("/")
+			Response(func() {
+				Code(StatusOK)
+				ContentType("text/plain")
+			})
+		})
+	})
+})
+
+var _ = Service("swagger", func() {
+	Description("The swagger service serves the API swagger definition.")
+	HTTP(func() {
+		Path("/swagger")
+	})
+
+	// Serve the file with relative path
+	// ../../gen/http/openapi.json for requests sent to /swagger.json.
+	Files("/swagger.json", "../../gen/http/openapi.json", func() {
+		Description("JSON document containing the API swagger definition")
 	})
 })

@@ -8,9 +8,10 @@ import (
 )
 
 // IoT Notifications
-//The IoT API sends a notification when a device publish event occurs.
-// To receive these notifications you need to setup a callback URL depending on the type of notification.
-var IoTNotification = Type("IoTNotification", func() {
+// The IoT API sends a notification when a device publish event occurs.
+// To receive these notifications you need to setup a callback URL
+// depending on the type of notification.
+var IoTNotificationPayload = Type("IoTNotificationPayload", func() {
 	Description("")
 
 	Attribute("payload", String, func() {

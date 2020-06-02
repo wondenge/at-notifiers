@@ -34,20 +34,8 @@ FROM scratch
 
 COPY --from=builder /app /
 
-# Build Args
-ARG LOG_DIR=/logs
-
-# Create Log Directory
-RUN mkdir -p ${LOG_DIR}
-
-# Environment Variables 
-ENV LOG_FILE_LOCATION=${LOG_DIR}/app.log
-
 # This container exposes port 8080 to the outside world.
 EXPOSE 8000 
-
-# Declare volumes to mount
-VOLUME [ ${LOG_DIR} ]
 
 # Command to run
 CMD ["./atsvr", "-host", "docker"]

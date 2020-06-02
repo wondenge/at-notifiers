@@ -1,5 +1,5 @@
 <p align="center">
-<img src="docs/assets/img/gopher.png" alt="Traefik" title="AfricasTalking Notifiers" />
+<img src="src/img/AfricasTalkingNotifiers.png" alt="AfricasTalking Notifiers" title="AfricasTalking Notifiers" />
 </p>
 
 [![Go Report Card](https://goreportcard.com/badge/wondenge/at-notifiers)](https://goreportcard.com/report/wondenge/at-notifiers)
@@ -31,12 +31,12 @@ $ git clone https://github.com/wondenge/at-notifiers.git
 
 $ cd at-notifiers
 
-$ go build ./cmd/atsvr && go build ./cmd/atsvr-cli
+$ go build ./cmd/at && go build ./cmd/at-cli
 ```
 
-This creates two binaries, atsvr and atsvr-cli, which is a server and a client respectively. Start a local server by running `./atsvr` which runs on `http://localhost:3000`.
+This creates two binaries, `at` and `at-cli`, which is a server and a client respectively. Start a local server by running `./at` which runs on `http://localhost:3000`.
 
-On a separate terminal, run the CLI client for the notifier API by invoking the --help command using `./atsvr-cli --help` and logs the following output.
+On a separate terminal, run the CLI client for the notifier API by invoking the --help command using `./at-cli --help` and logs the following output.
 
 ## Production Use with Docker
 

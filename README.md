@@ -107,6 +107,8 @@ To receive incoming messages, you need to set an incoming messages callback URL.
 
 From the dashboard select SMS -> SMS Callback URLs -> Incoming Messages.
 
+> Example Request
+
 ```bash
 curl --request POST \
   --url http://0.0.0.0:8000/callbacks/africastalking/sms/incomingmessage \
@@ -124,6 +126,8 @@ curl --request POST \
    }'
 ```
 
+> Example Response
+
 ```bash
 ts=2020-06-01T19:20:32.06257147Z caller=log.go:30 id=3CrxESuC req="POST /callbacks/africastalking/sms/incomingmessage" from=172.17.0.1
 ts=2020-06-01T19:20:32.0627394Z caller=sms.go:30 info=sms.incomingMessage
@@ -138,6 +142,8 @@ To receive bulk sms opt out notifications, you need to set a bulk sms opt out ca
 
 From the dashboard select SMS -> SMS Callback URLs -> Bulk SMS Opt Out.
 
+> Example Request
+
 ```bash
 curl --request POST \
   --url http://0.0.0.0:8000/callbacks/africastalking/sms/bulksmsoptout \
@@ -149,6 +155,8 @@ curl --request POST \
       "senderId": "Enim neque."
    }'
 ```
+
+> Example Response
 
 ```bash
 ts=2020-06-01T19:21:43.984298331Z caller=log.go:30 id=1p6NRt1J req="POST /callbacks/africastalking/sms/bulksmsoptout" from=172.17.0.1
@@ -166,6 +174,8 @@ To receive premium sms subscription notifications, you need to set asubscription
 
 From the dashboard select SMS -> SMS Callback URLs -> Subscription Notifications.
 
+> Example Request
+
 ```bash
 curl --request POST \
   --url http://0.0.0.0:8000/callbacks/africastalking/sms/subscription \
@@ -179,6 +189,8 @@ curl --request POST \
       "updateType": "deletion"
    }'
 ```
+
+> Example Response
 
 ```bash
 ts=2020-06-01T19:22:30.674050184Z caller=log.go:30 id=0f6DpB1K req="POST /callbacks/africastalking/sms/subscription" from=172.17.0.1
@@ -203,6 +215,10 @@ Voice API notifications are sent for;
 - After Input: These are sent whenever an action in your response requires user input (such as GetDigits and Record)
 
 - When Call Ends: These are sent after a call ends. This is the final notification and contains some extra information about the call like the cost and duration.
+
+## Voice Notification
+
+> Example Request
 
 ```bash
 curl --request POST \
@@ -231,11 +247,17 @@ curl --request POST \
    }'
 ```
 
+> Example Response
+
 ```bash
 ts=2020-06-01T19:23:19.674572551Z caller=log.go:30 id=jN1y8ZVd req="POST /callbacks/africastalking/voice/notifications" from=172.17.0.1
 ts=2020-06-01T19:23:19.674887773Z caller=voice.go:24 info=voice.voiceNotifier
 ts=2020-06-01T19:23:19.674912988Z caller=log.go:37 id=jN1y8ZVd status=201 bytes=3 time=342.365µs
 ```
+
+## Call Transfer Events
+
+> Example Request
 
 ```bash
 curl --request POST \
@@ -254,6 +276,8 @@ curl --request POST \
    }'
 ```
 
+> Example Response
+
 ```bash
 ts=2020-06-01T19:24:02.941335358Z caller=log.go:30 id=UHHNRDGm req="POST /callbacks/africastalking/voice/transferevents" from=172.17.0.1
 ts=2020-06-01T19:24:02.941490098Z caller=voice.go:30 info=voice.transferEvents
@@ -268,6 +292,8 @@ This service is hit when the user dials a USSD code and every time they respond 
 - Register a URL that they can call whenever they get a request from a client coming into their system.
 
 Once you register your callback URL, any requests that they receive belonging to you will trigger a callback that sends the request data to that URL using HTTP POST.
+
+> Example Request
 
 ```bash
 curl --request POST \
@@ -294,6 +320,8 @@ To receive these notifications you need to setup an airtime validation callback 
 
 From the dashboard select Airtime -> Airtime Callback URLs -> Validation Callback URL.
 
+> Example Request
+
 ```bash
 curl --request POST \
   --url http://0.0.0.0:8000/callbacks/africastalking/airtime/validation \
@@ -307,6 +335,8 @@ curl --request POST \
       "transactionId": "SomeTransactionID"
    }'
 ```
+
+> Example Response
 
 ```bash
 ts=2020-06-01T19:27:30.439185432Z caller=log.go:30 id=1eyf-hiQ req="POST /callbacks/africastalking/airtime/validation" from=172.17.0.1
@@ -326,6 +356,8 @@ To receive these notifications you need to setup an airtime status callback URL.
 
 From the dashboard select Airtime -> Airtime Callback URLs -> Status Callback URL.
 
+> Example Request
+
 ```bash
 curl --request POST \
   --url http://0.0.0.0:8000/callbacks/africastalking/airtime/status \
@@ -337,6 +369,8 @@ curl --request POST \
       "status": "Success"
    }'
 ```
+
+> Example Response
 
 ```bash
 ts=2020-06-01T19:28:43.286126869Z caller=log.go:30 id=lNKMqVbM req="POST /callbacks/africastalking/airtime/status" from=172.17.0.1
@@ -367,6 +401,10 @@ The Payment API sends a notification when a specific event happens. To receive t
 
 - UserStashTopup: These are sent once funds are successfully moved from your payment wallet to your Africa’s Talking Stash.
 
+## Payment Notifications
+
+> Example Request
+
 ```bash
 curl --request POST \
   --url http://0.0.0.0:8000/callbacks/africastalking/payments/events \
@@ -396,11 +434,17 @@ curl --request POST \
    }'
 ```
 
+> Example Response
+
 ```bash
 ts=2020-06-01T19:29:22.672857301Z caller=log.go:30 id=9fTUhiCO req="POST /callbacks/africastalking/payments/events" from=172.17.0.1
 ts=2020-06-01T19:29:22.673067231Z caller=payments.go:24 info=payments.paymentNotifier
 ts=2020-06-01T19:29:22.673115464Z caller=log.go:37 id=9fTUhiCO status=201 bytes=3 time=259.037µs
 ```
+
+## C2B Validation Notification
+
+> Example Request
 
 ```bash
 curl --request POST \
@@ -420,11 +464,17 @@ curl --request POST \
    }'
 ```
 
+> Example Response
+
 ```bash
 ts=2020-06-01T19:30:05.299538595Z caller=log.go:30 id=jV-1vCdB req="POST /callbacks/africastalking/payments/c2b/validation" from=172.17.0.1
 ts=2020-06-01T19:30:05.299679587Z caller=payments.go:30 info=payments.c2bNotifier
 ts=2020-06-01T19:30:05.299715637Z caller=log.go:37 id=jV-1vCdB status=201 bytes=3 time=179.946µs
 ```
+
+## B2C Validation Notification
+
+> Example Request
 
 ```bash
 curl --request POST \
@@ -444,6 +494,8 @@ curl --request POST \
    }'
 ```
 
+> Example Response
+
 ```bash
 ts=2020-06-01T19:30:51.451874827Z caller=log.go:30 id=LgDHaWBX req="POST /callbacks/africastalking/payments/b2c/validation" from=172.17.0.1
 ts=2020-06-01T19:30:51.452056778Z caller=payments.go:37 info=payments.b2cNotifier
@@ -458,7 +510,7 @@ To receive these notifications you need to setup a callback URL depending on the
 
 When creating your device group, you have the option to supply your application callback URL. This is the remote endpoint to which device messages will be sent.
 
-Here is a curl example request testing the IoT callback.
+> Example Request
 
 ```bash
 curl --request POST \
@@ -471,6 +523,8 @@ curl --request POST \
       "topic": "myusername/devicegroup/sensor/id/1/temperature"
    }'
 ```
+
+> Example Response
 
 ```bash
 ts=2020-06-01T19:31:27.110932634Z caller=log.go:30 id=0jnyFwax req="POST /callbacks/africastalking/iot/events" from=172.17.0.1

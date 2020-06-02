@@ -3,8 +3,11 @@ module github.com/wondenge/at-notifiers
 go 1.14
 
 require (
+	github.com/boltdb/bolt v1.3.1
 	github.com/go-kit/kit v0.8.0
 	github.com/google/go-cmp v0.4.0 // indirect
+	go.etcd.io/bbolt v1.3.4 // indirect
+	go.mongodb.org/mongo-driver v1.3.3 // indirect
 	goa.design/goa/v3 v3.1.3
 	goa.design/plugins/v3 v3.1.3
 	golang.org/x/mod v0.3.0 // indirect

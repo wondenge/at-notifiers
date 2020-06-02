@@ -15,265 +15,154 @@ import (
      3. Bulk SMS Opt Out.
      4. Subscription Notification.
 */
-var _ = Service("sms", func() {
+var _ = Service("africastalking", func() {
 	HTTP(func() {
-		Path("/callbacks/africastalking/sms")
+		Path("/callbacks/africastalking")
 	})
 
-	// Delivery Reports
-	// To receive delivery reports, you need to set a delivery report
-	// callback URL.
-	// From the dashboard select SMS -> SMS Callback URLs -> Delivery Reports.
-	//
-	// Delivery Report notification contents
-	Method("deliveryReport", func() {
-		Description("Sent whenever an MSP confirms or rejects delivery of a message.")
+	// Sent whenever an MSP confirms or rejects delivery of a message.
+	Method("sms_delivery_report", func() {
+
+		Description("Adds new SMS Delivery Report to our callback URL and return its ID.")
 		Payload(DeliveryReport)
 		Result(String)
 		HTTP(func() {
-			POST("/deliveryreport")
+			POST("/sms/deliveryreport")
 			Response(StatusCreated)
 		})
 	})
 
-	// Incoming Messages
-	// To receive incoming messages, you need to set an incoming messages
-	// callback URL.
-	// From the dashboard select SMS -> SMS Callback URLs -> Incoming Messages.
-	//
-	// Incoming message notification contents
-	Method("incomingMessage", func() {
-		Description("Sent whenever a message is sent to any of your registered shortcodes.")
+	// Sent whenever a message is sent to any of your registered
+	// shortcodes.
+	Method("sms_incoming_message", func() {
+
+		Description("Adds new SMS Incoming Message to our callback URL and return its ID.")
 		Payload(IncomingMessage)
 		Result(String)
 		HTTP(func() {
-			POST("/incomingmessage")
+			POST("/sms/incomingmessage")
 			Response(StatusCreated)
 		})
 	})
 
-	// Bulk SMS Opt Out
-	// To receive bulk sms opt out notifications, you need to set a bulk
-	// sms opt out callback URL.
-	// From the dashboard select SMS -> SMS Callback URLs -> Bulk SMS Opt Out.
-	// The instructions on how to opt out are automatically appended to the
-	// first message you send to the mobile subscriber.
-	// From then onwards, any other message will be sent ‘as is’ to the subscriber.
-	//
-	// Bulk sms opt out notification contents
-	Method("bulkSMSOptOut", func() {
-		Description("Sent whenever a user opts out of receiving messages from your alphanumeric sender ID")
+	// Sent whenever a user opts out of receiving messages from your
+	// alphanumeric sender ID
+	Method("sms_bulk_optout", func() {
+		Description("Adds new SMS Bulk OptOut to our callback URL and return its ID.")
 		Payload(BulkSMSOptOut)
 		Result(String)
 		HTTP(func() {
-			POST("/bulksmsoptout")
+			POST("/sms/bulksmsoptout")
 			Response(StatusCreated)
 		})
 	})
 
-	// Subscription Notification
-	// To receive premium sms subscription notifications, you need to
-	// set a subscription notification callback URL.
-	// From the dashboard select SMS -> SMS Callback URLs -> Subscription Notifications.
-	//
-	// Subscription notification contents
-	Method("subNotifier", func() {
-		Description("Sent whenever someone subscribes or unsubscribes from any of your premium SMS products.")
+	// Sent whenever someone subscribes or unsubscribes from any of
+	// your premium SMS products.
+	Method("sms_subscription", func() {
+		Description("Adds new SMS subscription to our callback URL and return its ID.")
 		Payload(SubscriptionNotification)
 		Result(String)
 		HTTP(func() {
-			POST("/subscription")
+			POST("/sms/subscription")
 			Response(StatusCreated)
 		})
 	})
-})
 
-/*
-   Voice Callback Service.
-   This service hosts the following notifications.
-   1. Voice notifications sent from Africa'sTalking gateway.
-   2. Call Transfer Event Notifications
-*/
-var _ = Service("voice", func() {
-
-	HTTP(func() {
-		Path("/callbacks/africastalking/voice")
-	})
-
-	Method("voiceNotifier", func() {
-		Description("Voice Notification delivered to our callback URL")
+	// Voice notifications sent from Africa'sTalking gateway.
+	Method("voice_notification", func() {
+		Description("Adds new Voice Notification to our callback URL and return its ID.")
 		Payload(VoiceNotification)
 		Result(String)
 		HTTP(func() {
-			POST("/notifications")
+			POST("/voice/notifications")
 			Response(StatusCreated)
 		})
 	})
 
-	Method("transferEvents", func() {
-		Description("Event Notifications sent from AT after call transfer initiated.")
+	// Sent from AT after call transfer initiated.
+	Method("transfer_event", func() {
+		Description("Adds new Event Notification to our callback URL and return its ID.")
 		Payload(CallTransferEvent)
 		Result(String)
 		HTTP(func() {
-			POST("/transferevents")
+			POST("/voice/transferevents")
 			Response(StatusCreated)
 		})
 	})
-})
 
-/*
-     USSD Callback Service.
-	 This service hosts the following notifications.
-     1. USSD Notifications sent from Africa'sTalking gateway.
-*/
-var _ = Service("ussd", func() {
-
-	HTTP(func() {
-		Path("/callbacks/africastalking/ussd")
-	})
-
-	Method("ussdNotifier", func() {
-		Description("Callback URL that sends request data our App using HTTP POST.")
+	// USSD Notifications sent from Africa'sTalking gateway.
+	Method("ussd_notifier", func() {
+		Description("Adds new USSD Notification to our callback URL and return its ID.")
 		Payload(USSDPayload)
 		Result(USSDResponse)
 		HTTP(func() {
-			POST("/sessions")
+			POST("/ussd/sessions")
 			Response(StatusCreated)
 		})
 	})
 
-})
-
-/*
-   Airtime Callback Service
-   This service hosts the following notifications.
-   1. Airtime Validation Notifications
-   2. Airtime Status Notifications
-*/
-var _ = Service("airtime", func() {
-
-	HTTP(func() {
-		Path("/callbacks/africastalking/airtime")
-	})
-
-	Method("validation", func() {
-		Description("Airtime Validation Notifications")
+	Method("validation_notifier", func() {
+		Description("Adds new Airtime Validation Notification to our callback URL and return its ID.")
 		Payload(AirtimeValidationPayload)
 		Result(AirtimeValidationResponse)
 		HTTP(func() {
-			POST("/validation")
+			POST("/airtime/validation")
 			Response(StatusCreated)
 		})
 	})
 
-	Method("status", func() {
-		Description("Airtime Status Notifications")
+	Method("status_notifier", func() {
+		Description("Adds new Airtime Status Notification to our callback URL and return its ID.")
 		Payload(AirtimeStatus)
 		Result(String)
 		HTTP(func() {
-			POST("/status")
+			POST("/airtime/status")
 			Response(StatusCreated)
 		})
 	})
-})
 
-/*
-   Payments Callback Service
-   This service hosts the following notifications.
-   1. Payment Notifications
-   2. C2B Validation Notifications
-   3. B2C Validation Notifications.
-*/
-var _ = Service("payments", func() {
-
-	HTTP(func() {
-		Path("/callbacks/africastalking/payments")
-	})
-
-	Method("paymentNotifier", func() {
-		Description("Payment Notifications")
+	// Payment Notifications
+	Method("payment_notifier", func() {
+		Description("Adds new Payment Notification to our callback URL and return its ID.")
 		Payload(PaymentNotification)
 		Result(String)
 		HTTP(func() {
-			POST("/events")
+			POST("/payments/events")
 			Response(StatusCreated)
 		})
 	})
 
-	Method("c2bNotifier", func() {
-		Description("C2B Validation Notifications")
+	// C2B Validation Notifications
+	Method("c2b_validation_notifier", func() {
+		Description("Adds new C2B Validation Notification to our callback URL and return its ID.")
 		Payload(C2BValidationNotification)
 		Result(String)
 		HTTP(func() {
-			POST("/c2b/validation")
+			POST("/payments/c2b/validation")
 			Response(StatusCreated)
 		})
 	})
 
-	Method("b2cNotifier", func() {
-		Description("B2C Validation Notifications")
+	// B2C Validation Notifications.
+	Method("b2c_validation_notifier", func() {
+		Description("Adds new B2C Validation Notification to our callback URL and return its ID.")
 		Payload(B2CValidationNotificationPayload)
 		Result(B2CValidationNotificationResponse)
 		HTTP(func() {
-			POST("/b2c/validation")
+			POST("/payments/b2c/validation")
 			Response(StatusCreated)
 		})
 	})
-})
 
-/*
-   IoT Callback Service
-   This service hosts the following notifications.
-   1. IoT Notifications
-*/
-var _ = Service("iot", func() {
-
-	HTTP(func() {
-		Path("/callbacks/africastalking/iot")
-	})
-
-	Method("iotNotifier", func() {
-		Description("IoT Notifications")
+	// IoT Notifications
+	Method("iot_notifier", func() {
+		Description("Adds new IoT Notification to our callback URL and return its ID.")
 		Payload(IoTNotification)
 		Result(String)
 		HTTP(func() {
-			POST("/events")
+			POST("/iot/events")
 			Response(StatusCreated)
 		})
-	})
-})
-
-var _ = Service("health", func() {
-
-	// HTTP defines the HTTP transport specific
-	// properties of an API, a service or a single method.
-	HTTP(func() {
-		Path("/health")
-	})
-
-	// Defines a single service method
-	Method("show", func() {
-		Description("Health check endpoint.")
-		Result(String)
-		HTTP(func() {
-			GET("/")
-			Response(func() {
-				Code(StatusOK)
-				ContentType("text/plain")
-			})
-		})
-	})
-})
-
-var _ = Service("swagger", func() {
-	Description("The swagger service serves the API swagger definition.")
-	HTTP(func() {
-		Path("/swagger")
-	})
-
-	// Serve the file with relative path
-	// ../../gen/http/openapi.json for requests sent to /swagger.json.
-	Files("/swagger.json", "../../gen/http/openapi.json", func() {
-		Description("JSON document containing the API swagger definition")
 	})
 })

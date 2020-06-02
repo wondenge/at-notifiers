@@ -49,7 +49,7 @@ $ docker pull ondengew/at-notifiers
 We can then run the docker image which starts the HTTP server listening on 0.0.0.0:8000
 
 ```bash
-$ docker run -p 8000:8000 at-notifiers
+$ docker run -p 8000:8000 ondengew/at-notifiers
 ```
 
 # 4. SMS Callback
@@ -89,6 +89,12 @@ curl --request POST \
        }'
 ```
 
+```bash
+ts=2020-06-01T19:19:03.39104844Z caller=log.go:30 id=M_4eFRe_ req="POST /callbacks/africastalking/sms/deliveryreport" from=172.17.0.1
+ts=2020-06-01T19:19:03.391291775Z caller=sms.go:24 info=sms.deliveryReport
+ts=2020-06-01T19:19:03.391334458Z caller=log.go:37 id=M_4eFRe_ status=201 bytes=3 time=286.852µs
+```
+
 ## Incoming Messages.
 
 These are sent whenever a message is sent to any of your registered shortcodes.
@@ -103,7 +109,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'cache-control: no-cache' \
   --header 'content-type: application/json' \
-  --body '{
+  --data '{
       "date": "1977-01-31",
       "from": "Velit earum est.",
       "id": "Illo voluptate iste voluptate unde.",
@@ -112,6 +118,12 @@ curl --request POST \
       "text": "Aut quas quia laboriosam vitae dolor hic.",
       "to": "Eligendi suscipit recusandae libero natus cupiditate libero."
    }'
+```
+
+```bash
+ts=2020-06-01T19:20:32.06257147Z caller=log.go:30 id=3CrxESuC req="POST /callbacks/africastalking/sms/incomingmessage" from=172.17.0.1
+ts=2020-06-01T19:20:32.0627394Z caller=sms.go:30 info=sms.incomingMessage
+ts=2020-06-01T19:20:32.062780502Z caller=log.go:37 id=3CrxESuC status=201 bytes=3 time=209.2µs
 ```
 
 ## Bulk SMS Opt Out
@@ -132,6 +144,12 @@ curl --request POST \
       "phoneNumber": "Ut vitae sit.",
       "senderId": "Enim neque."
    }'
+```
+
+```bash
+ts=2020-06-01T19:21:43.984298331Z caller=log.go:30 id=1p6NRt1J req="POST /callbacks/africastalking/sms/bulksmsoptout" from=172.17.0.1
+ts=2020-06-01T19:21:43.984455752Z caller=sms.go:37 info=sms.bulkSMSOptOut
+ts=2020-06-01T19:21:43.984502415Z caller=log.go:37 id=1p6NRt1J status=201 bytes=3 time=205.051µs
 ```
 
 The instructions on how to opt out are automatically appended to the first message you send to the mobile subscriber. From then onwards, any other message will be sent ‘as is’ to the subscriber.
@@ -156,6 +174,12 @@ curl --request POST \
       "shortCode": "Pariatur aut omnis.",
       "updateType": "deletion"
    }'
+```
+
+```bash
+ts=2020-06-01T19:22:30.674050184Z caller=log.go:30 id=0f6DpB1K req="POST /callbacks/africastalking/sms/subscription" from=172.17.0.1
+ts=2020-06-01T19:22:30.67421404Z caller=sms.go:44 info=sms.subNotifier
+ts=2020-06-01T19:22:30.674260295Z caller=log.go:37 id=0f6DpB1K status=201 bytes=3 time=212.748µs
 ```
 
 # 5. Voice Callback
@@ -204,6 +228,12 @@ curl --request POST \
 ```
 
 ```bash
+ts=2020-06-01T19:23:19.674572551Z caller=log.go:30 id=jN1y8ZVd req="POST /callbacks/africastalking/voice/notifications" from=172.17.0.1
+ts=2020-06-01T19:23:19.674887773Z caller=voice.go:24 info=voice.voiceNotifier
+ts=2020-06-01T19:23:19.674912988Z caller=log.go:37 id=jN1y8ZVd status=201 bytes=3 time=342.365µs
+```
+
+```bash
 curl --request POST \
   --url http://0.0.0.0:8000/callbacks/africastalking/voice/transferevents \
   --header 'accept: application/json' \
@@ -218,6 +248,12 @@ curl --request POST \
       "isActive": "1",
       "status": "Success"
    }'
+```
+
+```bash
+ts=2020-06-01T19:24:02.941335358Z caller=log.go:30 id=UHHNRDGm req="POST /callbacks/africastalking/voice/transferevents" from=172.17.0.1
+ts=2020-06-01T19:24:02.941490098Z caller=voice.go:30 info=voice.transferEvents
+ts=2020-06-01T19:24:02.941526761Z caller=log.go:37 id=UHHNRDGm status=201 bytes=3 time=193.731µs
 ```
 
 # 6. USSD Callback
@@ -268,6 +304,12 @@ curl --request POST \
    }'
 ```
 
+```bash
+ts=2020-06-01T19:27:30.439185432Z caller=log.go:30 id=1eyf-hiQ req="POST /callbacks/africastalking/airtime/validation" from=172.17.0.1
+ts=2020-06-01T19:27:30.439358278Z caller=airtime.go:25 info=airtime.validation
+ts=2020-06-01T19:27:30.439403337Z caller=log.go:37 id=1eyf-hiQ status=201 bytes=3 time=221.848µs
+```
+
 Once you receive a validation callback notification you’ll be expected to send back a JSON response that marks the transaction as Validated or Failed.
 
 If validated we will proceed to send the airtime, if failed, we will block the airtime transaction.
@@ -290,6 +332,12 @@ curl --request POST \
       "requestId": "ATQid_SampleTxnId123",
       "status": "Success"
    }'
+```
+
+```bash
+ts=2020-06-01T19:28:43.286126869Z caller=log.go:30 id=lNKMqVbM req="POST /callbacks/africastalking/airtime/status" from=172.17.0.1
+ts=2020-06-01T19:28:43.286228493Z caller=airtime.go:31 info=airtime.status
+ts=2020-06-01T19:28:43.286257631Z caller=log.go:37 id=lNKMqVbM status=201 bytes=3 time=133.147µs
 ```
 
 # 8. Payment Callback
@@ -345,6 +393,12 @@ curl --request POST \
 ```
 
 ```bash
+ts=2020-06-01T19:29:22.672857301Z caller=log.go:30 id=9fTUhiCO req="POST /callbacks/africastalking/payments/events" from=172.17.0.1
+ts=2020-06-01T19:29:22.673067231Z caller=payments.go:24 info=payments.paymentNotifier
+ts=2020-06-01T19:29:22.673115464Z caller=log.go:37 id=9fTUhiCO status=201 bytes=3 time=259.037µs
+```
+
+```bash
 curl --request POST \
   --url http://0.0.0.0:8000/callbacks/africastalking/payments/c2b/validation \
   --header 'accept: application/json' \
@@ -363,6 +417,12 @@ curl --request POST \
 ```
 
 ```bash
+ts=2020-06-01T19:30:05.299538595Z caller=log.go:30 id=jV-1vCdB req="POST /callbacks/africastalking/payments/c2b/validation" from=172.17.0.1
+ts=2020-06-01T19:30:05.299679587Z caller=payments.go:30 info=payments.c2bNotifier
+ts=2020-06-01T19:30:05.299715637Z caller=log.go:37 id=jV-1vCdB status=201 bytes=3 time=179.946µs
+```
+
+```bash
 curl --request POST \
   --url http://0.0.0.0:8000/callbacks/africastalking/payments/b2c/validation \
   --header 'accept: application/json' \
@@ -378,6 +438,12 @@ curl --request POST \
       "sourceIpAddress": "12.34.56.78",
       "transactionId": "SomeTransactionID"
    }'
+```
+
+```bash
+ts=2020-06-01T19:30:51.451874827Z caller=log.go:30 id=LgDHaWBX req="POST /callbacks/africastalking/payments/b2c/validation" from=172.17.0.1
+ts=2020-06-01T19:30:51.452056778Z caller=payments.go:37 info=payments.b2cNotifier
+ts=2020-06-01T19:30:51.452136713Z caller=log.go:37 id=LgDHaWBX status=201 bytes=3 time=264.64µs
 ```
 
 # 9. IoT Callback
@@ -400,4 +466,10 @@ curl --request POST \
       "payload": "42",
       "topic": "myusername/devicegroup/sensor/id/1/temperature"
    }'
+```
+
+```bash
+ts=2020-06-01T19:31:27.110932634Z caller=log.go:30 id=0jnyFwax req="POST /callbacks/africastalking/iot/events" from=172.17.0.1
+ts=2020-06-01T19:31:27.111037143Z caller=iot.go:24 info=iot.iotNotifier
+ts=2020-06-01T19:31:27.111070365Z caller=log.go:37 id=0jnyFwax status=201 bytes=3 time=131.511µs
 ```

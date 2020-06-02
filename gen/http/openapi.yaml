@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  title: AfricasTalking HTTP Notifiers
+  title: AfricasTalking HTTP Listeners
   description: HTTP service for interacting with callbacks supporting AfricasTalking APIs
   termsOfService: https://github.com/wondenge/at-notifiers/blob/master/LICENSE
   contact:
@@ -24,16 +24,16 @@ paths:
   /callbacks/africastalking/airtime/status:
     post:
       tags:
-      - airtime
-      summary: status airtime
-      description: Airtime Status Notifications
-      operationId: airtime#status
+      - africastalking
+      summary: status_notifier africastalking
+      description: Adds new Airtime Status Notification to our callback URL and return its ID.
+      operationId: africastalking#status_notifier
       parameters:
-      - name: StatusRequestBody
+      - name: status_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/AirtimeStatusRequestBody'
+          $ref: '#/definitions/AfricastalkingStatusNotifierRequestBody'
       responses:
         "201":
           description: Created response.
@@ -44,36 +44,36 @@ paths:
   /callbacks/africastalking/airtime/validation:
     post:
       tags:
-      - airtime
-      summary: validation airtime
-      description: Airtime Validation Notifications
-      operationId: airtime#validation
+      - africastalking
+      summary: validation_notifier africastalking
+      description: Adds new Airtime Validation Notification to our callback URL and return its ID.
+      operationId: africastalking#validation_notifier
       parameters:
-      - name: ValidationRequestBody
+      - name: validation_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/AirtimeValidationRequestBody'
+          $ref: '#/definitions/AfricastalkingValidationNotifierRequestBody'
       responses:
         "201":
           description: Created response.
           schema:
-            $ref: '#/definitions/AirtimeValidationResponseBody'
+            $ref: '#/definitions/AfricastalkingValidationNotifierResponseBody'
       schemes:
       - http
   /callbacks/africastalking/iot/events:
     post:
       tags:
-      - iot
-      summary: iotNotifier iot
-      description: IoT Notifications
-      operationId: iot#iotNotifier
+      - africastalking
+      summary: iot_notifier africastalking
+      description: Adds new IoT Notification to our callback URL and return its ID.
+      operationId: africastalking#iot_notifier
       parameters:
-      - name: IotNotifierRequestBody
+      - name: iot_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/IotIotNotifierRequestBody'
+          $ref: '#/definitions/AfricastalkingIotNotifierRequestBody'
       responses:
         "201":
           description: Created response.
@@ -84,36 +84,36 @@ paths:
   /callbacks/africastalking/payments/b2c/validation:
     post:
       tags:
-      - payments
-      summary: b2cNotifier payments
-      description: B2C Validation Notifications
-      operationId: payments#b2cNotifier
+      - africastalking
+      summary: b2c_validation_notifier africastalking
+      description: Adds new B2C Validation Notification to our callback URL and return its ID.
+      operationId: africastalking#b2c_validation_notifier
       parameters:
-      - name: B2cNotifierRequestBody
+      - name: b2c_validation_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/PaymentsB2cNotifierRequestBody'
+          $ref: '#/definitions/AfricastalkingB2cValidationNotifierRequestBody'
       responses:
         "201":
           description: Created response.
           schema:
-            $ref: '#/definitions/PaymentsB2cNotifierResponseBody'
+            $ref: '#/definitions/AfricastalkingB2cValidationNotifierResponseBody'
       schemes:
       - http
   /callbacks/africastalking/payments/c2b/validation:
     post:
       tags:
-      - payments
-      summary: c2bNotifier payments
-      description: C2B Validation Notifications
-      operationId: payments#c2bNotifier
+      - africastalking
+      summary: c2b_validation_notifier africastalking
+      description: Adds new C2B Validation Notification to our callback URL and return its ID.
+      operationId: africastalking#c2b_validation_notifier
       parameters:
-      - name: C2bNotifierRequestBody
+      - name: c2b_validation_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/PaymentsC2bNotifierRequestBody'
+          $ref: '#/definitions/AfricastalkingC2bValidationNotifierRequestBody'
           required:
           - provider
           - productName
@@ -130,16 +130,16 @@ paths:
   /callbacks/africastalking/payments/events:
     post:
       tags:
-      - payments
-      summary: paymentNotifier payments
-      description: Payment Notifications
-      operationId: payments#paymentNotifier
+      - africastalking
+      summary: payment_notifier africastalking
+      description: Adds new Payment Notification to our callback URL and return its ID.
+      operationId: africastalking#payment_notifier
       parameters:
-      - name: PaymentNotifierRequestBody
+      - name: payment_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/PaymentsPaymentNotifierRequestBody'
+          $ref: '#/definitions/AfricastalkingPaymentNotifierRequestBody'
           required:
           - transactionId
           - category
@@ -165,16 +165,16 @@ paths:
   /callbacks/africastalking/sms/bulksmsoptout:
     post:
       tags:
-      - sms
-      summary: bulkSMSOptOut sms
-      description: Sent whenever a user opts out of receiving messages from your alphanumeric sender ID
-      operationId: sms#bulkSMSOptOut
+      - africastalking
+      summary: sms_bulk_optout africastalking
+      description: Adds new SMS Bulk OptOut to our callback URL and return its ID.
+      operationId: africastalking#sms_bulk_optout
       parameters:
-      - name: BulkSMSOptOutRequestBody
+      - name: sms_bulk_optout_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/SmsBulkSMSOptOutRequestBody'
+          $ref: '#/definitions/AfricastalkingSmsBulkOptoutRequestBody'
       responses:
         "201":
           description: Created response.
@@ -185,16 +185,16 @@ paths:
   /callbacks/africastalking/sms/deliveryreport:
     post:
       tags:
-      - sms
-      summary: deliveryReport sms
-      description: Sent whenever an MSP confirms or rejects delivery of a message.
-      operationId: sms#deliveryReport
+      - africastalking
+      summary: sms_delivery_report africastalking
+      description: Adds new SMS Delivery Report to our callback URL and return its ID.
+      operationId: africastalking#sms_delivery_report
       parameters:
-      - name: DeliveryReportRequestBody
+      - name: sms_delivery_report_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/SmsDeliveryReportRequestBody'
+          $ref: '#/definitions/AfricastalkingSmsDeliveryReportRequestBody'
       responses:
         "201":
           description: Created response.
@@ -205,16 +205,16 @@ paths:
   /callbacks/africastalking/sms/incomingmessage:
     post:
       tags:
-      - sms
-      summary: incomingMessage sms
-      description: Sent whenever a message is sent to any of your registered shortcodes.
-      operationId: sms#incomingMessage
+      - africastalking
+      summary: sms_incoming_message africastalking
+      description: Adds new SMS Incoming Message to our callback URL and return its ID.
+      operationId: africastalking#sms_incoming_message
       parameters:
-      - name: IncomingMessageRequestBody
+      - name: sms_incoming_message_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/SmsIncomingMessageRequestBody'
+          $ref: '#/definitions/AfricastalkingSmsIncomingMessageRequestBody'
       responses:
         "201":
           description: Created response.
@@ -225,16 +225,16 @@ paths:
   /callbacks/africastalking/sms/subscription:
     post:
       tags:
-      - sms
-      summary: subNotifier sms
-      description: Sent whenever someone subscribes or unsubscribes from any of your premium SMS products.
-      operationId: sms#subNotifier
+      - africastalking
+      summary: sms_subscription africastalking
+      description: Adds new SMS subscription to our callback URL and return its ID.
+      operationId: africastalking#sms_subscription
       parameters:
-      - name: SubNotifierRequestBody
+      - name: sms_subscription_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/SmsSubNotifierRequestBody'
+          $ref: '#/definitions/AfricastalkingSmsSubscriptionRequestBody'
       responses:
         "201":
           description: Created response.
@@ -245,38 +245,38 @@ paths:
   /callbacks/africastalking/ussd/sessions:
     post:
       tags:
-      - ussd
-      summary: ussdNotifier ussd
-      description: Callback URL that sends request data our App using HTTP POST.
-      operationId: ussd#ussdNotifier
+      - africastalking
+      summary: ussd_notifier africastalking
+      description: Adds new USSD Notification to our callback URL and return its ID.
+      operationId: africastalking#ussd_notifier
       produces:
       - text/plain
       parameters:
-      - name: UssdNotifierRequestBody
+      - name: ussd_notifier_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/UssdUssdNotifierRequestBody'
+          $ref: '#/definitions/AfricastalkingUssdNotifierRequestBody'
       responses:
         "201":
           description: Created response.
           schema:
-            $ref: '#/definitions/UssdUssdNotifierResponseBody'
+            $ref: '#/definitions/AfricastalkingUssdNotifierResponseBody'
       schemes:
       - http
   /callbacks/africastalking/voice/notifications:
     post:
       tags:
-      - voice
-      summary: voiceNotifier voice
-      description: Voice Notification delivered to our callback URL
-      operationId: voice#voiceNotifier
+      - africastalking
+      summary: voice_notification africastalking
+      description: Adds new Voice Notification to our callback URL and return its ID.
+      operationId: africastalking#voice_notification
       parameters:
-      - name: VoiceNotifierRequestBody
+      - name: voice_notification_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/VoiceVoiceNotifierRequestBody'
+          $ref: '#/definitions/AfricastalkingVoiceNotificationRequestBody'
       responses:
         "201":
           description: Created response.
@@ -287,16 +287,16 @@ paths:
   /callbacks/africastalking/voice/transferevents:
     post:
       tags:
-      - voice
-      summary: transferEvents voice
-      description: Event Notifications sent from AT after call transfer initiated.
-      operationId: voice#transferEvents
+      - africastalking
+      summary: transfer_event africastalking
+      description: Adds new Event Notification to our callback URL and return its ID.
+      operationId: africastalking#transfer_event
       parameters:
-      - name: TransferEventsRequestBody
+      - name: transfer_event_request_body
         in: body
         required: true
         schema:
-          $ref: '#/definitions/VoiceTransferEventsRequestBody'
+          $ref: '#/definitions/AfricastalkingTransferEventRequestBody'
       responses:
         "201":
           description: Created response.
@@ -335,79 +335,8 @@ paths:
       schemes:
       - http
 definitions:
-  AirtimeStatusRequestBody:
-    title: AirtimeStatusRequestBody
-    type: object
-    properties:
-      requestId:
-        type: string
-        description: The request ID sent back as a response to the airtime send request.
-        example: ATQid_SampleTxnId123
-      status:
-        type: string
-        description: The Transaction status.
-        example: Success
-        enum:
-        - Success
-        - Failed
-    example:
-      requestId: ATQid_SampleTxnId123
-      status: Success
-  AirtimeValidationRequestBody:
-    title: AirtimeValidationRequestBody
-    type: object
-    properties:
-      amount:
-        type: number
-        description: Amount - in the provided currency - that the client will receive.
-        example: 500
-        format: double
-      currencyCode:
-        type: string
-        description: The 3-digist ISO format currency for the value of this transaction
-        example: KES
-      phoneNumber:
-        type: string
-        description: The phone number of the mobile subscriber receiving the airtime.
-        example: +254711XXXYYY
-      transactionId:
-        type: string
-        description: The transaction id within Africa’s Talking.
-        example: SomeTransactionID
-    example:
-      amount: 500
-      currencyCode: KES
-      phoneNumber: +254711XXXYYY
-      transactionId: SomeTransactionID
-  AirtimeValidationResponseBody:
-    title: AirtimeValidationResponseBody
-    type: object
-    properties:
-      status:
-        type: string
-        example: Validated
-        enum:
-        - Validated
-        - Failed
-    example:
-      status: Validated
-  IotIotNotifierRequestBody:
-    title: IotIotNotifierRequestBody
-    type: object
-    properties:
-      payload:
-        type: string
-        description: The MQTT packet sent by the publishing device.
-        example: "42"
-      topic:
-        type: string
-        description: Message channel to which the message was sent by the publishing MQTT client
-        example: myusername/devicegroup/sensor/id/1/temperature
-    example:
-      payload: "42"
-      topic: myusername/devicegroup/sensor/id/1/temperature
-  PaymentsB2cNotifierRequestBody:
-    title: PaymentsB2cNotifierRequestBody
+  AfricastalkingB2cValidationNotifierRequestBody:
+    title: AfricastalkingB2cValidationNotifierRequestBody
     type: object
     properties:
       amount:
@@ -423,8 +352,7 @@ definitions:
         type: object
         description: A map of metadata associated with this request.
         example:
-          Incidunt nulla.: Alias minima debitis ullam necessitatibus repudiandae.
-          Ullam necessitatibus temporibus est praesentium explicabo corrupti.: Provident exercitationem doloremque sunt voluptas.
+          Et exercitationem.: Inventore omnis nostrum inventore aut repellat.
         additionalProperties: true
       phoneNumber:
         type: string
@@ -442,14 +370,13 @@ definitions:
       amount: 500
       currencyCode: KES
       metadata:
-        Ad recusandae non ut ut reiciendis laborum.: Molestias et.
-        Fuga voluptatum cum qui reprehenderit dignissimos.: Recusandae ea suscipit dolor.
-        Sequi quia sed.: Quia explicabo.
+        Harum quo.: Dignissimos nam aut esse aut omnis distinctio.
+        Neque atque.: Assumenda omnis exercitationem voluptatem sed nobis.
       phoneNumber: +254711XXXYYY
       sourceIpAddress: 12.34.56.78
       transactionId: SomeTransactionID
-  PaymentsB2cNotifierResponseBody:
-    title: PaymentsB2cNotifierResponseBody
+  AfricastalkingB2cValidationNotifierResponseBody:
+    title: AfricastalkingB2cValidationNotifierResponseBody
     type: object
     properties:
       status:
@@ -460,26 +387,26 @@ definitions:
         - Failed
     example:
       status: Validated
-  PaymentsC2bNotifierRequestBody:
-    title: PaymentsC2bNotifierRequestBody
+  AfricastalkingC2bValidationNotifierRequestBody:
+    title: AfricastalkingC2bValidationNotifierRequestBody
     type: object
     properties:
       clientAccount:
         type: string
         description: Account name used by a mobile subscriber to initiate this transaction.
-        example: Praesentium debitis.
+        example: Ullam facilis.
       phoneNumber:
         type: string
         description: Phone number of the mobile subscriber who is initiating the C2B transaction.
-        example: Sunt facilis.
+        example: Recusandae enim quis.
       productName:
         type: string
         description: Identifies the Africa’s Talking Payment Product used to facilitate this transaction.
-        example: Cupiditate facilis animi.
+        example: Reprehenderit ut voluptatem aut molestiae.
       provider:
         type: string
         description: Payment provider that is facilitating this transaction
-        example: Mpesa
+        example: TigoTanzania
         enum:
         - Mpesa
         - TigoTanzania
@@ -488,38 +415,53 @@ definitions:
         type: object
         description: Additional data received from a payment provider for a particular transaction
         example:
-          Nam quas dolorem.: Tempora consequatur aut voluptatem animi ipsa sint.
-          Sapiente sapiente ut molestiae tempora.: Inventore sed eum velit excepturi.
-          Sunt maiores id omnis exercitationem sed.: Rerum aut odio laborum voluptatem.
+          Dolor quia necessitatibus tempora explicabo labore ea.: Molestiae nulla quia maxime dicta omnis eius.
+          Doloremque ut voluptates voluptatem vero distinctio.: Est sint voluptatibus et commodi.
+          Molestiae omnis quae consequatur quibusdam ut.: Vel sequi et enim dolorem.
         additionalProperties: true
       value:
         type: string
         description: Value being exchanged in this transaction
-        example: Quam rerum rem magnam eveniet quasi.
+        example: Repellat repudiandae impedit dolores.
     example:
-      clientAccount: Omnis dolores laborum deserunt sed ut repudiandae.
-      phoneNumber: Nulla voluptate praesentium nulla.
-      productName: Eveniet in velit odio eius.
+      clientAccount: Reiciendis et et cum impedit.
+      phoneNumber: Omnis ut laudantium eligendi veniam.
+      productName: Harum et.
       provider: Athena
       providerMetadata:
-        Dicta laborum minus.: Dolor asperiores dolorem.
-        Laboriosam enim aut.: Illum sit architecto nobis incidunt facilis adipisci.
-        Quisquam nesciunt.: Expedita qui.
-      value: Modi dolor maiores facere est.
+        Sed similique in enim perspiciatis.: Corporis earum et eius explicabo.
+        Sunt quia.: Est sed.
+        Voluptatem illum necessitatibus.: Nihil qui voluptatem accusamus dolorem exercitationem aut.
+      value: Similique ipsum occaecati distinctio.
     required:
     - provider
     - productName
     - phoneNumber
     - value
     - providerMetadata
-  PaymentsPaymentNotifierRequestBody:
-    title: PaymentsPaymentNotifierRequestBody
+  AfricastalkingIotNotifierRequestBody:
+    title: AfricastalkingIotNotifierRequestBody
+    type: object
+    properties:
+      payload:
+        type: string
+        description: The MQTT packet sent by the publishing device.
+        example: "42"
+      topic:
+        type: string
+        description: Message channel to which the message was sent by the publishing MQTT client
+        example: myusername/devicegroup/sensor/id/1/temperature
+    example:
+      payload: "42"
+      topic: myusername/devicegroup/sensor/id/1/temperature
+  AfricastalkingPaymentNotifierRequestBody:
+    title: AfricastalkingPaymentNotifierRequestBody
     type: object
     properties:
       category:
         type: string
         description: Category of the payment.
-        example: CardCheckout
+        example: MobileB2B
         enum:
         - BankCheckout
         - CardCheckout
@@ -533,19 +475,19 @@ definitions:
       clientAccount:
         type: string
         description: Account name used by a mobile subscriber to initiate this transaction.
-        example: In quia.
+        example: Praesentium accusantium enim ab.
       description:
         type: string
         description: A detailed description of this transaction.
-        example: Repellendus minima.
+        example: Dolore culpa.
       destination:
         type: string
         description: Unique identifier of the party  receiving the funds for this transaction.
-        example: Minima voluptatem modi quidem quo aut necessitatibus.
+        example: Quidem eum iusto dignissimos.
       destinationType:
         type: string
         description: Unique identifier of the party receiving funds in this transaction (the Credit Party).
-        example: BankAccount
+        example: PhoneNumber
         enum:
         - PhoneNumber
         - BankAccount
@@ -554,11 +496,11 @@ definitions:
       productName:
         type: string
         description: Africa’s Talking Payment Product used to facilitate this transaction.
-        example: Aut mollitia voluptatem.
+        example: Labore illum ea.
       provider:
         type: string
         description: Payment provider that facilitated this transaction.
-        example: Segovia
+        example: Admin
         enum:
         - Mpesa
         - Segovia
@@ -568,31 +510,31 @@ definitions:
       providerChannel:
         type: string
         description: Name or number of channel that used to facilitate this payment.
-        example: Rerum magnam quis sunt voluptatem dolores.
+        example: Et ipsum nam minima corporis.
       providerFee:
         type: string
         description: Fee charged by a payment provider to facilitate this transaction.
-        example: Dicta dicta mollitia voluptate dolorem.
+        example: Ea ea et.
       providerMetadata:
         type: string
         description: Any additional data that we receive from a payment provider for a particular transaction.
-        example: Optio est maxime.
+        example: Architecto nam nulla voluptatem rerum et repellat.
       providerRefId:
         type: string
         description: Unique ID generated by the payment provider for this transaction.
-        example: Vel magni labore iure.
+        example: Quidem consequatur commodi quis.
       requestMetadata:
         type: string
         description: Any metadata that was sent by your application when it initiated this transaction.
-        example: Aut quae atque quo eos amet facere.
+        example: Eligendi explicabo porro vero.
       source:
         type: string
         description: Unique identifier of the party that is providing the funds for this transaction.
-        example: Aut autem excepturi.
+        example: Dolorum quaerat quia voluptatem explicabo reprehenderit.
       sourceType:
         type: string
         description: Type of party providing the funds for this transaction (the Debit Party).
-        example: Card
+        example: PhoneNumber
         enum:
         - PhoneNumber
         - BankAccount
@@ -608,39 +550,39 @@ definitions:
       transactionDate:
         type: string
         description: The date and time when a successful transaction was completed.
-        example: Hic doloribus at officiis sed.
+        example: Minima dolor.
       transactionFee:
         type: string
         description: Transaction fee charged by Africa’s Talking for this transaction.
-        example: Aliquam commodi voluptas.
+        example: Et modi.
       transactionId:
         type: string
         description: Unique transactionId generated for every payment.
-        example: Sed qui.
+        example: Veritatis aut est in.
       value:
         type: string
         description: Value being exchanged in this transaction.
-        example: Soluta nulla libero consequuntur quo vel.
+        example: Esse laboriosam asperiores vitae neque.
     example:
-      category: MobileC2B
-      clientAccount: Est repellendus recusandae quae earum.
-      description: Et nam et ea possimus.
-      destination: Praesentium corporis dolores corporis.
+      category: WalletTransfer
+      clientAccount: Nostrum aut.
+      description: Corporis corporis dolor consequuntur beatae.
+      destination: Doloremque alias voluptatem eveniet et nihil.
       destinationType: PhoneNumber
-      productName: Blanditiis quo et ut itaque.
-      provider: Flutterwave
-      providerChannel: Placeat quia incidunt velit.
-      providerFee: Eum qui.
-      providerMetadata: Illo adipisci ut consectetur et dignissimos.
-      providerRefId: Nihil sequi et iure perferendis.
-      requestMetadata: Reprehenderit error vero necessitatibus eaque quo.
-      source: Iusto quaerat ea voluptatibus laudantium unde.
+      productName: Eos debitis sit modi doloribus.
+      provider: Athena
+      providerChannel: Asperiores repellat.
+      providerFee: Omnis adipisci nihil error.
+      providerMetadata: Est unde et a necessitatibus voluptatem non.
+      providerRefId: Qui sit magnam possimus ex.
+      requestMetadata: Nihil minima est.
+      source: Velit asperiores quibusdam qui qui.
       sourceType: Wallet
       status: Success
-      transactionDate: Voluptatem ipsum.
-      transactionFee: Repudiandae reiciendis non.
-      transactionId: Saepe illum qui reiciendis atque.
-      value: Exercitationem autem repellendus.
+      transactionDate: Similique eos.
+      transactionFee: Et qui similique.
+      transactionId: Qui repellat inventore illo ad.
+      value: Corporis sunt tenetur illum nemo neque unde.
     required:
     - transactionId
     - category
@@ -656,29 +598,29 @@ definitions:
     - description
     - requestMetadata
     - providerMetadata
-  SmsBulkSMSOptOutRequestBody:
-    title: SmsBulkSMSOptOutRequestBody
+  AfricastalkingSmsBulkOptoutRequestBody:
+    title: AfricastalkingSmsBulkOptoutRequestBody
     type: object
     properties:
       phoneNumber:
         type: string
         description: Mobile phone number of the subscriber who opted out.
-        example: Atque soluta praesentium ratione.
+        example: Excepturi ut aut nesciunt delectus beatae.
       senderId:
         type: string
         description: Shortcode/Alphanumeric Sender ID the user opted out from.
-        example: Commodi iusto velit dolores error libero.
+        example: Possimus vel fugit impedit.
     example:
-      phoneNumber: Fugit ut pariatur eum sit et et.
-      senderId: Eius omnis illum ut.
-  SmsDeliveryReportRequestBody:
-    title: SmsDeliveryReportRequestBody
+      phoneNumber: Omnis sunt ea eos ut est.
+      senderId: Eveniet illum consequatur recusandae numquam autem ad.
+  AfricastalkingSmsDeliveryReportRequestBody:
+    title: AfricastalkingSmsDeliveryReportRequestBody
     type: object
     properties:
       failureReason:
         type: string
         description: Only provided if status is Rejected or Failed.
-        example: InsufficientCredit
+        example: NotNetworkSubscriber
         enum:
         - InsufficientCredit
         - InvalidLinkId
@@ -692,11 +634,11 @@ definitions:
       id:
         type: string
         description: A unique identifier for each message.
-        example: Fuga quidem voluptatem est temporibus.
+        example: Voluptatem similique.
       networkCode:
         type: string
         description: A unique identifier for the Telco that handled the message.
-        example: "64110"
+        example: "63510"
         enum:
         - "62120"
         - "62130"
@@ -725,15 +667,15 @@ definitions:
       phoneNumber:
         type: string
         description: Mobile phone number message was sent out to.
-        example: Aperiam vel expedita dignissimos.
+        example: Corporis at praesentium odio.
       retryCount:
         type: string
         description: Number of times the request to send a message to the device was retried before it succeeded or definitely failed.
-        example: Et reiciendis aut excepturi.
+        example: Incidunt sapiente error qui placeat.
       status:
         type: string
         description: The status of the message.
-        example: Buffered
+        example: Rejected
         enum:
         - Sent
         - Submitted
@@ -742,37 +684,37 @@ definitions:
         - Success
         - Failed
     example:
-      failureReason: UserInBlackList
-      id: Odio voluptas blanditiis quo quis.
-      networkCode: "63513"
-      phoneNumber: Eos qui sint ratione animi quo.
-      retryCount: Magnam ipsam sint at.
-      status: Submitted
-  SmsIncomingMessageRequestBody:
-    title: SmsIncomingMessageRequestBody
+      failureReason: InsufficientCredit
+      id: Quos quas quia rerum qui.
+      networkCode: "62120"
+      phoneNumber: Deleniti velit.
+      retryCount: Et aspernatur repellat et.
+      status: Buffered
+  AfricastalkingSmsIncomingMessageRequestBody:
+    title: AfricastalkingSmsIncomingMessageRequestBody
     type: object
     properties:
       date:
         type: string
         description: The date and time when the message was received.
-        example: "1978-08-29"
+        example: "1972-08-02"
         format: date
       from:
         type: string
         description: The number that sent the message.
-        example: Non incidunt odit ut illo.
+        example: A et iste eaque modi repudiandae.
       id:
         type: string
         description: The internal ID that we use to store this message.
-        example: Excepturi quam.
+        example: Ullam voluptas aliquam dolor eos commodi vero.
       linkId:
         type: string
         description: Parameter required when responding to an on-demand user request with a premium message.
-        example: Iste quo optio et.
+        example: Quidem a voluptatem suscipit quas repudiandae.
       networkCode:
         type: string
         description: A unique identifier for the telco that handled the message.
-        example: "63902"
+        example: "64007"
         enum:
         - "62120"
         - "62130"
@@ -801,35 +743,35 @@ definitions:
       text:
         type: string
         description: The message content.
-        example: Dolorem nihil molestias repellat ut unde.
+        example: Assumenda enim fuga placeat occaecati dolore dolores.
       to:
         type: string
         description: The number to which the message was sent.
-        example: Sint cupiditate.
+        example: Necessitatibus illo nobis occaecati aut qui.
     example:
-      date: "2005-11-16"
-      from: Harum fuga quo tenetur omnis.
-      id: Ea reiciendis ut illum vitae.
-      linkId: Cupiditate omnis est necessitatibus molestias veritatis ullam.
-      networkCode: "63902"
-      text: Modi consequatur pariatur soluta.
-      to: Magni ea aliquid id.
-  SmsSubNotifierRequestBody:
-    title: SmsSubNotifierRequestBody
+      date: "1975-05-01"
+      from: Harum molestiae dolorem.
+      id: Rerum eligendi laborum doloribus blanditiis aut.
+      linkId: Fugiat voluptatem reprehenderit.
+      networkCode: "62130"
+      text: Sit et harum qui cum totam accusantium.
+      to: Dignissimos ipsa voluptatum illo.
+  AfricastalkingSmsSubscriptionRequestBody:
+    title: AfricastalkingSmsSubscriptionRequestBody
     type: object
     properties:
       keyword:
         type: string
         description: The product keyword that the user has subscribed or unsubscribed from.
-        example: Quae quas qui.
+        example: Et aut.
       phoneNumber:
         type: string
         description: Mobile phone number to subscribe or unsubscribe.
-        example: Illum esse nesciunt reprehenderit eum.
+        example: Asperiores et animi at.
       shortCode:
         type: string
         description: The short code that has this product.
-        example: Quis recusandae.
+        example: Aliquam placeat qui saepe.
       updateType:
         type: string
         description: The type of the update.
@@ -838,53 +780,30 @@ definitions:
         - addition
         - deletion
     example:
-      keyword: Minus reprehenderit rerum.
-      phoneNumber: Cumque ut rerum et dolor est quisquam.
-      shortCode: Nulla laudantium aperiam.
-      updateType: deletion
-  UssdUssdNotifierRequestBody:
-    title: UssdUssdNotifierRequestBody
+      keyword: Sint voluptatem et omnis modi atque.
+      phoneNumber: Eius illum beatae ipsa.
+      shortCode: Qui beatae nesciunt magni numquam eius.
+      updateType: addition
+  AfricastalkingStatusNotifierRequestBody:
+    title: AfricastalkingStatusNotifierRequestBody
     type: object
     properties:
-      networkCode:
+      requestId:
         type: string
-        description: Telco of the mobile number interacting with USSD application.
-        example: Ut explicabo ut possimus.
-      phoneNumber:
+        description: The request ID sent back as a response to the airtime send request.
+        example: ATQid_SampleTxnId123
+      status:
         type: string
-        description: Mobile number of the subscriber interacting with USSD application.
-        example: Et quas est dolores.
-      serviceCode:
-        type: string
-        description: USSD code assigned to application.
-        example: Consequatur nesciunt magni qui ut.
-      sessionId:
-        type: string
-        description: A unique value generated when the session starts.
-        example: Omnis facere eum possimus aut voluptatem.
-      text:
-        type: string
-        description: Shows the user input.
-        example: Beatae quaerat accusantium.
+        description: The Transaction status.
+        example: Success
+        enum:
+        - Success
+        - Failed
     example:
-      networkCode: Vero saepe modi.
-      phoneNumber: Repudiandae quia reprehenderit dolorem dignissimos.
-      serviceCode: Porro aspernatur quisquam.
-      sessionId: Quos iusto rerum ut laboriosam totam.
-      text: Sit amet.
-  UssdUssdNotifierResponseBody:
-    title: 'Mediatype identifier: ussdresponse; view=default'
-    type: object
-    properties:
-      response:
-        type: string
-        description: Plain text response back to AT gateway
-        example: Aut quis.
-    description: UssdNotifierResponseBody result type (default view)
-    example:
-      response: Suscipit quo omnis id.
-  VoiceTransferEventsRequestBody:
-    title: VoiceTransferEventsRequestBody
+      requestId: ATQid_SampleTxnId123
+      status: Success
+  AfricastalkingTransferEventRequestBody:
+    title: AfricastalkingTransferEventRequestBody
     type: object
     properties:
       callSessionState:
@@ -896,7 +815,7 @@ definitions:
         - TransferCompleted
       callTransferHangupCause:
         type: string
-        example: DestinationNotSupported
+        example: InvalidPhoneNumber
         enum:
         - DestinationNotSupported
         - InvalidPhoneNumber
@@ -905,10 +824,10 @@ definitions:
       callTransferParam:
         type: string
         description: +2347XXXXXXXXX:20, (20 is the duration in seconds)
-        example: Similique fuga deleniti quasi quos.
+        example: Dolorum corrupti.
       callTransferState:
         type: string
-        example: Completed
+        example: CalleeHangup
         enum:
         - ' Active'
         - Completed
@@ -917,11 +836,11 @@ definitions:
       callTransferredToNumber:
         type: string
         description: Number call was transferred to
-        example: Impedit quae fugit ullam.
+        example: Laboriosam voluptatem.
       isActive:
         type: string
         default: "1"
-        example: "0"
+        example: "1"
         enum:
         - "0"
         - "1"
@@ -933,31 +852,110 @@ definitions:
     example:
       callSessionState: Active
       callTransferHangupCause: DestinationNotSupported
-      callTransferParam: Vitae eligendi architecto et possimus praesentium harum.
+      callTransferParam: Et nostrum culpa.
       callTransferState: CallerHangup
-      callTransferredToNumber: Consequatur rerum molestiae inventore.
-      isActive: "1"
+      callTransferredToNumber: Optio cupiditate incidunt quis repudiandae.
+      isActive: "0"
       status: Success
-  VoiceVoiceNotifierRequestBody:
-    title: VoiceVoiceNotifierRequestBody
+  AfricastalkingUssdNotifierRequestBody:
+    title: AfricastalkingUssdNotifierRequestBody
+    type: object
+    properties:
+      networkCode:
+        type: string
+        description: Telco of the mobile number interacting with USSD application.
+        example: Tempora iste expedita eum consectetur eligendi.
+      phoneNumber:
+        type: string
+        description: Mobile number of the subscriber interacting with USSD application.
+        example: Qui placeat asperiores amet harum corrupti.
+      serviceCode:
+        type: string
+        description: USSD code assigned to application.
+        example: Minima quia id eaque qui dolorum quisquam.
+      sessionId:
+        type: string
+        description: A unique value generated when the session starts.
+        example: Voluptas quis vero.
+      text:
+        type: string
+        description: Shows the user input.
+        example: Dolores esse quidem quod dolorem.
+    example:
+      networkCode: Architecto laboriosam officia vel laudantium.
+      phoneNumber: Asperiores ex quam.
+      serviceCode: Nulla quibusdam temporibus id quis nostrum.
+      sessionId: Occaecati nisi consequuntur quisquam modi.
+      text: Assumenda voluptatibus in.
+  AfricastalkingUssdNotifierResponseBody:
+    title: 'Mediatype identifier: ussdresponse; view=default'
+    type: object
+    properties:
+      response:
+        type: string
+        description: Plain text response back to AT gateway
+        example: Vel cum et atque.
+    description: ussd_notifier_response_body result type (default view)
+    example:
+      response: Cupiditate soluta.
+  AfricastalkingValidationNotifierRequestBody:
+    title: AfricastalkingValidationNotifierRequestBody
+    type: object
+    properties:
+      amount:
+        type: number
+        description: Amount - in the provided currency - that the client will receive.
+        example: 500
+        format: double
+      currencyCode:
+        type: string
+        description: The 3-digist ISO format currency for the value of this transaction
+        example: KES
+      phoneNumber:
+        type: string
+        description: The phone number of the mobile subscriber receiving the airtime.
+        example: +254711XXXYYY
+      transactionId:
+        type: string
+        description: The transaction id within Africa’s Talking.
+        example: SomeTransactionID
+    example:
+      amount: 500
+      currencyCode: KES
+      phoneNumber: +254711XXXYYY
+      transactionId: SomeTransactionID
+  AfricastalkingValidationNotifierResponseBody:
+    title: AfricastalkingValidationNotifierResponseBody
+    type: object
+    properties:
+      status:
+        type: string
+        example: Validated
+        enum:
+        - Validated
+        - Failed
+    example:
+      status: Validated
+  AfricastalkingVoiceNotificationRequestBody:
+    title: AfricastalkingVoiceNotificationRequestBody
     type: object
     properties:
       amount:
         type: string
         description: The total cost of the call.
-        example: Voluptatem et.
+        example: Recusandae iure qui cumque amet.
       callSessionState:
         type: string
         description: The final status of the call.
-        example: Qui consequatur ut ipsam omnis.
+        example: Sequi saepe quidem.
       callStartTime:
         type: string
         description: The time the call began.
-        example: Consectetur libero eligendi atque.
+        example: Est autem omnis quibusdam.
       callerCountryCode:
         type: string
         description: The code of the country the callerNumber is calling from.
-        example: Recusandae est.
+        example: Totam incidunt assumenda quam amet eaque.
       callerNumber:
         type: string
         description: The phone number of the phone user in the call, in international format.
@@ -965,7 +963,7 @@ definitions:
       currencyCode:
         type: string
         description: The currency used to bill this call (e.g KES, USD, GBP).
-        example: Nesciunt voluptas aut.
+        example: Enim non.
       destinationNumber:
         type: string
         description: Africa’s Talking phone number, in international format
@@ -973,31 +971,31 @@ definitions:
       dialDestinationNumber:
         type: string
         description: The number which a call was forwarded to if the Dial action was used.
-        example: Sed libero facere ipsam.
+        example: Est dolores.
       dialDurationInSeconds:
         type: string
         description: The duration of the dialed call if the Dial action was used.
-        example: Ipsam et.
+        example: Nulla unde qui totam modi quo.
       dialStartTime:
         type: string
         description: The time the dial action began if the Dial action was used.
-        example: Reiciendis ex nemo dolores aut natus ut.
+        example: Est ea error eius velit itaque error.
       direction:
         type: string
         description: Whether this is an inbound or outbound call
-        example: Assumenda doloremque et est architecto quidem.
+        example: Quibusdam eveniet eligendi a fugiat.
       dtmfDigits:
         type: string
         description: The digits that a user enters in response to a getDigits request
-        example: Id sunt tenetur.
+        example: Eaque non aut vero.
       durationInSeconds:
         type: string
         description: The duration of the call in seconds.
-        example: Distinctio qui itaque.
+        example: Praesentium eius.
       hangupCause:
         type: string
         description: The reason a call could have ended
-        example: NO_USER_RESPONSE
+        example: UNALLOCATED_NUMBER
         enum:
         - NORMAL_CLEARING
         - CALL_REJECTED
@@ -1017,33 +1015,33 @@ definitions:
         type: string
         description: Lets us know whether the call is in session state
         default: "0"
-        example: Officia tempore.
+        example: Dolor id vel fuga qui.
       recordingUrl:
         type: string
         description: The URL of the recording made for this call
-        example: Beatae numquam et id eius.
+        example: Repudiandae in sint dolorum.
       sessionId:
         type: string
         description: A unique identifier generated during each call session
-        example: Et labore asperiores voluptas rerum.
+        example: Aliquid eius qui ut perspiciatis provident omnis.
     example:
-      amount: Quibusdam dolorem adipisci facere.
-      callSessionState: Dolore et ad et odit.
-      callStartTime: Ut adipisci laboriosam est.
-      callerCountryCode: Dolorem itaque maiores perspiciatis non nobis.
+      amount: Et quam voluptas debitis veritatis sit.
+      callSessionState: Nam iure.
+      callStartTime: Neque dolores saepe tempore.
+      callerCountryCode: Quos cumque pariatur ea fugiat delectus.
       callerNumber: +254711XXXYYY
-      currencyCode: Incidunt molestiae voluptate ullam dignissimos sunt ut.
+      currencyCode: Pariatur nihil.
       destinationNumber: +254711XXXYYY
-      dialDestinationNumber: Cupiditate veniam cupiditate.
-      dialDurationInSeconds: Molestiae aperiam est itaque nihil et.
-      dialStartTime: Quis deleniti ducimus quis cumque et.
-      direction: Magnam quia voluptates ullam sed.
-      dtmfDigits: Omnis illum sit quae.
-      durationInSeconds: Eum saepe qui reprehenderit voluptatem.
-      hangupCause: NO_USER_RESPONSE
-      isActive: At fuga voluptatem repellat modi eveniet perferendis.
-      recordingUrl: Maxime sed doloribus reprehenderit cumque.
-      sessionId: Aut consequatur eum laborum quam labore.
+      dialDestinationNumber: Deserunt minima dicta illo qui aut quo.
+      dialDurationInSeconds: Magnam iste quisquam accusantium enim.
+      dialStartTime: Quam aut veritatis iusto sapiente veritatis.
+      direction: Harum ea eum nostrum alias.
+      dtmfDigits: Labore dignissimos esse rerum non minus.
+      durationInSeconds: Omnis qui repellat.
+      hangupCause: SUBSCRIBER_ABSENT
+      isActive: Molestiae quisquam sint.
+      recordingUrl: Magnam repellat harum qui.
+      sessionId: Reprehenderit et eveniet.
 externalDocs:
   description: Library Usage
   url: https://github.com/wondenge/at-notifiers/blob/master/README.md

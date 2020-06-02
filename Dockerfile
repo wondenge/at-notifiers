@@ -27,7 +27,7 @@ RUN go mod download
 COPY . .
 
 # Build the server application
-RUN go build ./cmd/atsvr && go build ./cmd/atsvr-cli
+RUN go build ./cmd/at && go build ./cmd/at-cli
 
 # Build a small image
 FROM scratch

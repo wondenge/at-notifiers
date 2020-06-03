@@ -1,11 +1,10 @@
 <p align="center">
 <img src="src/img/AfricasTalkingNotifiers.png" alt="AfricasTalking Notifiers" title="AfricasTalking Notifiers" />
 </p>
+<h1 align="center">Easy and Powerful AfricasTalking Notifiers</h3>
 
 [![Go Report Card](https://goreportcard.com/badge/wondenge/at-notifiers)](https://goreportcard.com/report/wondenge/at-notifiers)
 [![License](https://img.shields.io/badge/license-Apache-blue.svg)]
-
-# AfricasTalking Notifiers
 
 # 1. Overview
 

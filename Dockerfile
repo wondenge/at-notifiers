@@ -27,7 +27,7 @@ RUN go mod download
 COPY . .
 
 # Build the server application
-RUN go build ./cmd/at && go build ./cmd/at-cli
+RUN go build ./cmd/at
 
 # Build a small image
 FROM scratch
@@ -38,6 +38,6 @@ COPY --from=builder /app /
 EXPOSE 8000 
 
 # Command to run
-CMD ["./atsvr", "-host", "docker"]
+CMD ["./at", "-host", "docker"]
 
 

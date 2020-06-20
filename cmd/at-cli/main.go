@@ -35,7 +35,7 @@ func main() {
 			case "local":
 				addr = "http://localhost:3000"
 			case "docker":
-				addr = "http://0.0.0.0:8000"
+				addr = "http://0.0.0.0:3000"
 			default:
 				fmt.Fprintf(os.Stderr, "invalid host argument: %q (valid hosts: local|docker)\n", *hostF)
 				os.Exit(1)

@@ -61,7 +61,7 @@ var _ = API("listener", func() {
 			// We will not be doing TLS here as we expect the instance to
 			// be running in a firewalled environment behind a load balancer
 			// where the load balancer kubernetes ingress will be responsible for TLS.
-			URI("http://0.0.0.0:3000")
+			URI("http://0.0.0.0:8000")
 		})
 	})
 })

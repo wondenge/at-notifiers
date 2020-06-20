@@ -101,7 +101,7 @@ func main() {
 
 	case "docker":
 		{
-			addr := "http://0.0.0.0:3000"
+			addr := "http://0.0.0.0:8000"
 			u, err := url.Parse(addr)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "invalid URL %#v: %s\n", addr, err)
